@@ -23,7 +23,6 @@ class FiniteStateMachine:
             t = ct.getCurrentTime()
             for a in t :
                 a = str(a)
-            print "%s" %newState
-            print "Time: %s" %(t["YEAR"]+"-"+t["MONTH"]+"-"+t["MONTHDAY"]+" "+ t["HOUR"]+":"+t["MINUTE"]+"."+t["SEC"]+" "+t["WEEKDAY"])
+            print "%s Time: %s" %(newState,(t["YEAR"]+"-"+t["MONTH"]+"-"+t["MONTHDAY"]+" "+ t["HOUR"]+":"+t["MINUTE"]+"."+t["SEC"]+" "+t["WEEKDAY"]))
             oldState = newState
 
