@@ -9,6 +9,7 @@ CMakeFiles/main.dir/src/main.o: ../src/utilities.h
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/include/XmlRpcDecl.h
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/include/XmlRpcValue.h
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/include/opencv/cv.h
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/include/opencv/cvblob.h
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/include/opencv/cxcore.h
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/include/opencv/highgui.h
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/include/opencv2/calib3d/calib3d.hpp

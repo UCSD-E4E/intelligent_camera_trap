@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ViperROS
+CMAKE_SOURCE_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ViperROS/build
+CMAKE_BINARY_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/main.dir/depend.make
@@ -49,21 +49,30 @@ include CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/main.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/main.o: ../src/main.cpp
 CMakeFiles/main.dir/src/main.o: ../manifest.xml
-CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/std_msgs/manifest.xml
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/roslang/manifest.xml
-CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/rospy/manifest.xml
 CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/roscpp/manifest.xml
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/riley/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles $(CMAKE_PROGRESS_1)
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/geometry_msgs/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/sensor_msgs/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/stacks/vision_opencv/opencv2/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/stacks/vision_opencv/cv_bridge/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/std_msgs/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/ros/core/rosbuild/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/roslib/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/rosconsole/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/stacks/pluginlib/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/share/message_filters/manifest.xml
+CMakeFiles/main.dir/src/main.o: /opt/ros/fuerte/stacks/image_common/image_transport/manifest.xml
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/main.dir/src/main.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/main.dir/src/main.o -c /home/riley/fuerte_workspace/sandbox/ViperROS/src/main.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/main.dir/src/main.o -c /home/sealab/fuerte_workspace/sandbox/ViperROS/src/main.cpp
 
 CMakeFiles/main.dir/src/main.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/main.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/riley/fuerte_workspace/sandbox/ViperROS/src/main.cpp > CMakeFiles/main.dir/src/main.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/sealab/fuerte_workspace/sandbox/ViperROS/src/main.cpp > CMakeFiles/main.dir/src/main.i
 
 CMakeFiles/main.dir/src/main.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/main.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/riley/fuerte_workspace/sandbox/ViperROS/src/main.cpp -o CMakeFiles/main.dir/src/main.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/sealab/fuerte_workspace/sandbox/ViperROS/src/main.cpp -o CMakeFiles/main.dir/src/main.s
 
 CMakeFiles/main.dir/src/main.o.requires:
 .PHONY : CMakeFiles/main.dir/src/main.o.requires
@@ -99,6 +108,6 @@ CMakeFiles/main.dir/clean:
 .PHONY : CMakeFiles/main.dir/clean
 
 CMakeFiles/main.dir/depend:
-	cd /home/riley/fuerte_workspace/sandbox/ViperROS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/riley/fuerte_workspace/sandbox/ViperROS /home/riley/fuerte_workspace/sandbox/ViperROS /home/riley/fuerte_workspace/sandbox/ViperROS/build /home/riley/fuerte_workspace/sandbox/ViperROS/build /home/riley/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/sealab/fuerte_workspace/sandbox/ViperROS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/main.dir/depend
 

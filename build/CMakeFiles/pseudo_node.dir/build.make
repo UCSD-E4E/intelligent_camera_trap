@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ViperROS
+CMAKE_SOURCE_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ViperROS/build
+CMAKE_BINARY_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/pseudo_node.dir/depend.make
@@ -49,21 +49,30 @@ include CMakeFiles/pseudo_node.dir/flags.make
 CMakeFiles/pseudo_node.dir/src/pseudo_node.o: CMakeFiles/pseudo_node.dir/flags.make
 CMakeFiles/pseudo_node.dir/src/pseudo_node.o: ../src/pseudo_node.cpp
 CMakeFiles/pseudo_node.dir/src/pseudo_node.o: ../manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/std_msgs/manifest.xml
 CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/roslang/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/rospy/manifest.xml
 CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/roscpp/manifest.xml
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/riley/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles $(CMAKE_PROGRESS_1)
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/geometry_msgs/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/sensor_msgs/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/vision_opencv/opencv2/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/vision_opencv/cv_bridge/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/std_msgs/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/ros/core/rosbuild/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/roslib/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/rosconsole/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/pluginlib/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/message_filters/manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/image_common/image_transport/manifest.xml
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/pseudo_node.dir/src/pseudo_node.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/pseudo_node.dir/src/pseudo_node.o -c /home/riley/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/pseudo_node.dir/src/pseudo_node.o -c /home/sealab/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp
 
 CMakeFiles/pseudo_node.dir/src/pseudo_node.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pseudo_node.dir/src/pseudo_node.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/riley/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp > CMakeFiles/pseudo_node.dir/src/pseudo_node.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/sealab/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp > CMakeFiles/pseudo_node.dir/src/pseudo_node.i
 
 CMakeFiles/pseudo_node.dir/src/pseudo_node.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pseudo_node.dir/src/pseudo_node.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/riley/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp -o CMakeFiles/pseudo_node.dir/src/pseudo_node.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/sealab/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp -o CMakeFiles/pseudo_node.dir/src/pseudo_node.s
 
 CMakeFiles/pseudo_node.dir/src/pseudo_node.o.requires:
 .PHONY : CMakeFiles/pseudo_node.dir/src/pseudo_node.o.requires
@@ -99,6 +108,6 @@ CMakeFiles/pseudo_node.dir/clean:
 .PHONY : CMakeFiles/pseudo_node.dir/clean
 
 CMakeFiles/pseudo_node.dir/depend:
-	cd /home/riley/fuerte_workspace/sandbox/ViperROS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/riley/fuerte_workspace/sandbox/ViperROS /home/riley/fuerte_workspace/sandbox/ViperROS /home/riley/fuerte_workspace/sandbox/ViperROS/build /home/riley/fuerte_workspace/sandbox/ViperROS/build /home/riley/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/pseudo_node.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/sealab/fuerte_workspace/sandbox/ViperROS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/pseudo_node.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/pseudo_node.dir/depend
 

@@ -27,11 +27,11 @@ unsigned char wake_camera[4] = {'W','A','K','E'};
 char* degrees_to_serial(char movebuff[8], char cmd[8], double degrees_x,  double degrees_z)
 {
 	movebuff = cmd;
-	for (i = 0;i<8;i++)
+	/*for (i = 0;i<8;i++)
 	{
 		printf("%d", movebuff[i]);
 	}
-	printf("\n");
+	printf("\n");*/
 	int x = (int)degrees_x;
 	int z = (int)degrees_z;
 	

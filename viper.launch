@@ -1,0 +1,4 @@
+<launch>
+	<node name="Vibration_Node" pkg="ViperROS" type="Vibration_Node" />
+	<node name="main" pkg="ViperROS" type="main" />
+</launch>

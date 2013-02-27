@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/flirROS.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/flirROS.h
 stdio.h
 -
 string.h
@@ -27,6 +27,8 @@ iostream
 -
 /opt/ros/fuerte/include/opencv/highgui.h
 -
+/opt/ros/fuerte/include/opencv/highgui.hpp
+-
 /opt/ros/fuerte/include/opencv/cxcore.h
 -
 /usr/local/include/cvblobs/BlobResult.h
@@ -36,11 +38,11 @@ iostream
 /usr/local/include/cvblobs/BlobOperators.h
 -
 parameters.h
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/parameters.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/parameters.h
 karp.h
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/karp.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/karp.h
 
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/karp.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/karp.h
 stdlib.h
 -
 stdio.h
@@ -58,11 +60,11 @@ stdbool.h
 time.h
 -
 
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/main.cpp
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/main.cpp
 ros/ros.h
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/ros/ros.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/ros/ros.h
 std_msgs/String.h
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/std_msgs/String.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/std_msgs/String.h
 sstream
 -
 iostream
@@ -70,13 +72,13 @@ iostream
 time.h
 -
 utilities.h
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/utilities.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/utilities.h
 sys/statvfs.h
 -
 flirROS.h
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/flirROS.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/flirROS.h
 
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/parameters.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/parameters.h
 string.h
 -
 stdlib.h
@@ -96,7 +98,7 @@ stdbool.h
 time.h
 -
 
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/utilities.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/utilities.h
 sstream
 -
 iostream
@@ -104,7 +106,7 @@ iostream
 time.h
 -
 std_msgs/String.h
-/home/riley/fuerte_workspace/sandbox/ViperROS/src/std_msgs/String.h
+/home/sealab/fuerte_workspace/sandbox/ViperROS/src/std_msgs/String.h
 
 /opt/ros/fuerte/include/XmlRpcDecl.h
 ros/macros.h
@@ -145,6 +147,24 @@ opencv2/legacy/compat.hpp
 /opt/ros/fuerte/include/opencv/opencv2/legacy/compat.hpp
 opencv2/core/internal.hpp
 /opt/ros/fuerte/include/opencv/opencv2/core/internal.hpp
+
+/opt/ros/fuerte/include/opencv/cvblob.h
+cvblob.h
+/opt/ros/fuerte/include/opencv/cvblob.h
+iostream
+-
+map
+-
+list
+-
+vector
+-
+limits
+-
+cv.h
+-
+opencv/cv.h
+-
 
 /opt/ros/fuerte/include/opencv/cxcore.h
 opencv2/core/core_c.h

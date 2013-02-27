@@ -5,7 +5,7 @@
 #include <time.h>
 #include "utilities.h"
 #include <sys/statvfs.h>
-#include "flirROS.h"
+#include "flirROSAdaptive.h"
 using namespace std;
 
 #define TERMINATE 	 0
@@ -41,6 +41,7 @@ void VibrationCallback(const std_msgs::String::ConstPtr& msg){
 	vibration_trigger = true;
 
 	trackObject();
+	write(fd, &stop_cmd, 4);
 }
 
 int Wait_For_Trigger(){
@@ -107,16 +108,13 @@ int main(int argc, char **argv){
 	int lookup = 1;
 	
 
-//	while(lookup){
-//		if (lookup == 1){
-			ROS_INFO("attempting to subscribe to Vibration_Node");
-			ros::Subscriber sub = n.subscribe("Vibration_Node", 10, VibrationCallback);
+
+	ROS_INFO("attempting to subscribe to Vibration_Node");
+	ros::Subscriber sub = n.subscribe("Vibration_Node", 0, VibrationCallback);
 			 
-//		}
-	ros::spin();	
-//		lookup = Call_State_Function(State_Table[lookup]);
-		//ROS_INFO("new lookup %d", lookup);
-//	}
+	while (ros::ok()){
+		ros::spinOnce();
+	}
 	return 0;
 } 
 	
