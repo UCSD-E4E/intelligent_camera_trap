@@ -1,5 +1,5 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/Vibration_Node.dir/src/Vibration_Node.o"
+  "CMakeFiles/Vibration_Node.dir/src/Vibration_Node.cpp.o"
   "bin/Vibration_Node.pdb"
   "bin/Vibration_Node"
 )

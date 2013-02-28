@@ -1,6 +1,6 @@
-#include </opt/ros/fuerte/include/ros/ros.h>
-#include </opt/ros/fuerte/include/ros/duration.h>
-#include </opt/ros/fuerte/include/std_msgs/String.h>
+#include </opt/ros/groovy/include/ros/ros.h>
+#include </opt/ros/groovy/include/ros/duration.h>
+#include </opt/ros/groovy/include/std_msgs/String.h>
 #include <sstream>
 
 #include <fcntl.h>

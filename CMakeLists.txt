@@ -21,10 +21,16 @@ rosbuild_genmsg()
 #uncomment if you have defined services
 rosbuild_gensrv()
 
+
+
+
 rosbuild_add_executable(main src/main.cpp)
 rosbuild_add_executable(pseudo_node src/pseudo_node.cpp)
 rosbuild_add_executable(Vibration_Node src/Vibration_Node.cpp)
 
+find_package(OpenCV REQUIRED)
+target_link_libraries(main ${OpenCV_Libs})
+target_link_libraries(main blob)
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
