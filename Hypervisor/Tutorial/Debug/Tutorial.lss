@@ -1,0 +1,2814 @@
+
+Tutorial.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000d1e  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         000000f4  00800060  00000d1e  00000db2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          000001e5  00800154  00800154  00000ea6  2**0
+                  ALLOC
+  3 .stab         00000750  00000000  00000000  00000ea8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      000000e7  00000000  00000000  000015f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 000004d8  00000000  00000000  000016e0  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000018fa  00000000  00000000  00001bb8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000cc9  00000000  00000000  000034b2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00003051  00000000  00000000  0000417b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000774  00000000  00000000  000071cc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000aaf  00000000  00000000  00007940  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000006df  00000000  00000000  000083ef  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_macinfo 0005c08a  00000000  00000000  00008ace  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000328  00000000  00000000  00064b58  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 d3 03 	jmp	0x7a6	; 0x7a6 <__vector_9>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	11 e0       	ldi	r17, 0x01	; 1
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ee e1       	ldi	r30, 0x1E	; 30
+  68:	fd e0       	ldi	r31, 0x0D	; 13
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a4 35       	cpi	r26, 0x54	; 84
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	13 e0       	ldi	r17, 0x03	; 3
+  78:	a4 e5       	ldi	r26, 0x54	; 84
+  7a:	b1 e0       	ldi	r27, 0x01	; 1
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a9 33       	cpi	r26, 0x39	; 57
+  82:	b1 07       	cpc	r27, r17
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 14 04 	call	0x828	; 0x828 <main>
+  8a:	0c 94 8d 06 	jmp	0xd1a	; 0xd1a <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <board_init>:
+
+
+void board_init(void)
+{
+
+}
+  92:	08 95       	ret
+
+00000094 <activityDetected>:
+volatile static unsigned int activityInactiveTimeInS = INACTIVITY_TIME_THRESHOLD;
+volatile static unsigned char activityInactiveTimeInMS = 0;
+
+unsigned char activityDetected(void)
+{
+	return (activityInactiveTimeInS < INACTIVITY_TIME_THRESHOLD );
+  94:	20 91 1b 01 	lds	r18, 0x011B
+  98:	30 91 1c 01 	lds	r19, 0x011C
+  9c:	81 e0       	ldi	r24, 0x01	; 1
+  9e:	2e 31       	cpi	r18, 0x1E	; 30
+  a0:	31 05       	cpc	r19, r1
+  a2:	08 f0       	brcs	.+2      	; 0xa6 <activityDetected+0x12>
+  a4:	80 e0       	ldi	r24, 0x00	; 0
+}
+  a6:	08 95       	ret
+
+000000a8 <setActivityDetected>:
+
+void setActivityDetected(unsigned char activityNow)
+{
+    if (activityNow == TRUE) {
+  a8:	81 30       	cpi	r24, 0x01	; 1
+  aa:	49 f4       	brne	.+18     	; 0xbe <setActivityDetected+0x16>
+
+		cli();
+  ac:	f8 94       	cli
+        activityInactiveTimeInS = 0;
+  ae:	10 92 1c 01 	sts	0x011C, r1
+  b2:	10 92 1b 01 	sts	0x011B, r1
+		activityInactiveTimeInMS = 0;
+  b6:	10 92 54 01 	sts	0x0154, r1
+		sei();
+  ba:	78 94       	sei
+  bc:	08 95       	ret
+
+    }else if (activityNow == FALSE) {
+  be:	88 23       	and	r24, r24
+  c0:	51 f4       	brne	.+20     	; 0xd6 <setActivityDetected+0x2e>
+
+		cli();
+  c2:	f8 94       	cli
+        activityInactiveTimeInS = INACTIVITY_TIME_THRESHOLD;
+  c4:	8e e1       	ldi	r24, 0x1E	; 30
+  c6:	90 e0       	ldi	r25, 0x00	; 0
+  c8:	90 93 1c 01 	sts	0x011C, r25
+  cc:	80 93 1b 01 	sts	0x011B, r24
+		activityInactiveTimeInMS = 0;
+  d0:	10 92 54 01 	sts	0x0154, r1
+		sei();
+  d4:	78 94       	sei
+  d6:	08 95       	ret
+
+000000d8 <setActivityInactiveTimeInS>:
+    } 
+}
+
+void setActivityInactiveTimeInS(unsigned int timer)
+{
+    activityInactiveTimeInS = timer ;
+  d8:	90 93 1c 01 	sts	0x011C, r25
+  dc:	80 93 1b 01 	sts	0x011B, r24
+}
+  e0:	08 95       	ret
+
+000000e2 <getActivityInactiveTimeInS>:
+
+unsigned int getActivityInactiveTimeInS(void)
+{
+    return activityInactiveTimeInS;
+  e2:	80 91 1b 01 	lds	r24, 0x011B
+  e6:	90 91 1c 01 	lds	r25, 0x011C
+}
+  ea:	08 95       	ret
+
+000000ec <checkActivity>:
+
+void checkActivity(void){
+
+    if (inputON1()) {
+  ec:	0e 94 03 05 	call	0xa06	; 0xa06 <inputON1>
+  f0:	88 23       	and	r24, r24
+  f2:	39 f0       	breq	.+14     	; 0x102 <checkActivity+0x16>
+
+        activityInactiveTimeInS = 0;
+  f4:	10 92 1c 01 	sts	0x011C, r1
+  f8:	10 92 1b 01 	sts	0x011B, r1
+        activityInactiveTimeInMS = 0;
+  fc:	10 92 54 01 	sts	0x0154, r1
+ 100:	08 95       	ret
+
+    }else{
+
+        if (activityInactiveTimeInS  <= MAXIMUM_INACTIVE_TIME)
+ 102:	80 91 1b 01 	lds	r24, 0x011B
+ 106:	90 91 1c 01 	lds	r25, 0x011C
+ 10a:	2e e0       	ldi	r18, 0x0E	; 14
+ 10c:	81 31       	cpi	r24, 0x11	; 17
+ 10e:	92 07       	cpc	r25, r18
+ 110:	a0 f4       	brcc	.+40     	; 0x13a <checkActivity+0x4e>
+        {
+            activityInactiveTimeInMS++;
+ 112:	80 91 54 01 	lds	r24, 0x0154
+ 116:	8f 5f       	subi	r24, 0xFF	; 255
+ 118:	80 93 54 01 	sts	0x0154, r24
+		
+            if (activityInactiveTimeInMS == 10)
+ 11c:	80 91 54 01 	lds	r24, 0x0154
+ 120:	8a 30       	cpi	r24, 0x0A	; 10
+ 122:	59 f4       	brne	.+22     	; 0x13a <checkActivity+0x4e>
+            {
+                activityInactiveTimeInS++;
+ 124:	80 91 1b 01 	lds	r24, 0x011B
+ 128:	90 91 1c 01 	lds	r25, 0x011C
+ 12c:	01 96       	adiw	r24, 0x01	; 1
+ 12e:	90 93 1c 01 	sts	0x011C, r25
+ 132:	80 93 1b 01 	sts	0x011B, r24
+                activityInactiveTimeInMS = 0;
+ 136:	10 92 54 01 	sts	0x0154, r1
+ 13a:	08 95       	ret
+
+0000013c <Length>:
+
+/*************************************** W R I T E *****************************************/
+
+//return Length of string
+unsigned char Length(char Temp[80])
+{
+ 13c:	dc 01       	movw	r26, r24
+	unsigned char L=0;
+	while (Temp[L]) L++;
+ 13e:	8c 91       	ld	r24, X
+ 140:	88 23       	and	r24, r24
+ 142:	49 f0       	breq	.+18     	; 0x156 <Length+0x1a>
+/*************************************** W R I T E *****************************************/
+
+//return Length of string
+unsigned char Length(char Temp[80])
+{
+	unsigned char L=0;
+ 144:	80 e0       	ldi	r24, 0x00	; 0
+	while (Temp[L]) L++;
+ 146:	8f 5f       	subi	r24, 0xFF	; 255
+ 148:	fd 01       	movw	r30, r26
+ 14a:	e8 0f       	add	r30, r24
+ 14c:	f1 1d       	adc	r31, r1
+ 14e:	90 81       	ld	r25, Z
+ 150:	99 23       	and	r25, r25
+ 152:	c9 f7       	brne	.-14     	; 0x146 <Length+0xa>
+ 154:	08 95       	ret
+/*************************************** W R I T E *****************************************/
+
+//return Length of string
+unsigned char Length(char Temp[80])
+{
+	unsigned char L=0;
+ 156:	80 e0       	ldi	r24, 0x00	; 0
+	while (Temp[L]) L++;
+	return L;
+}
+ 158:	08 95       	ret
+
+0000015a <Print>:
+
+//print text
+void Print(char Text[80])
+{
+ 15a:	ef 92       	push	r14
+ 15c:	ff 92       	push	r15
+ 15e:	0f 93       	push	r16
+ 160:	1f 93       	push	r17
+ 162:	cf 93       	push	r28
+ 164:	df 93       	push	r29
+ 166:	7c 01       	movw	r14, r24
+	unsigned char Len, i, T;
+	Len = Length(Text);
+ 168:	0e 94 9e 00 	call	0x13c	; 0x13c <Length>
+ 16c:	d8 2f       	mov	r29, r24
+	for (i=0; i<Len; i++)
+ 16e:	88 23       	and	r24, r24
+ 170:	51 f0       	breq	.+20     	; 0x186 <Print+0x2c>
+ 172:	87 01       	movw	r16, r14
+ 174:	c0 e0       	ldi	r28, 0x00	; 0
+	{
+		T = Text[i];
+		UART_Transmit(T);
+ 176:	f8 01       	movw	r30, r16
+ 178:	81 91       	ld	r24, Z+
+ 17a:	8f 01       	movw	r16, r30
+ 17c:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+//print text
+void Print(char Text[80])
+{
+	unsigned char Len, i, T;
+	Len = Length(Text);
+	for (i=0; i<Len; i++)
+ 180:	cf 5f       	subi	r28, 0xFF	; 255
+ 182:	cd 17       	cp	r28, r29
+ 184:	c1 f7       	brne	.-16     	; 0x176 <Print+0x1c>
+	{
+		T = Text[i];
+		UART_Transmit(T);
+	}
+	strcpy(Text, "");
+ 186:	f7 01       	movw	r30, r14
+ 188:	10 82       	st	Z, r1
+}
+ 18a:	df 91       	pop	r29
+ 18c:	cf 91       	pop	r28
+ 18e:	1f 91       	pop	r17
+ 190:	0f 91       	pop	r16
+ 192:	ff 90       	pop	r15
+ 194:	ef 90       	pop	r14
+ 196:	08 95       	ret
+
+00000198 <PrintLn>:
+
+//print text and new line
+void PrintLn(char Text[80])
+{
+ 198:	ff 92       	push	r15
+ 19a:	0f 93       	push	r16
+ 19c:	1f 93       	push	r17
+ 19e:	cf 93       	push	r28
+ 1a0:	df 93       	push	r29
+ 1a2:	08 2f       	mov	r16, r24
+ 1a4:	f9 2e       	mov	r15, r25
+	unsigned char Len, i, T;
+	Len = Length(Text);
+ 1a6:	0e 94 9e 00 	call	0x13c	; 0x13c <Length>
+ 1aa:	18 2f       	mov	r17, r24
+	for (i=0; i<Len; i++)
+ 1ac:	88 23       	and	r24, r24
+ 1ae:	49 f0       	breq	.+18     	; 0x1c2 <PrintLn+0x2a>
+ 1b0:	c0 2f       	mov	r28, r16
+ 1b2:	df 2d       	mov	r29, r15
+ 1b4:	00 e0       	ldi	r16, 0x00	; 0
+	{
+		T = Text[i];
+		UART_Transmit(T);
+ 1b6:	89 91       	ld	r24, Y+
+ 1b8:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+//print text and new line
+void PrintLn(char Text[80])
+{
+	unsigned char Len, i, T;
+	Len = Length(Text);
+	for (i=0; i<Len; i++)
+ 1bc:	0f 5f       	subi	r16, 0xFF	; 255
+ 1be:	01 17       	cp	r16, r17
+ 1c0:	d1 f7       	brne	.-12     	; 0x1b6 <PrintLn+0x1e>
+	{
+		T = Text[i];
+		UART_Transmit(T);
+	}
+	UART_Transmit(13);
+ 1c2:	8d e0       	ldi	r24, 0x0D	; 13
+ 1c4:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	UART_Transmit(10);
+ 1c8:	8a e0       	ldi	r24, 0x0A	; 10
+ 1ca:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+}
+ 1ce:	df 91       	pop	r29
+ 1d0:	cf 91       	pop	r28
+ 1d2:	1f 91       	pop	r17
+ 1d4:	0f 91       	pop	r16
+ 1d6:	ff 90       	pop	r15
+ 1d8:	08 95       	ret
+
+000001da <PrintLine>:
+
+//print new line
+void PrintLine()
+{
+	UART_Transmit(13);
+ 1da:	8d e0       	ldi	r24, 0x0D	; 13
+ 1dc:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	UART_Transmit(10);
+ 1e0:	8a e0       	ldi	r24, 0x0A	; 10
+ 1e2:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+}
+ 1e6:	08 95       	ret
+
+000001e8 <Print_Welcome>:
+
+//print welcome message
+void Print_Welcome()
+{
+ 1e8:	cf 93       	push	r28
+ 1ea:	df 93       	push	r29
+	PrintLine();
+ 1ec:	0e 94 ed 00 	call	0x1da	; 0x1da <PrintLine>
+	strcpy(printTxt, "************************"); PrintLn(printTxt);
+ 1f0:	a9 e6       	ldi	r26, 0x69	; 105
+ 1f2:	b2 e0       	ldi	r27, 0x02	; 2
+ 1f4:	e0 e6       	ldi	r30, 0x60	; 96
+ 1f6:	f0 e0       	ldi	r31, 0x00	; 0
+ 1f8:	89 e1       	ldi	r24, 0x19	; 25
+ 1fa:	01 90       	ld	r0, Z+
+ 1fc:	0d 92       	st	X+, r0
+ 1fe:	81 50       	subi	r24, 0x01	; 1
+ 200:	e1 f7       	brne	.-8      	; 0x1fa <Print_Welcome+0x12>
+ 202:	c9 e6       	ldi	r28, 0x69	; 105
+ 204:	d2 e0       	ldi	r29, 0x02	; 2
+ 206:	ce 01       	movw	r24, r28
+ 208:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+	strcpy(printTxt, "*    AVR IO CONTROL    *"); PrintLn(printTxt);
+ 20c:	e9 e7       	ldi	r30, 0x79	; 121
+ 20e:	f0 e0       	ldi	r31, 0x00	; 0
+ 210:	89 e1       	ldi	r24, 0x19	; 25
+ 212:	01 90       	ld	r0, Z+
+ 214:	09 92       	st	Y+, r0
+ 216:	81 50       	subi	r24, 0x01	; 1
+ 218:	e1 f7       	brne	.-8      	; 0x212 <Print_Welcome+0x2a>
+ 21a:	c9 e6       	ldi	r28, 0x69	; 105
+ 21c:	d2 e0       	ldi	r29, 0x02	; 2
+ 21e:	ce 01       	movw	r24, r28
+ 220:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+	strcpy(printTxt, "* (C) 2007, OLIMEX Ltd *"); PrintLn(printTxt);
+ 224:	e2 e9       	ldi	r30, 0x92	; 146
+ 226:	f0 e0       	ldi	r31, 0x00	; 0
+ 228:	89 e1       	ldi	r24, 0x19	; 25
+ 22a:	01 90       	ld	r0, Z+
+ 22c:	09 92       	st	Y+, r0
+ 22e:	81 50       	subi	r24, 0x01	; 1
+ 230:	e1 f7       	brne	.-8      	; 0x22a <Print_Welcome+0x42>
+ 232:	c9 e6       	ldi	r28, 0x69	; 105
+ 234:	d2 e0       	ldi	r29, 0x02	; 2
+ 236:	ce 01       	movw	r24, r28
+ 238:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+	strcpy(printTxt, "************************"); PrintLn(printTxt);
+ 23c:	e0 e6       	ldi	r30, 0x60	; 96
+ 23e:	f0 e0       	ldi	r31, 0x00	; 0
+ 240:	89 e1       	ldi	r24, 0x19	; 25
+ 242:	01 90       	ld	r0, Z+
+ 244:	09 92       	st	Y+, r0
+ 246:	81 50       	subi	r24, 0x01	; 1
+ 248:	e1 f7       	brne	.-8      	; 0x242 <Print_Welcome+0x5a>
+ 24a:	89 e6       	ldi	r24, 0x69	; 105
+ 24c:	92 e0       	ldi	r25, 0x02	; 2
+ 24e:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+}
+ 252:	df 91       	pop	r29
+ 254:	cf 91       	pop	r28
+ 256:	08 95       	ret
+
+00000258 <Print_Error>:
+
+//print error message
+void Print_Error()
+{
+	unsigned char T1 = 0;
+	PrintLine();
+ 258:	0e 94 ed 00 	call	0x1da	; 0x1da <PrintLine>
+	strcpy(printTxt, "ERROR!");
+ 25c:	a9 e6       	ldi	r26, 0x69	; 105
+ 25e:	b2 e0       	ldi	r27, 0x02	; 2
+ 260:	eb ea       	ldi	r30, 0xAB	; 171
+ 262:	f0 e0       	ldi	r31, 0x00	; 0
+ 264:	87 e0       	ldi	r24, 0x07	; 7
+ 266:	01 90       	ld	r0, Z+
+ 268:	0d 92       	st	X+, r0
+ 26a:	81 50       	subi	r24, 0x01	; 1
+ 26c:	e1 f7       	brne	.-8      	; 0x266 <Print_Error+0xe>
+	PrintLn(printTxt);
+ 26e:	89 e6       	ldi	r24, 0x69	; 105
+ 270:	92 e0       	ldi	r25, 0x02	; 2
+ 272:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+	PrintLine();
+ 276:	0e 94 ed 00 	call	0x1da	; 0x1da <PrintLine>
+}
+ 27a:	08 95       	ret
+
+0000027c <receiveOneCharMessage>:
+char receivedMessage[128];
+char messageType = 0;
+char receiveMessageLength = 0;
+
+unsigned char receiveOneCharMessage()
+{
+ 27c:	cf 93       	push	r28
+ 27e:	df 93       	push	r29
+ 280:	0f 92       	push	r0
+ 282:	cd b7       	in	r28, 0x3d	; 61
+ 284:	de b7       	in	r29, 0x3e	; 62
+	static unsigned char byteNumber = 0;
+	static unsigned char byteLeft = 0;
+	static unsigned char checkSum = 0;
+	unsigned char temp;	
+	
+	if (receiving == FALSE)
+ 286:	80 91 57 01 	lds	r24, 0x0157
+ 28a:	88 23       	and	r24, r24
+ 28c:	f1 f4       	brne	.+60     	; 0x2ca <receiveOneCharMessage+0x4e>
+	{
+		if (UART_ReceiveSuccess(&temp))
+ 28e:	ce 01       	movw	r24, r28
+ 290:	01 96       	adiw	r24, 0x01	; 1
+ 292:	0e 94 55 06 	call	0xcaa	; 0xcaa <UART_ReceiveSuccess>
+ 296:	88 23       	and	r24, r24
+ 298:	09 f4       	brne	.+2      	; 0x29c <receiveOneCharMessage+0x20>
+ 29a:	52 c0       	rjmp	.+164    	; 0x340 <receiveOneCharMessage+0xc4>
+		{
+			//Received Something
+			if (previousChar == 'S' && temp == 'T')
+ 29c:	80 91 58 01 	lds	r24, 0x0158
+ 2a0:	83 35       	cpi	r24, 0x53	; 83
+ 2a2:	71 f4       	brne	.+28     	; 0x2c0 <receiveOneCharMessage+0x44>
+ 2a4:	89 81       	ldd	r24, Y+1	; 0x01
+ 2a6:	84 35       	cpi	r24, 0x54	; 84
+ 2a8:	59 f4       	brne	.+22     	; 0x2c0 <receiveOneCharMessage+0x44>
+			{
+				receiving = TRUE;
+ 2aa:	81 e0       	ldi	r24, 0x01	; 1
+ 2ac:	80 93 57 01 	sts	0x0157, r24
+				byteNumber = 0;
+ 2b0:	10 92 59 01 	sts	0x0159, r1
+				byteLeft = 0;
+ 2b4:	10 92 5a 01 	sts	0x015A, r1
+				checkSum = 0;				
+ 2b8:	10 92 5b 01 	sts	0x015B, r1
+			}else
+			{
+				previousChar = temp;
+			}
+		}
+		return NO_MESSAGE_TO_PARSE;
+ 2bc:	80 e0       	ldi	r24, 0x00	; 0
+			if (previousChar == 'S' && temp == 'T')
+			{
+				receiving = TRUE;
+				byteNumber = 0;
+				byteLeft = 0;
+				checkSum = 0;				
+ 2be:	41 c0       	rjmp	.+130    	; 0x342 <receiveOneCharMessage+0xc6>
+			}else
+			{
+				previousChar = temp;
+ 2c0:	89 81       	ldd	r24, Y+1	; 0x01
+ 2c2:	80 93 58 01 	sts	0x0158, r24
+			}
+		}
+		return NO_MESSAGE_TO_PARSE;
+ 2c6:	80 e0       	ldi	r24, 0x00	; 0
+ 2c8:	3c c0       	rjmp	.+120    	; 0x342 <receiveOneCharMessage+0xc6>
+	}
+	else if (UART_ReceiveSuccess(&temp))
+ 2ca:	ce 01       	movw	r24, r28
+ 2cc:	01 96       	adiw	r24, 0x01	; 1
+ 2ce:	0e 94 55 06 	call	0xcaa	; 0xcaa <UART_ReceiveSuccess>
+ 2d2:	88 23       	and	r24, r24
+ 2d4:	a1 f1       	breq	.+104    	; 0x33e <receiveOneCharMessage+0xc2>
+	{	
+		checkSum += temp;
+ 2d6:	89 81       	ldd	r24, Y+1	; 0x01
+ 2d8:	20 91 5b 01 	lds	r18, 0x015B
+ 2dc:	28 0f       	add	r18, r24
+ 2de:	20 93 5b 01 	sts	0x015B, r18
+		if (byteNumber == MESSAGE_TYPE)
+ 2e2:	90 91 59 01 	lds	r25, 0x0159
+ 2e6:	99 23       	and	r25, r25
+ 2e8:	19 f4       	brne	.+6      	; 0x2f0 <receiveOneCharMessage+0x74>
+		{
+			messageType =  temp;				
+ 2ea:	80 93 56 01 	sts	0x0156, r24
+ 2ee:	20 c0       	rjmp	.+64     	; 0x330 <receiveOneCharMessage+0xb4>
+		}
+		else if (byteNumber == MESSAGE_LENGTH)
+ 2f0:	91 30       	cpi	r25, 0x01	; 1
+ 2f2:	29 f4       	brne	.+10     	; 0x2fe <receiveOneCharMessage+0x82>
+		{
+			byteLeft = temp;
+ 2f4:	80 93 5a 01 	sts	0x015A, r24
+			receiveMessageLength = temp;			
+ 2f8:	80 93 55 01 	sts	0x0155, r24
+ 2fc:	19 c0       	rjmp	.+50     	; 0x330 <receiveOneCharMessage+0xb4>
+		}
+		else if (byteLeft > 0)
+ 2fe:	80 91 5a 01 	lds	r24, 0x015A
+ 302:	88 23       	and	r24, r24
+ 304:	21 f0       	breq	.+8      	; 0x30e <receiveOneCharMessage+0x92>
+		{
+			receivedMessage[byteNumber - HEADER_LENGTH]	;		
+			byteLeft--;
+ 306:	81 50       	subi	r24, 0x01	; 1
+ 308:	80 93 5a 01 	sts	0x015A, r24
+ 30c:	11 c0       	rjmp	.+34     	; 0x330 <receiveOneCharMessage+0xb4>
+		}
+		else if (checkSum == 0)
+ 30e:	22 23       	and	r18, r18
+ 310:	49 f4       	brne	.+18     	; 0x324 <receiveOneCharMessage+0xa8>
+		{
+			receiveMessageLength = byteNumber + 1;
+ 312:	9f 5f       	subi	r25, 0xFF	; 255
+ 314:	90 93 55 01 	sts	0x0155, r25
+			receiving = FALSE;
+ 318:	10 92 57 01 	sts	0x0157, r1
+			previousChar = 0;			
+ 31c:	10 92 58 01 	sts	0x0158, r1
+			return MESSAGE_TO_PARSE;
+ 320:	81 e0       	ldi	r24, 0x01	; 1
+ 322:	0f c0       	rjmp	.+30     	; 0x342 <receiveOneCharMessage+0xc6>
+		}
+		else
+		{
+			receiving = FALSE;
+ 324:	10 92 57 01 	sts	0x0157, r1
+			previousChar = 0;
+ 328:	10 92 58 01 	sts	0x0158, r1
+			return NO_MESSAGE_TO_PARSE;			
+ 32c:	80 e0       	ldi	r24, 0x00	; 0
+ 32e:	09 c0       	rjmp	.+18     	; 0x342 <receiveOneCharMessage+0xc6>
+		}		
+		byteNumber++;
+ 330:	80 91 59 01 	lds	r24, 0x0159
+ 334:	8f 5f       	subi	r24, 0xFF	; 255
+ 336:	80 93 59 01 	sts	0x0159, r24
+		return NO_MESSAGE_TO_PARSE;
+ 33a:	80 e0       	ldi	r24, 0x00	; 0
+ 33c:	02 c0       	rjmp	.+4      	; 0x342 <receiveOneCharMessage+0xc6>
+ 33e:	01 c0       	rjmp	.+2      	; 0x342 <receiveOneCharMessage+0xc6>
+			}else
+			{
+				previousChar = temp;
+			}
+		}
+		return NO_MESSAGE_TO_PARSE;
+ 340:	80 e0       	ldi	r24, 0x00	; 0
+			return NO_MESSAGE_TO_PARSE;			
+		}		
+		byteNumber++;
+		return NO_MESSAGE_TO_PARSE;
+	}		
+}
+ 342:	0f 90       	pop	r0
+ 344:	df 91       	pop	r29
+ 346:	cf 91       	pop	r28
+ 348:	08 95       	ret
+
+0000034a <parseMessageTemp>:
+
+unsigned char parseMessageTemp(unsigned char State)
+{
+ 34a:	cf 93       	push	r28
+ 34c:	c8 2f       	mov	r28, r24
+	unsigned char testState;
+	
+	testState = UART_Receive();
+ 34e:	0e 94 4f 06 	call	0xc9e	; 0xc9e <UART_Receive>
+		
+	if (testState >= '0' && testState <= '5')
+ 352:	98 2f       	mov	r25, r24
+ 354:	90 53       	subi	r25, 0x30	; 48
+ 356:	96 30       	cpi	r25, 0x06	; 6
+ 358:	80 f1       	brcs	.+96     	; 0x3ba <parseMessageTemp+0x70>
+	{
+			testState = testState - '0' ;
+			return testState;
+	}
+		
+	if (testState == 'A')
+ 35a:	81 34       	cpi	r24, 0x41	; 65
+ 35c:	29 f4       	brne	.+10     	; 0x368 <parseMessageTemp+0x1e>
+	{
+		setActivityDetected(TRUE);
+ 35e:	81 e0       	ldi	r24, 0x01	; 1
+ 360:	0e 94 54 00 	call	0xa8	; 0xa8 <setActivityDetected>
+	}else if (testState == 'H')
+	{
+		setPowerOffAcknowledge(TRUE);			
+	}
+	
+	return State;
+ 364:	9c 2f       	mov	r25, r28
+ 366:	29 c0       	rjmp	.+82     	; 0x3ba <parseMessageTemp+0x70>
+		
+	if (testState == 'A')
+	{
+		setActivityDetected(TRUE);
+			
+	}else if (testState == 'B')
+ 368:	82 34       	cpi	r24, 0x42	; 66
+ 36a:	29 f4       	brne	.+10     	; 0x376 <parseMessageTemp+0x2c>
+	{
+		setHeartBeat(TRUE);
+ 36c:	81 e0       	ldi	r24, 0x01	; 1
+ 36e:	0e 94 d0 02 	call	0x5a0	; 0x5a0 <setHeartBeat>
+	}else if (testState == 'H')
+	{
+		setPowerOffAcknowledge(TRUE);			
+	}
+	
+	return State;
+ 372:	9c 2f       	mov	r25, r28
+ 374:	22 c0       	rjmp	.+68     	; 0x3ba <parseMessageTemp+0x70>
+			
+	}else if (testState == 'B')
+	{
+		setHeartBeat(TRUE);
+			
+	}else if (testState == 'C')
+ 376:	83 34       	cpi	r24, 0x43	; 67
+ 378:	29 f4       	brne	.+10     	; 0x384 <parseMessageTemp+0x3a>
+	{
+		setTracking(TRUE);
+ 37a:	81 e0       	ldi	r24, 0x01	; 1
+ 37c:	0e 94 81 03 	call	0x702	; 0x702 <setTracking>
+	}else if (testState == 'H')
+	{
+		setPowerOffAcknowledge(TRUE);			
+	}
+	
+	return State;
+ 380:	9c 2f       	mov	r25, r28
+ 382:	1b c0       	rjmp	.+54     	; 0x3ba <parseMessageTemp+0x70>
+			
+	}else if (testState == 'C')
+	{
+		setTracking(TRUE);
+		
+	}else if (testState == 'D')
+ 384:	84 34       	cpi	r24, 0x44	; 68
+ 386:	91 f0       	breq	.+36     	; 0x3ac <parseMessageTemp+0x62>
+	{
+		//setPowerLEDStatus(TRUE);
+			
+	}else if (testState == 'E')
+ 388:	85 34       	cpi	r24, 0x45	; 69
+ 38a:	91 f0       	breq	.+36     	; 0x3b0 <parseMessageTemp+0x66>
+	{
+		//setPowerLEDStatus(FALSE);
+		
+	}else if (testState == 'F')
+ 38c:	86 34       	cpi	r24, 0x46	; 70
+ 38e:	29 f4       	brne	.+10     	; 0x39a <parseMessageTemp+0x50>
+	{
+		setSuspendAcknowledge(TRUE);
+ 390:	81 e0       	ldi	r24, 0x01	; 1
+ 392:	0e 94 41 03 	call	0x682	; 0x682 <setSuspendAcknowledge>
+	}else if (testState == 'H')
+	{
+		setPowerOffAcknowledge(TRUE);			
+	}
+	
+	return State;
+ 396:	9c 2f       	mov	r25, r28
+ 398:	10 c0       	rjmp	.+32     	; 0x3ba <parseMessageTemp+0x70>
+		
+	}else if (testState == 'F')
+	{
+		setSuspendAcknowledge(TRUE);
+		
+	}else if (testState == 'G')
+ 39a:	87 34       	cpi	r24, 0x47	; 71
+ 39c:	59 f0       	breq	.+22     	; 0x3b4 <parseMessageTemp+0x6a>
+	{
+		//setHibernateAcknowledge(TRUE);
+			
+	}else if (testState == 'H')
+ 39e:	88 34       	cpi	r24, 0x48	; 72
+ 3a0:	59 f4       	brne	.+22     	; 0x3b8 <parseMessageTemp+0x6e>
+	{
+		setPowerOffAcknowledge(TRUE);			
+ 3a2:	81 e0       	ldi	r24, 0x01	; 1
+ 3a4:	0e 94 2e 03 	call	0x65c	; 0x65c <setPowerOffAcknowledge>
+	}
+	
+	return State;
+ 3a8:	9c 2f       	mov	r25, r28
+ 3aa:	07 c0       	rjmp	.+14     	; 0x3ba <parseMessageTemp+0x70>
+ 3ac:	9c 2f       	mov	r25, r28
+ 3ae:	05 c0       	rjmp	.+10     	; 0x3ba <parseMessageTemp+0x70>
+ 3b0:	9c 2f       	mov	r25, r28
+ 3b2:	03 c0       	rjmp	.+6      	; 0x3ba <parseMessageTemp+0x70>
+ 3b4:	9c 2f       	mov	r25, r28
+ 3b6:	01 c0       	rjmp	.+2      	; 0x3ba <parseMessageTemp+0x70>
+ 3b8:	9c 2f       	mov	r25, r28
+ 3ba:	89 2f       	mov	r24, r25
+ 3bc:	cf 91       	pop	r28
+ 3be:	08 95       	ret
+
+000003c0 <sendOneCharInMessage>:
+static char message[MAX_MESSAGE_SIZE];
+
+//print text and new line
+unsigned char sendOneCharInMessage()
+{
+	if (length >= 1)
+ 3c0:	80 91 5c 01 	lds	r24, 0x015C
+ 3c4:	88 23       	and	r24, r24
+ 3c6:	99 f0       	breq	.+38     	; 0x3ee <sendOneCharInMessage+0x2e>
+	{
+		length--;
+ 3c8:	81 50       	subi	r24, 0x01	; 1
+ 3ca:	80 93 5c 01 	sts	0x015C, r24
+		UART_Transmit(message[index]);
+ 3ce:	80 91 5d 01 	lds	r24, 0x015D
+ 3d2:	ee e5       	ldi	r30, 0x5E	; 94
+ 3d4:	f1 e0       	ldi	r31, 0x01	; 1
+ 3d6:	e8 0f       	add	r30, r24
+ 3d8:	f1 1d       	adc	r31, r1
+ 3da:	80 81       	ld	r24, Z
+ 3dc:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+		index++;
+ 3e0:	80 91 5d 01 	lds	r24, 0x015D
+ 3e4:	8f 5f       	subi	r24, 0xFF	; 255
+ 3e6:	80 93 5d 01 	sts	0x015D, r24
+		return TRUE;
+ 3ea:	81 e0       	ldi	r24, 0x01	; 1
+ 3ec:	08 95       	ret
+	}
+	else
+	{
+		index = 0;
+ 3ee:	10 92 5d 01 	sts	0x015D, r1
+		return FALSE;		
+ 3f2:	80 e0       	ldi	r24, 0x00	; 0
+	}
+}
+ 3f4:	08 95       	ret
+
+000003f6 <sendEntireMessage>:
+
+unsigned char sendEntireMessage()
+{
+    while (sendOneCharInMessage());
+ 3f6:	0e 94 e0 01 	call	0x3c0	; 0x3c0 <sendOneCharInMessage>
+ 3fa:	88 23       	and	r24, r24
+ 3fc:	e1 f7       	brne	.-8      	; 0x3f6 <sendEntireMessage>
+}
+ 3fe:	08 95       	ret
+
+00000400 <setMessage>:
+void setMessage(char* stringData, unsigned char stringLength)
+{
+ 400:	58 2f       	mov	r21, r24
+ 402:	79 2f       	mov	r23, r25
+ 404:	46 2f       	mov	r20, r22
+	length = stringLength;
+ 406:	60 93 5c 01 	sts	0x015C, r22
+	memcpy(message,stringData,stringLength);
+ 40a:	2e e5       	ldi	r18, 0x5E	; 94
+ 40c:	31 e0       	ldi	r19, 0x01	; 1
+ 40e:	82 2f       	mov	r24, r18
+ 410:	93 2f       	mov	r25, r19
+ 412:	65 2f       	mov	r22, r21
+ 414:	50 e0       	ldi	r21, 0x00	; 0
+ 416:	0e 94 84 06 	call	0xd08	; 0xd08 <memcpy>
+}
+ 41a:	08 95       	ret
+
+0000041c <addOneChar>:
+
+void addOneChar(char data)
+{
+	if (length < MAX_MESSAGE_SIZE)
+ 41c:	90 91 5c 01 	lds	r25, 0x015C
+ 420:	9f 3f       	cpi	r25, 0xFF	; 255
+ 422:	41 f0       	breq	.+16     	; 0x434 <addOneChar+0x18>
+		message[length++] = data; 
+ 424:	ee e5       	ldi	r30, 0x5E	; 94
+ 426:	f1 e0       	ldi	r31, 0x01	; 1
+ 428:	e9 0f       	add	r30, r25
+ 42a:	f1 1d       	adc	r31, r1
+ 42c:	80 83       	st	Z, r24
+ 42e:	9f 5f       	subi	r25, 0xFF	; 255
+ 430:	90 93 5c 01 	sts	0x015C, r25
+ 434:	08 95       	ret
+
+00000436 <resetMessageBuffer>:
+}
+
+void resetMessageBuffer()
+{
+	length = 0;
+ 436:	10 92 5c 01 	sts	0x015C, r1
+	index = 0;
+ 43a:	10 92 5d 01 	sts	0x015D, r1
+}
+ 43e:	08 95       	ret
+
+00000440 <getPowerButtonPressed>:
+static unsigned char currentPowerButton = OFF;
+
+unsigned char getPowerButtonPressed(void)
+{
+	return currentPowerButton;
+}
+ 440:	80 e0       	ldi	r24, 0x00	; 0
+ 442:	08 95       	ret
+
+00000444 <powerButtonPressed>:
+
+void powerButtonPressed(unsigned char command)
+{
+	relayON2(command);
+ 444:	0e 94 19 05 	call	0xa32	; 0xa32 <relayON2>
+}
+ 448:	08 95       	ret
+
+0000044a <tester_11>:
+	sendOneCharInMessage();
+}	
+
+void tester_11()
+{
+	while(sendOneCharInMessage());
+ 44a:	0e 94 e0 01 	call	0x3c0	; 0x3c0 <sendOneCharInMessage>
+ 44e:	88 23       	and	r24, r24
+ 450:	e1 f7       	brne	.-8      	; 0x44a <tester_11>
+}
+ 452:	08 95       	ret
+
+00000454 <tester_10>:
+}
+
+
+void tester_10()
+{
+	sendOneCharInMessage();
+ 454:	0e 94 e0 01 	call	0x3c0	; 0x3c0 <sendOneCharInMessage>
+}	
+ 458:	08 95       	ret
+
+0000045a <tester_9>:
+	UART_Transmit(13);
+	UART_Transmit(10);
+}
+
+void tester_9()
+{
+ 45a:	cf 93       	push	r28
+ 45c:	df 93       	push	r29
+ 45e:	cd b7       	in	r28, 0x3d	; 61
+ 460:	de b7       	in	r29, 0x3e	; 62
+ 462:	2a 97       	sbiw	r28, 0x0a	; 10
+ 464:	0f b6       	in	r0, 0x3f	; 63
+ 466:	f8 94       	cli
+ 468:	de bf       	out	0x3e, r29	; 62
+ 46a:	0f be       	out	0x3f, r0	; 63
+ 46c:	cd bf       	out	0x3d, r28	; 61
+	char sample[]="Welcome!\n";
+ 46e:	de 01       	movw	r26, r28
+ 470:	11 96       	adiw	r26, 0x01	; 1
+ 472:	e2 eb       	ldi	r30, 0xB2	; 178
+ 474:	f0 e0       	ldi	r31, 0x00	; 0
+ 476:	8a e0       	ldi	r24, 0x0A	; 10
+ 478:	01 90       	ld	r0, Z+
+ 47a:	0d 92       	st	X+, r0
+ 47c:	81 50       	subi	r24, 0x01	; 1
+ 47e:	e1 f7       	brne	.-8      	; 0x478 <__stack+0x19>
+	resetMessageBuffer();
+ 480:	0e 94 1b 02 	call	0x436	; 0x436 <resetMessageBuffer>
+	setMessage(sample,9);
+ 484:	ce 01       	movw	r24, r28
+ 486:	01 96       	adiw	r24, 0x01	; 1
+ 488:	69 e0       	ldi	r22, 0x09	; 9
+ 48a:	0e 94 00 02 	call	0x400	; 0x400 <setMessage>
+	sendOneCharInMessage();
+ 48e:	0e 94 e0 01 	call	0x3c0	; 0x3c0 <sendOneCharInMessage>
+}
+ 492:	2a 96       	adiw	r28, 0x0a	; 10
+ 494:	0f b6       	in	r0, 0x3f	; 63
+ 496:	f8 94       	cli
+ 498:	de bf       	out	0x3e, r29	; 62
+ 49a:	0f be       	out	0x3f, r0	; 63
+ 49c:	cd bf       	out	0x3d, r28	; 61
+ 49e:	df 91       	pop	r29
+ 4a0:	cf 91       	pop	r28
+ 4a2:	08 95       	ret
+
+000004a4 <tester_0>:
+{	tester_0, tester_1, tester_2, tester_3, tester_4, 
+	tester_5, tester_6, tester_7, tester_8, tester_9, 
+	tester_10, tester_11};
+
+//Do nothing function
+void tester_0(){UART_Transmit('A');} 
+ 4a4:	81 e4       	ldi	r24, 0x41	; 65
+ 4a6:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ 4aa:	08 95       	ret
+
+000004ac <tester_8>:
+	UART_Transmit(10);
+}
+
+void tester_8()
+{
+	UART_Transmit('P');
+ 4ac:	80 e5       	ldi	r24, 0x50	; 80
+ 4ae:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	UART_Transmit('S');
+ 4b2:	83 e5       	ldi	r24, 0x53	; 83
+ 4b4:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	
+	if(inputON2())
+ 4b8:	0e 94 07 05 	call	0xa0e	; 0xa0e <inputON2>
+ 4bc:	88 23       	and	r24, r24
+ 4be:	21 f0       	breq	.+8      	; 0x4c8 <tester_8+0x1c>
+	{
+		UART_Transmit('1');
+ 4c0:	81 e3       	ldi	r24, 0x31	; 49
+ 4c2:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ 4c6:	03 c0       	rjmp	.+6      	; 0x4ce <tester_8+0x22>
+		
+	}else
+	{
+		UART_Transmit('0');
+ 4c8:	80 e3       	ldi	r24, 0x30	; 48
+ 4ca:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	}
+
+	UART_Transmit(13);
+ 4ce:	8d e0       	ldi	r24, 0x0D	; 13
+ 4d0:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	UART_Transmit(10);
+ 4d4:	8a e0       	ldi	r24, 0x0A	; 10
+ 4d6:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+}
+ 4da:	08 95       	ret
+
+000004dc <tester_7>:
+ UART_Transmit(10);
+}
+
+void tester_7()
+{
+	UART_Transmit('P');
+ 4dc:	80 e5       	ldi	r24, 0x50	; 80
+ 4de:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	UART_Transmit('S');
+ 4e2:	83 e5       	ldi	r24, 0x53	; 83
+ 4e4:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	
+	if(inputON2())
+ 4e8:	0e 94 07 05 	call	0xa0e	; 0xa0e <inputON2>
+ 4ec:	88 23       	and	r24, r24
+ 4ee:	21 f0       	breq	.+8      	; 0x4f8 <tester_7+0x1c>
+	{
+		UART_Transmit('1');
+ 4f0:	81 e3       	ldi	r24, 0x31	; 49
+ 4f2:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ 4f6:	03 c0       	rjmp	.+6      	; 0x4fe <tester_7+0x22>
+		
+	}else
+	{
+		UART_Transmit('0');
+ 4f8:	80 e3       	ldi	r24, 0x30	; 48
+ 4fa:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	}
+
+	UART_Transmit(13);
+ 4fe:	8d e0       	ldi	r24, 0x0D	; 13
+ 500:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+	UART_Transmit(10);
+ 504:	8a e0       	ldi	r24, 0x0A	; 10
+ 506:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+}
+ 50a:	08 95       	ret
+
+0000050c <tester_6>:
+ UART_Transmit(10);
+}
+
+void tester_6()
+{
+ UART_Transmit('P');
+ 50c:	80 e5       	ldi	r24, 0x50	; 80
+ 50e:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ UART_Transmit('B');
+ 512:	82 e4       	ldi	r24, 0x42	; 66
+ 514:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ 
+ if(isPowerLED_ON())
+ 518:	0e 94 10 03 	call	0x620	; 0x620 <isPowerLED_ON>
+ 51c:	88 23       	and	r24, r24
+ 51e:	21 f0       	breq	.+8      	; 0x528 <tester_6+0x1c>
+ {
+	 UART_Transmit('1');
+ 520:	81 e3       	ldi	r24, 0x31	; 49
+ 522:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ 526:	03 c0       	rjmp	.+6      	; 0x52e <tester_6+0x22>
+	 
+ }else
+ {
+	 UART_Transmit('0');
+ 528:	80 e3       	ldi	r24, 0x30	; 48
+ 52a:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ }
+
+ UART_Transmit(13);
+ 52e:	8d e0       	ldi	r24, 0x0D	; 13
+ 530:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ UART_Transmit(10);
+ 534:	8a e0       	ldi	r24, 0x0A	; 10
+ 536:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+}
+ 53a:	08 95       	ret
+
+0000053c <tester_5>:
+}
+
+//Power Status
+void tester_5() 
+{
+ UART_Transmit('P');
+ 53c:	80 e5       	ldi	r24, 0x50	; 80
+ 53e:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ UART_Transmit('B');
+ 542:	82 e4       	ldi	r24, 0x42	; 66
+ 544:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ 
+ if(isPowerLED_ON())
+ 548:	0e 94 10 03 	call	0x620	; 0x620 <isPowerLED_ON>
+ 54c:	88 23       	and	r24, r24
+ 54e:	21 f0       	breq	.+8      	; 0x558 <tester_5+0x1c>
+ {
+	 UART_Transmit('1');
+ 550:	81 e3       	ldi	r24, 0x31	; 49
+ 552:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ 556:	03 c0       	rjmp	.+6      	; 0x55e <tester_5+0x22>
+	 
+ }else
+ {
+	 UART_Transmit('0'); 
+ 558:	80 e3       	ldi	r24, 0x30	; 48
+ 55a:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ }	
+
+ UART_Transmit(13);
+ 55e:	8d e0       	ldi	r24, 0x0D	; 13
+ 560:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+ UART_Transmit(10);
+ 564:	8a e0       	ldi	r24, 0x0A	; 10
+ 566:	0e 94 5e 06 	call	0xcbc	; 0xcbc <UART_Transmit>
+}
+ 56a:	08 95       	ret
+
+0000056c <tester_4>:
+	powerSupplyON(1);
+}
+
+void tester_4()
+{
+	powerSupplyON(0);
+ 56c:	80 e0       	ldi	r24, 0x00	; 0
+ 56e:	0e 94 39 03 	call	0x672	; 0x672 <powerSupplyON>
+}
+ 572:	08 95       	ret
+
+00000574 <tester_3>:
+	powerButtonPressed(0);
+}
+
+void tester_3()
+{
+	powerSupplyON(1);
+ 574:	81 e0       	ldi	r24, 0x01	; 1
+ 576:	0e 94 39 03 	call	0x672	; 0x672 <powerSupplyON>
+}
+ 57a:	08 95       	ret
+
+0000057c <tester_2>:
+	powerButtonPressed(1);
+}
+
+void tester_2()
+{
+	powerButtonPressed(0);
+ 57c:	80 e0       	ldi	r24, 0x00	; 0
+ 57e:	0e 94 22 02 	call	0x444	; 0x444 <powerButtonPressed>
+}
+ 582:	08 95       	ret
+
+00000584 <tester_1>:
+//Do nothing function
+void tester_0(){UART_Transmit('A');} 
+
+void tester_1()
+{
+	powerButtonPressed(1);
+ 584:	81 e0       	ldi	r24, 0x01	; 1
+ 586:	0e 94 22 02 	call	0x444	; 0x444 <powerButtonPressed>
+}
+ 58a:	08 95       	ret
+
+0000058c <getHeartBeat>:
+volatile static unsigned int heartBeatInactiveTimeInS = MISSING_HEARTBEAT_TIME_THRESHOLD;
+volatile static unsigned char heartBeatInactiveTimeInMS = 0;
+
+unsigned char getHeartBeat(void){
+
+    return (heartBeatInactiveTimeInS < MISSING_HEARTBEAT_TIME_THRESHOLD);
+ 58c:	20 91 35 01 	lds	r18, 0x0135
+ 590:	30 91 36 01 	lds	r19, 0x0136
+ 594:	81 e0       	ldi	r24, 0x01	; 1
+ 596:	24 3b       	cpi	r18, 0xB4	; 180
+ 598:	31 05       	cpc	r19, r1
+ 59a:	08 f0       	brcs	.+2      	; 0x59e <getHeartBeat+0x12>
+ 59c:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 59e:	08 95       	ret
+
+000005a0 <setHeartBeat>:
+
+void setHeartBeat(unsigned char currentHearBeat){
+
+	if (currentHearBeat == ON) {
+ 5a0:	81 30       	cpi	r24, 0x01	; 1
+ 5a2:	49 f4       	brne	.+18     	; 0x5b6 <setHeartBeat+0x16>
+
+        cli();
+ 5a4:	f8 94       	cli
+		heartBeatInactiveTimeInS = 0;
+ 5a6:	10 92 36 01 	sts	0x0136, r1
+ 5aa:	10 92 35 01 	sts	0x0135, r1
+		heartBeatInactiveTimeInMS = 0;
+ 5ae:	10 92 5d 02 	sts	0x025D, r1
+		sei();
+ 5b2:	78 94       	sei
+ 5b4:	08 95       	ret
+
+    } else if (currentHearBeat == OFF) {
+ 5b6:	88 23       	and	r24, r24
+ 5b8:	51 f4       	brne	.+20     	; 0x5ce <setHeartBeat+0x2e>
+
+        cli();
+ 5ba:	f8 94       	cli
+		heartBeatInactiveTimeInS = MISSING_HEARTBEAT_TIME_THRESHOLD;
+ 5bc:	84 eb       	ldi	r24, 0xB4	; 180
+ 5be:	90 e0       	ldi	r25, 0x00	; 0
+ 5c0:	90 93 36 01 	sts	0x0136, r25
+ 5c4:	80 93 35 01 	sts	0x0135, r24
+		heartBeatInactiveTimeInMS = 0;
+ 5c8:	10 92 5d 02 	sts	0x025D, r1
+		sei();
+ 5cc:	78 94       	sei
+ 5ce:	08 95       	ret
+
+000005d0 <getHeartBeatInactiveTimeInS>:
+    }
+}
+
+unsigned char getHeartBeatInactiveTimeInS(void){
+
+    return heartBeatInactiveTimeInS;
+ 5d0:	80 91 35 01 	lds	r24, 0x0135
+ 5d4:	90 91 36 01 	lds	r25, 0x0136
+}
+ 5d8:	08 95       	ret
+
+000005da <setHeartBeatInactiveTimeInS>:
+
+void setHeartBeatInactiveTimeInS(unsigned char currentHearBeatInactiveTime){
+
+    heartBeatInactiveTimeInS = currentHearBeatInactiveTime;
+ 5da:	90 e0       	ldi	r25, 0x00	; 0
+ 5dc:	90 93 36 01 	sts	0x0136, r25
+ 5e0:	80 93 35 01 	sts	0x0135, r24
+}
+ 5e4:	08 95       	ret
+
+000005e6 <incrementHeartBeatInactiveTimeBy100MS>:
+
+void incrementHeartBeatInactiveTimeBy100MS(void){
+
+	if (heartBeatInactiveTimeInS  <= MAXIMUM_HEARTBEAT_TIME) 
+ 5e6:	80 91 35 01 	lds	r24, 0x0135
+ 5ea:	90 91 36 01 	lds	r25, 0x0136
+ 5ee:	2e e0       	ldi	r18, 0x0E	; 14
+ 5f0:	81 31       	cpi	r24, 0x11	; 17
+ 5f2:	92 07       	cpc	r25, r18
+ 5f4:	a0 f4       	brcc	.+40     	; 0x61e <incrementHeartBeatInactiveTimeBy100MS+0x38>
+	{
+		heartBeatInactiveTimeInMS++;
+ 5f6:	80 91 5d 02 	lds	r24, 0x025D
+ 5fa:	8f 5f       	subi	r24, 0xFF	; 255
+ 5fc:	80 93 5d 02 	sts	0x025D, r24
+		
+		if (heartBeatInactiveTimeInMS == 10)
+ 600:	80 91 5d 02 	lds	r24, 0x025D
+ 604:	8a 30       	cpi	r24, 0x0A	; 10
+ 606:	59 f4       	brne	.+22     	; 0x61e <incrementHeartBeatInactiveTimeBy100MS+0x38>
+		{
+			heartBeatInactiveTimeInS++; 
+ 608:	80 91 35 01 	lds	r24, 0x0135
+ 60c:	90 91 36 01 	lds	r25, 0x0136
+ 610:	01 96       	adiw	r24, 0x01	; 1
+ 612:	90 93 36 01 	sts	0x0136, r25
+ 616:	80 93 35 01 	sts	0x0135, r24
+			heartBeatInactiveTimeInMS = 0;
+ 61a:	10 92 5d 02 	sts	0x025D, r1
+ 61e:	08 95       	ret
+
+00000620 <isPowerLED_ON>:
+static unsigned char counter = 0;
+
+unsigned char isPowerLED_ON(void)
+{
+	//return powerLEDStatus;
+    return (counter >= POWERLEDON_TIME_THRESHOLD);
+ 620:	81 e0       	ldi	r24, 0x01	; 1
+ 622:	90 91 5e 02 	lds	r25, 0x025E
+ 626:	92 33       	cpi	r25, 0x32	; 50
+ 628:	08 f4       	brcc	.+2      	; 0x62c <isPowerLED_ON+0xc>
+ 62a:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 62c:	08 95       	ret
+
+0000062e <setPowerLEDStatus>:
+
+void setPowerLEDStatus(unsigned char powerLED)
+{
+	powerLEDStatus = powerLED;
+ 62e:	80 93 5f 02 	sts	0x025F, r24
+}
+ 632:	08 95       	ret
+
+00000634 <checkPowerLED>:
+
+void checkPowerLED(void)
+{
+    if (inputON2()) {
+ 634:	0e 94 07 05 	call	0xa0e	; 0xa0e <inputON2>
+ 638:	88 23       	and	r24, r24
+ 63a:	41 f0       	breq	.+16     	; 0x64c <checkPowerLED+0x18>
+
+        //10 seconds ON
+        if (counter < MAXIMUM_POWERLEDON_TIME)
+ 63c:	80 91 5e 02 	lds	r24, 0x025E
+ 640:	88 3c       	cpi	r24, 0xC8	; 200
+ 642:	30 f4       	brcc	.+12     	; 0x650 <checkPowerLED+0x1c>
+            counter++;
+ 644:	8f 5f       	subi	r24, 0xFF	; 255
+ 646:	80 93 5e 02 	sts	0x025E, r24
+ 64a:	08 95       	ret
+    }else
+    {
+        counter = 0;
+ 64c:	10 92 5e 02 	sts	0x025E, r1
+ 650:	08 95       	ret
+
+00000652 <getPowerOffAcknowledge>:
+static unsigned char powerOffSend = FALSE;
+static unsigned char powerOffAcknowledge = FALSE;
+
+unsigned char getPowerOffAcknowledge(void)
+{
+	unsigned char powerOffAcknowledgeTemp = powerOffAcknowledge;
+ 652:	80 91 60 02 	lds	r24, 0x0260
+	powerOffAcknowledge = FALSE;
+ 656:	10 92 60 02 	sts	0x0260, r1
+	
+    return powerOffAcknowledgeTemp;
+}
+ 65a:	08 95       	ret
+
+0000065c <setPowerOffAcknowledge>:
+
+void setPowerOffAcknowledge(unsigned char cmd)
+{
+	powerOffAcknowledge = cmd;
+ 65c:	80 93 60 02 	sts	0x0260, r24
+}
+ 660:	08 95       	ret
+
+00000662 <sendPowerOffRequest>:
+
+void sendPowerOffRequest(void)
+{
+	prepareHyperVisorCommand(HV_CMD_POWEROFF);
+ 662:	80 e0       	ldi	r24, 0x00	; 0
+ 664:	0e 94 bc 03 	call	0x778	; 0x778 <prepareHyperVisorCommand>
+    sendEntireMessage();
+ 668:	0e 94 fb 01 	call	0x3f6	; 0x3f6 <sendEntireMessage>
+}
+ 66c:	08 95       	ret
+
+0000066e <getCurrentPowerSupply>:
+static unsigned char currentPowerSupply = OFF;
+
+unsigned char getCurrentPowerSupply(void)
+{
+    return currentPowerSupply;
+}
+ 66e:	80 e0       	ldi	r24, 0x00	; 0
+ 670:	08 95       	ret
+
+00000672 <powerSupplyON>:
+
+void powerSupplyON(unsigned char command)
+{
+    relayON1(command);
+ 672:	0e 94 13 05 	call	0xa26	; 0xa26 <relayON1>
+}
+ 676:	08 95       	ret
+
+00000678 <getSuspendAcknowledge>:
+static unsigned char suspendSend = FALSE;
+static unsigned char suspendAcknowledge = FALSE;
+
+unsigned char getSuspendAcknowledge(void)
+{
+	unsigned char suspendAnswer = suspendAcknowledge;
+ 678:	80 91 61 02 	lds	r24, 0x0261
+	
+	suspendAcknowledge = FALSE;
+ 67c:	10 92 61 02 	sts	0x0261, r1
+    return suspendAnswer;
+}
+ 680:	08 95       	ret
+
+00000682 <setSuspendAcknowledge>:
+
+void setSuspendAcknowledge(unsigned char cmd)
+{
+    suspendAcknowledge = cmd;
+ 682:	80 93 61 02 	sts	0x0261, r24
+}
+ 686:	08 95       	ret
+
+00000688 <sendSuspendRequest>:
+
+void sendSuspendRequest(void)
+{
+	prepareHyperVisorCommand(HV_CMD_SUSPEND);
+ 688:	81 e0       	ldi	r24, 0x01	; 1
+ 68a:	0e 94 bc 03 	call	0x778	; 0x778 <prepareHyperVisorCommand>
+    sendEntireMessage();
+ 68e:	0e 94 fb 01 	call	0x3f6	; 0x3f6 <sendEntireMessage>
+}
+ 692:	08 95       	ret
+
+00000694 <setTimerIn100ms>:
+#include <avr/interrupt.h>
+
+static unsigned int timer = 0;
+
+void setTimerIn100ms(unsigned int timerSetting){
+	cli();
+ 694:	f8 94       	cli
+    timer = timerSetting;
+ 696:	90 93 63 02 	sts	0x0263, r25
+ 69a:	80 93 62 02 	sts	0x0262, r24
+	sei();
+ 69e:	78 94       	sei
+}
+ 6a0:	08 95       	ret
+
+000006a2 <decrementTimerBy100ms>:
+void decrementTimerBy100ms(void){
+
+    if (timer > 0) {
+ 6a2:	80 91 62 02 	lds	r24, 0x0262
+ 6a6:	90 91 63 02 	lds	r25, 0x0263
+ 6aa:	00 97       	sbiw	r24, 0x00	; 0
+ 6ac:	29 f0       	breq	.+10     	; 0x6b8 <decrementTimerBy100ms+0x16>
+        timer--;
+ 6ae:	01 97       	sbiw	r24, 0x01	; 1
+ 6b0:	90 93 63 02 	sts	0x0263, r25
+ 6b4:	80 93 62 02 	sts	0x0262, r24
+ 6b8:	08 95       	ret
+
+000006ba <getTimerIn100ms>:
+}
+unsigned int getTimerIn100ms(void){
+
+    return timer;
+
+}
+ 6ba:	80 91 62 02 	lds	r24, 0x0262
+ 6be:	90 91 63 02 	lds	r25, 0x0263
+ 6c2:	08 95       	ret
+
+000006c4 <timerExpired>:
+unsigned char timerExpired(){
+
+    return timer == 0;	
+ 6c4:	81 e0       	ldi	r24, 0x01	; 1
+ 6c6:	20 91 62 02 	lds	r18, 0x0262
+ 6ca:	30 91 63 02 	lds	r19, 0x0263
+ 6ce:	21 15       	cp	r18, r1
+ 6d0:	31 05       	cpc	r19, r1
+ 6d2:	09 f0       	breq	.+2      	; 0x6d6 <timerExpired+0x12>
+ 6d4:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 6d6:	08 95       	ret
+
+000006d8 <TIMER_Init>:
+
+void TIMER_Init(void)
+{
+	TCCR0 = (1<<CS02)|(1<<CS00);	// Timer Clock = system clock / 1024
+ 6d8:	85 e0       	ldi	r24, 0x05	; 5
+ 6da:	83 bf       	out	0x33, r24	; 51
+	TIFR  = 1<<TOV0;				// Clear TOV0 / Clear pending interrupts
+ 6dc:	81 e0       	ldi	r24, 0x01	; 1
+ 6de:	88 bf       	out	0x38, r24	; 56
+	TIMSK = 1<< TOIE0;				// Enable Timer 0 Overflow Interrupt
+ 6e0:	89 bf       	out	0x39, r24	; 57
+}
+ 6e2:	08 95       	ret
+
+000006e4 <getTracking>:
+volatile static unsigned int trackingInactiveTimeInS = TRACKING_TIME_THRESHOLD;
+volatile static unsigned char trackingInactiveTimeInMS = 0;
+
+unsigned char getTracking(void){
+
+    return (trackingInactiveTimeInS < TRACKING_TIME_THRESHOLD );
+ 6e4:	20 91 37 01 	lds	r18, 0x0137
+ 6e8:	30 91 38 01 	lds	r19, 0x0138
+ 6ec:	81 e0       	ldi	r24, 0x01	; 1
+ 6ee:	2e 31       	cpi	r18, 0x1E	; 30
+ 6f0:	31 05       	cpc	r19, r1
+ 6f2:	08 f0       	brcs	.+2      	; 0x6f6 <getTracking+0x12>
+ 6f4:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 6f6:	08 95       	ret
+
+000006f8 <getTrackingInactiveTimeInS>:
+
+unsigned char getTrackingInactiveTimeInS(void){
+
+    return trackingInactiveTimeInS;
+ 6f8:	80 91 37 01 	lds	r24, 0x0137
+ 6fc:	90 91 38 01 	lds	r25, 0x0138
+}
+ 700:	08 95       	ret
+
+00000702 <setTracking>:
+
+void setTracking(unsigned char currentTracking){
+
+    if (currentTracking == ON) {
+ 702:	81 30       	cpi	r24, 0x01	; 1
+ 704:	49 f4       	brne	.+18     	; 0x718 <setTracking+0x16>
+
+        cli();
+ 706:	f8 94       	cli
+        trackingInactiveTimeInS = 0;
+ 708:	10 92 38 01 	sts	0x0138, r1
+ 70c:	10 92 37 01 	sts	0x0137, r1
+        trackingInactiveTimeInMS = 0;
+ 710:	10 92 64 02 	sts	0x0264, r1
+		sei();
+ 714:	78 94       	sei
+ 716:	08 95       	ret
+
+    } else if (currentTracking == OFF) {
+ 718:	88 23       	and	r24, r24
+ 71a:	51 f4       	brne	.+20     	; 0x730 <setTracking+0x2e>
+
+        cli();
+ 71c:	f8 94       	cli
+        trackingInactiveTimeInS = TRACKING_TIME_THRESHOLD;
+ 71e:	8e e1       	ldi	r24, 0x1E	; 30
+ 720:	90 e0       	ldi	r25, 0x00	; 0
+ 722:	90 93 38 01 	sts	0x0138, r25
+ 726:	80 93 37 01 	sts	0x0137, r24
+        trackingInactiveTimeInMS = 0;
+ 72a:	10 92 64 02 	sts	0x0264, r1
+		sei();
+ 72e:	78 94       	sei
+ 730:	08 95       	ret
+
+00000732 <setTrackingInactiveTimeInS>:
+	} 
+}
+
+void setTrackingInactiveTimeInS(unsigned char currentTrackingInactiveTimeInS){
+
+    trackingInactiveTimeInS = currentTrackingInactiveTimeInS;
+ 732:	90 e0       	ldi	r25, 0x00	; 0
+ 734:	90 93 38 01 	sts	0x0138, r25
+ 738:	80 93 37 01 	sts	0x0137, r24
+}
+ 73c:	08 95       	ret
+
+0000073e <incrementTrackingInactiveTimeBy100MS>:
+
+void incrementTrackingInactiveTimeBy100MS(void){
+
+	if (trackingInactiveTimeInS  <= MAXIMUM_TRACKING_TIME)
+ 73e:	80 91 37 01 	lds	r24, 0x0137
+ 742:	90 91 38 01 	lds	r25, 0x0138
+ 746:	2e e0       	ldi	r18, 0x0E	; 14
+ 748:	81 31       	cpi	r24, 0x11	; 17
+ 74a:	92 07       	cpc	r25, r18
+ 74c:	a0 f4       	brcc	.+40     	; 0x776 <incrementTrackingInactiveTimeBy100MS+0x38>
+	{
+		trackingInactiveTimeInMS++;
+ 74e:	80 91 64 02 	lds	r24, 0x0264
+ 752:	8f 5f       	subi	r24, 0xFF	; 255
+ 754:	80 93 64 02 	sts	0x0264, r24
+		
+		if (trackingInactiveTimeInMS == 10)
+ 758:	80 91 64 02 	lds	r24, 0x0264
+ 75c:	8a 30       	cpi	r24, 0x0A	; 10
+ 75e:	59 f4       	brne	.+22     	; 0x776 <incrementTrackingInactiveTimeBy100MS+0x38>
+		{
+			trackingInactiveTimeInS++;
+ 760:	80 91 37 01 	lds	r24, 0x0137
+ 764:	90 91 38 01 	lds	r25, 0x0138
+ 768:	01 96       	adiw	r24, 0x01	; 1
+ 76a:	90 93 38 01 	sts	0x0138, r25
+ 76e:	80 93 37 01 	sts	0x0137, r24
+			trackingInactiveTimeInMS = 0;
+ 772:	10 92 64 02 	sts	0x0264, r1
+ 776:	08 95       	ret
+
+00000778 <prepareHyperVisorCommand>:
+
+const char HyperVisorRequest[HYPERVISOR_COMMAND_NUMBER][HYPERVISOR_COMMAND_BYTE_NUMBER] = {"HC1X", "HC1S","HC1H","HC1A"};
+
+/******************************** A C T I O N S *****************************/
+void prepareHyperVisorCommand(unsigned char command)
+{
+ 778:	1f 93       	push	r17
+ 77a:	cf 93       	push	r28
+ 77c:	df 93       	push	r29
+ 77e:	c8 2f       	mov	r28, r24
+	unsigned char Len, i, T, checksum;
+	Len = HYPERVISOR_COMMAND_BYTE_NUMBER ;
+	
+	resetMessageBuffer();
+ 780:	0e 94 1b 02 	call	0x436	; 0x436 <resetMessageBuffer>
+	//addOneChar(ASCI_LF);
+
+	checksum = 0;
+	for (i=0; i < Len; i++)
+	{
+		T = HyperVisorRequest[command][i];
+ 784:	d0 e0       	ldi	r29, 0x00	; 0
+#include "HyperVisorCommand.h"
+
+const char HyperVisorRequest[HYPERVISOR_COMMAND_NUMBER][HYPERVISOR_COMMAND_BYTE_NUMBER] = {"HC1X", "HC1S","HC1H","HC1A"};
+
+/******************************** A C T I O N S *****************************/
+void prepareHyperVisorCommand(unsigned char command)
+ 786:	cc 0f       	add	r28, r28
+ 788:	dd 1f       	adc	r29, r29
+ 78a:	cc 0f       	add	r28, r28
+ 78c:	dd 1f       	adc	r29, r29
+ 78e:	c7 5c       	subi	r28, 0xC7	; 199
+ 790:	de 4f       	sbci	r29, 0xFE	; 254
+ 792:	14 e0       	ldi	r17, 0x04	; 4
+	checksum = 0;
+	for (i=0; i < Len; i++)
+	{
+		T = HyperVisorRequest[command][i];
+		checksum += T;	
+		addOneChar(T);
+ 794:	89 91       	ld	r24, Y+
+ 796:	0e 94 0e 02 	call	0x41c	; 0x41c <addOneChar>
+ 79a:	11 50       	subi	r17, 0x01	; 1
+	resetMessageBuffer();
+	//addOneChar(ASCI_CR);
+	//addOneChar(ASCI_LF);
+
+	checksum = 0;
+	for (i=0; i < Len; i++)
+ 79c:	d9 f7       	brne	.-10     	; 0x794 <prepareHyperVisorCommand+0x1c>
+		checksum += T;	
+		addOneChar(T);
+	}
+	checksum = 0 - checksum;
+	//addOneChar(checksum);
+ 79e:	df 91       	pop	r29
+ 7a0:	cf 91       	pop	r28
+ 7a2:	1f 91       	pop	r17
+ 7a4:	08 95       	ret
+
+000007a6 <__vector_9>:
+
+/*********************************** INTERRUPT ********************************/
+volatile unsigned int counter = 0;
+
+ISR(TIMER0_OVF_vect)
+{
+ 7a6:	1f 92       	push	r1
+ 7a8:	0f 92       	push	r0
+ 7aa:	0f b6       	in	r0, 0x3f	; 63
+ 7ac:	0f 92       	push	r0
+ 7ae:	11 24       	eor	r1, r1
+ 7b0:	2f 93       	push	r18
+ 7b2:	3f 93       	push	r19
+ 7b4:	4f 93       	push	r20
+ 7b6:	5f 93       	push	r21
+ 7b8:	6f 93       	push	r22
+ 7ba:	7f 93       	push	r23
+ 7bc:	8f 93       	push	r24
+ 7be:	9f 93       	push	r25
+ 7c0:	af 93       	push	r26
+ 7c2:	bf 93       	push	r27
+ 7c4:	ef 93       	push	r30
+ 7c6:	ff 93       	push	r31
+	if (counter < 3)
+ 7c8:	80 91 65 02 	lds	r24, 0x0265
+ 7cc:	90 91 66 02 	lds	r25, 0x0266
+ 7d0:	83 30       	cpi	r24, 0x03	; 3
+ 7d2:	91 05       	cpc	r25, r1
+ 7d4:	50 f4       	brcc	.+20     	; 0x7ea <__vector_9+0x44>
+		{
+		counter++;
+ 7d6:	80 91 65 02 	lds	r24, 0x0265
+ 7da:	90 91 66 02 	lds	r25, 0x0266
+ 7de:	01 96       	adiw	r24, 0x01	; 1
+ 7e0:	90 93 66 02 	sts	0x0266, r25
+ 7e4:	80 93 65 02 	sts	0x0265, r24
+ 7e8:	0e c0       	rjmp	.+28     	; 0x806 <__vector_9+0x60>
+		}
+	else
+		{
+		counter = 0;
+ 7ea:	10 92 66 02 	sts	0x0266, r1
+ 7ee:	10 92 65 02 	sts	0x0265, r1
+		decrementTimerBy100ms();
+ 7f2:	0e 94 51 03 	call	0x6a2	; 0x6a2 <decrementTimerBy100ms>
+		checkActivity();
+ 7f6:	0e 94 76 00 	call	0xec	; 0xec <checkActivity>
+		incrementTrackingInactiveTimeBy100MS();
+ 7fa:	0e 94 9f 03 	call	0x73e	; 0x73e <incrementTrackingInactiveTimeBy100MS>
+		incrementHeartBeatInactiveTimeBy100MS();
+ 7fe:	0e 94 f3 02 	call	0x5e6	; 0x5e6 <incrementHeartBeatInactiveTimeBy100MS>
+		checkPowerLED();
+ 802:	0e 94 1a 03 	call	0x634	; 0x634 <checkPowerLED>
+		}
+}
+ 806:	ff 91       	pop	r31
+ 808:	ef 91       	pop	r30
+ 80a:	bf 91       	pop	r27
+ 80c:	af 91       	pop	r26
+ 80e:	9f 91       	pop	r25
+ 810:	8f 91       	pop	r24
+ 812:	7f 91       	pop	r23
+ 814:	6f 91       	pop	r22
+ 816:	5f 91       	pop	r21
+ 818:	4f 91       	pop	r20
+ 81a:	3f 91       	pop	r19
+ 81c:	2f 91       	pop	r18
+ 81e:	0f 90       	pop	r0
+ 820:	0f be       	out	0x3f, r0	; 63
+ 822:	0f 90       	pop	r0
+ 824:	1f 90       	pop	r1
+ 826:	18 95       	reti
+
+00000828 <main>:
+
+/*********************************** MAIN ********************************/
+
+int main()
+{
+ 828:	cf 93       	push	r28
+ 82a:	df 93       	push	r29
+ 82c:	cd b7       	in	r28, 0x3d	; 61
+ 82e:	de b7       	in	r29, 0x3e	; 62
+ 830:	cc 57       	subi	r28, 0x7C	; 124
+ 832:	d0 40       	sbci	r29, 0x00	; 0
+ 834:	0f b6       	in	r0, 0x3f	; 63
+ 836:	f8 94       	cli
+ 838:	de bf       	out	0x3e, r29	; 62
+ 83a:	0f be       	out	0x3f, r0	; 63
+ 83c:	cd bf       	out	0x3d, r28	; 61
+	unsigned char State;
+	unsigned char pastState;
+
+	char txtString[24];
+	const char stateStr[5][20] = { "POWEROFF", "BOOTING", "RUN", "SUSPEND", "BEFORPOWEROFF" };
+ 83e:	de 01       	movw	r26, r28
+ 840:	59 96       	adiw	r26, 0x19	; 25
+ 842:	84 e6       	ldi	r24, 0x64	; 100
+ 844:	fd 01       	movw	r30, r26
+ 846:	11 92       	st	Z+, r1
+ 848:	8a 95       	dec	r24
+ 84a:	e9 f7       	brne	.-6      	; 0x846 <main+0x1e>
+ 84c:	eb ec       	ldi	r30, 0xCB	; 203
+ 84e:	f0 e0       	ldi	r31, 0x00	; 0
+ 850:	89 e0       	ldi	r24, 0x09	; 9
+ 852:	01 90       	ld	r0, Z+
+ 854:	0d 92       	st	X+, r0
+ 856:	81 50       	subi	r24, 0x01	; 1
+ 858:	e1 f7       	brne	.-8      	; 0x852 <main+0x2a>
+ 85a:	fe 01       	movw	r30, r28
+ 85c:	b2 96       	adiw	r30, 0x22	; 34
+ 85e:	8b e0       	ldi	r24, 0x0B	; 11
+ 860:	df 01       	movw	r26, r30
+ 862:	1d 92       	st	X+, r1
+ 864:	8a 95       	dec	r24
+ 866:	e9 f7       	brne	.-6      	; 0x862 <main+0x3a>
+ 868:	de 01       	movw	r26, r28
+ 86a:	9d 96       	adiw	r26, 0x2d	; 45
+ 86c:	ef ed       	ldi	r30, 0xDF	; 223
+ 86e:	f0 e0       	ldi	r31, 0x00	; 0
+ 870:	88 e0       	ldi	r24, 0x08	; 8
+ 872:	01 90       	ld	r0, Z+
+ 874:	0d 92       	st	X+, r0
+ 876:	81 50       	subi	r24, 0x01	; 1
+ 878:	e1 f7       	brne	.-8      	; 0x872 <main+0x4a>
+ 87a:	fe 01       	movw	r30, r28
+ 87c:	f5 96       	adiw	r30, 0x35	; 53
+ 87e:	8c e0       	ldi	r24, 0x0C	; 12
+ 880:	df 01       	movw	r26, r30
+ 882:	1d 92       	st	X+, r1
+ 884:	8a 95       	dec	r24
+ 886:	e9 f7       	brne	.-6      	; 0x882 <main+0x5a>
+ 888:	82 e5       	ldi	r24, 0x52	; 82
+ 88a:	95 e5       	ldi	r25, 0x55	; 85
+ 88c:	ae e4       	ldi	r26, 0x4E	; 78
+ 88e:	b0 e0       	ldi	r27, 0x00	; 0
+ 890:	25 96       	adiw	r28, 0x05	; 5
+ 892:	8c af       	sts	0x7c, r24
+ 894:	9d af       	sts	0x7d, r25
+ 896:	ae af       	sts	0x7e, r26
+ 898:	bf af       	sts	0x7f, r27
+ 89a:	25 97       	sbiw	r28, 0x05	; 5
+ 89c:	80 e1       	ldi	r24, 0x10	; 16
+ 89e:	fe 01       	movw	r30, r28
+ 8a0:	eb 5b       	subi	r30, 0xBB	; 187
+ 8a2:	ff 4f       	sbci	r31, 0xFF	; 255
+ 8a4:	df 01       	movw	r26, r30
+ 8a6:	1d 92       	st	X+, r1
+ 8a8:	8a 95       	dec	r24
+ 8aa:	e9 f7       	brne	.-6      	; 0x8a6 <main+0x7e>
+ 8ac:	de 01       	movw	r26, r28
+ 8ae:	ab 5a       	subi	r26, 0xAB	; 171
+ 8b0:	bf 4f       	sbci	r27, 0xFF	; 255
+ 8b2:	e3 ef       	ldi	r30, 0xF3	; 243
+ 8b4:	f0 e0       	ldi	r31, 0x00	; 0
+ 8b6:	88 e0       	ldi	r24, 0x08	; 8
+ 8b8:	01 90       	ld	r0, Z+
+ 8ba:	0d 92       	st	X+, r0
+ 8bc:	81 50       	subi	r24, 0x01	; 1
+ 8be:	e1 f7       	brne	.-8      	; 0x8b8 <main+0x90>
+ 8c0:	e5 e5       	ldi	r30, 0x55	; 85
+ 8c2:	f0 e0       	ldi	r31, 0x00	; 0
+ 8c4:	ec 0f       	add	r30, r28
+ 8c6:	fd 1f       	adc	r31, r29
+ 8c8:	38 96       	adiw	r30, 0x08	; 8
+ 8ca:	8c e0       	ldi	r24, 0x0C	; 12
+ 8cc:	df 01       	movw	r26, r30
+ 8ce:	1d 92       	st	X+, r1
+ 8d0:	8a 95       	dec	r24
+ 8d2:	e9 f7       	brne	.-6      	; 0x8ce <main+0xa6>
+ 8d4:	de 01       	movw	r26, r28
+ 8d6:	a7 59       	subi	r26, 0x97	; 151
+ 8d8:	bf 4f       	sbci	r27, 0xFF	; 255
+ 8da:	e7 e0       	ldi	r30, 0x07	; 7
+ 8dc:	f1 e0       	ldi	r31, 0x01	; 1
+ 8de:	8e e0       	ldi	r24, 0x0E	; 14
+ 8e0:	01 90       	ld	r0, Z+
+ 8e2:	0d 92       	st	X+, r0
+ 8e4:	81 50       	subi	r24, 0x01	; 1
+ 8e6:	e1 f7       	brne	.-8      	; 0x8e0 <main+0xb8>
+ 8e8:	e9 e6       	ldi	r30, 0x69	; 105
+ 8ea:	f0 e0       	ldi	r31, 0x00	; 0
+ 8ec:	ec 0f       	add	r30, r28
+ 8ee:	fd 1f       	adc	r31, r29
+ 8f0:	3e 96       	adiw	r30, 0x0e	; 14
+ 8f2:	86 e0       	ldi	r24, 0x06	; 6
+ 8f4:	df 01       	movw	r26, r30
+ 8f6:	1d 92       	st	X+, r1
+ 8f8:	8a 95       	dec	r24
+ 8fa:	e9 f7       	brne	.-6      	; 0x8f6 <main+0xce>
+
+	PORT_Init();
+ 8fc:	0e 94 f8 04 	call	0x9f0	; 0x9f0 <PORT_Init>
+	UART_Init(57600);
+ 900:	60 e0       	ldi	r22, 0x00	; 0
+ 902:	71 ee       	ldi	r23, 0xE1	; 225
+ 904:	80 e0       	ldi	r24, 0x00	; 0
+ 906:	90 e0       	ldi	r25, 0x00	; 0
+ 908:	0e 94 2a 06 	call	0xc54	; 0xc54 <UART_Init>
+
+	State = getInitialState();
+ 90c:	0e 94 1c 06 	call	0xc38	; 0xc38 <getInitialState>
+ 910:	18 2f       	mov	r17, r24
+	pastState = State;
+
+	TIMER_Init();
+ 912:	0e 94 6c 03 	call	0x6d8	; 0x6d8 <TIMER_Init>
+	sei();
+ 916:	78 94       	sei
+
+    //Delay 1 Seconds
+	setTimerIn100ms(10);
+ 918:	8a e0       	ldi	r24, 0x0A	; 10
+ 91a:	90 e0       	ldi	r25, 0x00	; 0
+ 91c:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+	while (getTimerIn100ms());
+ 920:	0e 94 5d 03 	call	0x6ba	; 0x6ba <getTimerIn100ms>
+ 924:	00 97       	sbiw	r24, 0x00	; 0
+ 926:	e1 f7       	brne	.-8      	; 0x920 <main+0xf8>
+
+	strcpy(txtString, " "); PrintLn(txtString);
+ 928:	ee 24       	eor	r14, r14
+ 92a:	ff 24       	eor	r15, r15
+ 92c:	68 94       	set
+ 92e:	e5 f8       	bld	r14, 5
+ 930:	fa 82       	std	Y+2, r15	; 0x02
+ 932:	e9 82       	std	Y+1, r14	; 0x01
+ 934:	ce 01       	movw	r24, r28
+ 936:	01 96       	adiw	r24, 0x01	; 1
+ 938:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+	strcpy(txtString, " "); PrintLn(txtString);
+ 93c:	fa 82       	std	Y+2, r15	; 0x02
+ 93e:	e9 82       	std	Y+1, r14	; 0x01
+ 940:	ce 01       	movw	r24, r28
+ 942:	01 96       	adiw	r24, 0x01	; 1
+ 944:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+	strcpy(txtString, "CURRENT STATE:"); PrintLn(txtString);
+ 948:	de 01       	movw	r26, r28
+ 94a:	11 96       	adiw	r26, 0x01	; 1
+ 94c:	ec eb       	ldi	r30, 0xBC	; 188
+ 94e:	f0 e0       	ldi	r31, 0x00	; 0
+ 950:	8f e0       	ldi	r24, 0x0F	; 15
+ 952:	01 90       	ld	r0, Z+
+ 954:	0d 92       	st	X+, r0
+ 956:	81 50       	subi	r24, 0x01	; 1
+ 958:	e1 f7       	brne	.-8      	; 0x952 <main+0x12a>
+ 95a:	ce 01       	movw	r24, r28
+ 95c:	01 96       	adiw	r24, 0x01	; 1
+ 95e:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+	PrintLn(stateStr[State]);
+ 962:	41 2f       	mov	r20, r17
+ 964:	50 e0       	ldi	r21, 0x00	; 0
+ 966:	24 e1       	ldi	r18, 0x14	; 20
+ 968:	30 e0       	ldi	r19, 0x00	; 0
+ 96a:	42 9f       	mul	r20, r18
+ 96c:	c0 01       	movw	r24, r0
+ 96e:	43 9f       	mul	r20, r19
+ 970:	90 0d       	add	r25, r0
+ 972:	52 9f       	mul	r21, r18
+ 974:	90 0d       	add	r25, r0
+ 976:	11 24       	eor	r1, r1
+ 978:	e9 e1       	ldi	r30, 0x19	; 25
+ 97a:	f0 e0       	ldi	r31, 0x00	; 0
+ 97c:	ec 0f       	add	r30, r28
+ 97e:	fd 1f       	adc	r31, r29
+ 980:	8e 0f       	add	r24, r30
+ 982:	9f 1f       	adc	r25, r31
+ 984:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+
+	PORT_Init();
+	UART_Init(57600);
+
+	State = getInitialState();
+	pastState = State;
+ 988:	01 2f       	mov	r16, r17
+	PrintLn(stateStr[State]);
+
+	while (1)
+		{
+		//STM
+		State = Ubuntu_State[State]();
+ 98a:	0f 2e       	mov	r0, r31
+ 98c:	f9 e4       	ldi	r31, 0x49	; 73
+ 98e:	ef 2e       	mov	r14, r31
+ 990:	f1 e0       	ldi	r31, 0x01	; 1
+ 992:	ff 2e       	mov	r15, r31
+ 994:	f0 2d       	mov	r31, r0
+ 996:	e1 2f       	mov	r30, r17
+ 998:	f0 e0       	ldi	r31, 0x00	; 0
+ 99a:	ee 0f       	add	r30, r30
+ 99c:	ff 1f       	adc	r31, r31
+ 99e:	ee 0d       	add	r30, r14
+ 9a0:	ff 1d       	adc	r31, r15
+ 9a2:	01 90       	ld	r0, Z+
+ 9a4:	f0 81       	ld	r31, Z
+ 9a6:	e0 2d       	mov	r30, r0
+ 9a8:	09 95       	icall
+
+		//Force to another state
+		State = parseMessageTemp(State);
+ 9aa:	0e 94 a5 01 	call	0x34a	; 0x34a <parseMessageTemp>
+ 9ae:	18 2f       	mov	r17, r24
+
+		if (State != pastState)
+ 9b0:	80 17       	cp	r24, r16
+ 9b2:	89 f3       	breq	.-30     	; 0x996 <main+0x16e>
+			{
+			pastState = State;
+			PrintLn(stateStr[State]);
+ 9b4:	90 e0       	ldi	r25, 0x00	; 0
+ 9b6:	88 0f       	add	r24, r24
+ 9b8:	99 1f       	adc	r25, r25
+ 9ba:	88 0f       	add	r24, r24
+ 9bc:	99 1f       	adc	r25, r25
+ 9be:	9c 01       	movw	r18, r24
+ 9c0:	22 0f       	add	r18, r18
+ 9c2:	33 1f       	adc	r19, r19
+ 9c4:	22 0f       	add	r18, r18
+ 9c6:	33 1f       	adc	r19, r19
+ 9c8:	82 0f       	add	r24, r18
+ 9ca:	93 1f       	adc	r25, r19
+ 9cc:	29 e1       	ldi	r18, 0x19	; 25
+ 9ce:	30 e0       	ldi	r19, 0x00	; 0
+ 9d0:	2c 0f       	add	r18, r28
+ 9d2:	3d 1f       	adc	r19, r29
+ 9d4:	82 0f       	add	r24, r18
+ 9d6:	93 1f       	adc	r25, r19
+ 9d8:	0e 94 cc 00 	call	0x198	; 0x198 <PrintLn>
+
+			//Delay 1 Second -- No too fast state transitions
+			setTimerIn100ms(10);
+ 9dc:	8a e0       	ldi	r24, 0x0A	; 10
+ 9de:	90 e0       	ldi	r25, 0x00	; 0
+ 9e0:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+			while (getTimerIn100ms());
+ 9e4:	0e 94 5d 03 	call	0x6ba	; 0x6ba <getTimerIn100ms>
+ 9e8:	00 97       	sbiw	r24, 0x00	; 0
+ 9ea:	e1 f7       	brne	.-8      	; 0x9e4 <main+0x1bc>
+		//Force to another state
+		State = parseMessageTemp(State);
+
+		if (State != pastState)
+			{
+			pastState = State;
+ 9ec:	01 2f       	mov	r16, r17
+ 9ee:	d3 cf       	rjmp	.-90     	; 0x996 <main+0x16e>
+
+000009f0 <PORT_Init>:
+#include "avr/io.h"
+
+void PORT_Init()
+{
+	PORTA = 0b00000000;
+ 9f0:	1b ba       	out	0x1b, r1	; 27
+	DDRA = 0b00000000;
+ 9f2:	1a ba       	out	0x1a, r1	; 26
+
+	PORTB = 0b00000000;
+ 9f4:	18 ba       	out	0x18, r1	; 24
+	DDRB = 0b00001111;		//set Relay as output (Bit0:3 = 1)
+ 9f6:	8f e0       	ldi	r24, 0x0F	; 15
+ 9f8:	87 bb       	out	0x17, r24	; 23
+
+	PORTC = 0b00000000;
+ 9fa:	15 ba       	out	0x15, r1	; 21
+	DDRC = 0b00000000;
+ 9fc:	14 ba       	out	0x14, r1	; 20
+
+	PORTD = 0b00000000;
+ 9fe:	12 ba       	out	0x12, r1	; 18
+	DDRD = 0b00000010;		//set TX as output (Bit1 = 1)
+ a00:	82 e0       	ldi	r24, 0x02	; 2
+ a02:	81 bb       	out	0x11, r24	; 17
+}
+ a04:	08 95       	ret
+
+00000a06 <inputON1>:
+
+unsigned char inputON1()
+{
+	return !(PINA & 0b00000100) ;
+ a06:	81 e0       	ldi	r24, 0x01	; 1
+ a08:	ca 99       	sbic	0x19, 2	; 25
+ a0a:	80 e0       	ldi	r24, 0x00	; 0
+}	
+ a0c:	08 95       	ret
+
+00000a0e <inputON2>:
+
+unsigned char inputON2()
+{
+	return !(PINA & 0b00000010) ;
+ a0e:	81 e0       	ldi	r24, 0x01	; 1
+ a10:	c9 99       	sbic	0x19, 1	; 25
+ a12:	80 e0       	ldi	r24, 0x00	; 0
+}
+ a14:	08 95       	ret
+
+00000a16 <inputON3>:
+
+unsigned char inputON3()
+{
+	return !(PINA & 0b00000001) ;
+ a16:	81 e0       	ldi	r24, 0x01	; 1
+ a18:	c8 99       	sbic	0x19, 0	; 25
+ a1a:	80 e0       	ldi	r24, 0x00	; 0
+}
+ a1c:	08 95       	ret
+
+00000a1e <inputON4>:
+
+unsigned char inputON4()
+{
+	return !(PIND & 0b00000100) ;
+ a1e:	81 e0       	ldi	r24, 0x01	; 1
+ a20:	82 99       	sbic	0x10, 2	; 16
+ a22:	80 e0       	ldi	r24, 0x00	; 0
+}
+ a24:	08 95       	ret
+
+00000a26 <relayON1>:
+
+void relayON1(unsigned char cmd)
+{
+	if (cmd)
+ a26:	88 23       	and	r24, r24
+ a28:	11 f0       	breq	.+4      	; 0xa2e <relayON1+0x8>
+	{
+		PORTB = PORTB | 0b00000001;		
+ a2a:	c0 9a       	sbi	0x18, 0	; 24
+ a2c:	08 95       	ret
+	}
+	else
+	{
+		PORTB = PORTB & 0b11111110;
+ a2e:	c0 98       	cbi	0x18, 0	; 24
+ a30:	08 95       	ret
+
+00000a32 <relayON2>:
+	return ;
+}
+
+void relayON2(unsigned char cmd)
+{
+	if (cmd)
+ a32:	88 23       	and	r24, r24
+ a34:	11 f0       	breq	.+4      	; 0xa3a <relayON2+0x8>
+	{
+		PORTB = PORTB | 0b00000010;
+ a36:	c1 9a       	sbi	0x18, 1	; 24
+ a38:	08 95       	ret
+	}
+	else
+	{
+		PORTB = PORTB & 0b11111101;
+ a3a:	c1 98       	cbi	0x18, 1	; 24
+ a3c:	08 95       	ret
+
+00000a3e <relayON3>:
+	return ;
+}
+
+void relayON3(unsigned char cmd)
+{
+	if (cmd)
+ a3e:	88 23       	and	r24, r24
+ a40:	11 f0       	breq	.+4      	; 0xa46 <relayON3+0x8>
+	{
+		PORTB = PORTB | 0b00000100;
+ a42:	c2 9a       	sbi	0x18, 2	; 24
+ a44:	08 95       	ret
+	}
+	else
+	{
+		PORTB = PORTB & 0b11111011;
+ a46:	c2 98       	cbi	0x18, 2	; 24
+ a48:	08 95       	ret
+
+00000a4a <relayON4>:
+}
+
+
+void relayON4(unsigned char cmd)
+{
+	if (cmd)
+ a4a:	88 23       	and	r24, r24
+ a4c:	11 f0       	breq	.+4      	; 0xa52 <relayON4+0x8>
+	{
+		PORTB = PORTB | 0b00001000;
+ a4e:	c3 9a       	sbi	0x18, 3	; 24
+ a50:	08 95       	ret
+	}
+	else
+	{
+		PORTB = PORTB & 0b11110111;
+ a52:	c3 98       	cbi	0x18, 3	; 24
+ a54:	08 95       	ret
+
+00000a56 <st_beforePowerOff>:
+}
+//Need to add the hangs
+unsigned char st_beforePowerOff(void){
+
+     //State Transition is occurring 
+    if (timerCountDownActivated == POWEROFF_ACK_WAITING) {
+ a56:	80 91 67 02 	lds	r24, 0x0267
+ a5a:	85 30       	cpi	r24, 0x05	; 5
+ a5c:	c1 f4       	brne	.+48     	; 0xa8e <st_beforePowerOff+0x38>
+
+        if (isPowerLED_ON() == OFF)
+ a5e:	0e 94 10 03 	call	0x620	; 0x620 <isPowerLED_ON>
+ a62:	88 23       	and	r24, r24
+ a64:	71 f4       	brne	.+28     	; 0xa82 <st_beforePowerOff+0x2c>
+        {
+            timerCountDownActivated = NOT_ACTIVATED;
+ a66:	10 92 67 02 	sts	0x0267, r1
+            setTimerIn100ms(ZERO);
+ a6a:	80 e0       	ldi	r24, 0x00	; 0
+ a6c:	90 e0       	ldi	r25, 0x00	; 0
+ a6e:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+            setActivityDetected(FALSE);
+ a72:	80 e0       	ldi	r24, 0x00	; 0
+ a74:	0e 94 54 00 	call	0xa8	; 0xa8 <setActivityDetected>
+            powerSupplyON(OFF);
+ a78:	80 e0       	ldi	r24, 0x00	; 0
+ a7a:	0e 94 39 03 	call	0x672	; 0x672 <powerSupplyON>
+            return POWEROFF;
+ a7e:	80 e0       	ldi	r24, 0x00	; 0
+ a80:	08 95       	ret
+        }
+        else if (timerExpired())
+ a82:	0e 94 62 03 	call	0x6c4	; 0x6c4 <timerExpired>
+ a86:	88 23       	and	r24, r24
+ a88:	69 f0       	breq	.+26     	; 0xaa4 <st_beforePowerOff+0x4e>
+        {
+            timerCountDownActivated = NOT_ACTIVATED;
+ a8a:	10 92 67 02 	sts	0x0267, r1
+            return BEFOREPOWEROFF;
+        }
+    }
+
+    //Needs to send every five seconds
+    sendPowerOffRequest();
+ a8e:	0e 94 31 03 	call	0x662	; 0x662 <sendPowerOffRequest>
+    timerCountDownActivated = POWEROFF_ACK_WAITING;
+ a92:	85 e0       	ldi	r24, 0x05	; 5
+ a94:	80 93 67 02 	sts	0x0267, r24
+    setTimerIn100ms(POWEROFF_WAIT);
+ a98:	84 e6       	ldi	r24, 0x64	; 100
+ a9a:	90 e0       	ldi	r25, 0x00	; 0
+ a9c:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+
+    return BEFOREPOWEROFF;
+ aa0:	84 e0       	ldi	r24, 0x04	; 4
+ aa2:	08 95       	ret
+        {
+            timerCountDownActivated = NOT_ACTIVATED;
+        }
+        else
+        {
+            return BEFOREPOWEROFF;
+ aa4:	84 e0       	ldi	r24, 0x04	; 4
+    sendPowerOffRequest();
+    timerCountDownActivated = POWEROFF_ACK_WAITING;
+    setTimerIn100ms(POWEROFF_WAIT);
+
+    return BEFOREPOWEROFF;
+}
+ aa6:	08 95       	ret
+
+00000aa8 <st_suspend>:
+    return RUN;
+}
+unsigned char st_suspend(void){
+
+    //State Transition is occuring 
+    if (timerCountDownActivated == POWER_BUTTON_OFF) {
+ aa8:	80 91 67 02 	lds	r24, 0x0267
+ aac:	82 30       	cpi	r24, 0x02	; 2
+ aae:	99 f4       	brne	.+38     	; 0xad6 <st_suspend+0x2e>
+
+        if (timerExpired())
+ ab0:	0e 94 62 03 	call	0x6c4	; 0x6c4 <timerExpired>
+ ab4:	88 23       	and	r24, r24
+ ab6:	21 f1       	breq	.+72     	; 0xb00 <st_suspend+0x58>
+        {
+            powerButtonPressed(RELEASED);
+ ab8:	80 e0       	ldi	r24, 0x00	; 0
+ aba:	0e 94 22 02 	call	0x444	; 0x444 <powerButtonPressed>
+            timerCountDownActivated = NOT_ACTIVATED;
+ abe:	10 92 67 02 	sts	0x0267, r1
+
+            if (getActivityInactiveTimeInS() > POWEROFF_THRESOLD_SEC) {
+ ac2:	0e 94 71 00 	call	0xe2	; 0xe2 <getActivityInactiveTimeInS>
+ ac6:	85 36       	cpi	r24, 0x65	; 101
+ ac8:	91 05       	cpc	r25, r1
+ aca:	e0 f4       	brcc	.+56     	; 0xb04 <st_suspend+0x5c>
+
+                return BEFOREPOWEROFF;
+            }
+            else
+            {
+                setHeartBeat(OFF);
+ acc:	80 e0       	ldi	r24, 0x00	; 0
+ ace:	0e 94 d0 02 	call	0x5a0	; 0x5a0 <setHeartBeat>
+                return BOOTING;
+ ad2:	81 e0       	ldi	r24, 0x01	; 1
+ ad4:	08 95       	ret
+            return SUSPEND;
+        }
+    }
+
+    //Activty detected OR NON-Activity for too long
+    if (activityDetected() || getActivityInactiveTimeInS() > POWEROFF_THRESOLD_SEC) {
+ ad6:	0e 94 4a 00 	call	0x94	; 0x94 <activityDetected>
+ ada:	88 23       	and	r24, r24
+ adc:	29 f4       	brne	.+10     	; 0xae8 <st_suspend+0x40>
+ ade:	0e 94 71 00 	call	0xe2	; 0xe2 <getActivityInactiveTimeInS>
+ ae2:	85 36       	cpi	r24, 0x65	; 101
+ ae4:	91 05       	cpc	r25, r1
+ ae6:	80 f0       	brcs	.+32     	; 0xb08 <st_suspend+0x60>
+        powerButtonPressed(PRESSED);
+ ae8:	81 e0       	ldi	r24, 0x01	; 1
+ aea:	0e 94 22 02 	call	0x444	; 0x444 <powerButtonPressed>
+        timerCountDownActivated = POWER_BUTTON_OFF;
+ aee:	82 e0       	ldi	r24, 0x02	; 2
+ af0:	80 93 67 02 	sts	0x0267, r24
+        setTimerIn100ms(POWER_BUTTON_PRESSED);
+ af4:	83 e2       	ldi	r24, 0x23	; 35
+ af6:	90 e0       	ldi	r25, 0x00	; 0
+ af8:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+    }
+
+    return SUSPEND;
+ afc:	83 e0       	ldi	r24, 0x03	; 3
+ afe:	08 95       	ret
+                return BOOTING;
+            }
+        }
+        else{
+
+            return SUSPEND;
+ b00:	83 e0       	ldi	r24, 0x03	; 3
+ b02:	08 95       	ret
+            powerButtonPressed(RELEASED);
+            timerCountDownActivated = NOT_ACTIVATED;
+
+            if (getActivityInactiveTimeInS() > POWEROFF_THRESOLD_SEC) {
+
+                return BEFOREPOWEROFF;
+ b04:	84 e0       	ldi	r24, 0x04	; 4
+ b06:	08 95       	ret
+        powerButtonPressed(PRESSED);
+        timerCountDownActivated = POWER_BUTTON_OFF;
+        setTimerIn100ms(POWER_BUTTON_PRESSED);
+    }
+
+    return SUSPEND;
+ b08:	83 e0       	ldi	r24, 0x03	; 3
+}
+ b0a:	08 95       	ret
+
+00000b0c <st_powerOff>:
+}
+
+unsigned char st_powerOff(void){
+
+    //State Transition is occuring 
+    if (timerCountDownActivated == POWER_BUTTON_ON) {
+ b0c:	80 91 67 02 	lds	r24, 0x0267
+ b10:	81 30       	cpi	r24, 0x01	; 1
+ b12:	b1 f4       	brne	.+44     	; 0xb40 <st_powerOff+0x34>
+
+        if (timerExpired())
+ b14:	0e 94 62 03 	call	0x6c4	; 0x6c4 <timerExpired>
+ b18:	88 23       	and	r24, r24
+ b1a:	29 f1       	breq	.+74     	; 0xb66 <st_powerOff+0x5a>
+        {
+            powerButtonPressed(RELEASED);
+ b1c:	80 e0       	ldi	r24, 0x00	; 0
+ b1e:	0e 94 22 02 	call	0x444	; 0x444 <powerButtonPressed>
+            if (isPowerLED_ON()) {
+ b22:	0e 94 10 03 	call	0x620	; 0x620 <isPowerLED_ON>
+ b26:	88 23       	and	r24, r24
+ b28:	01 f1       	breq	.+64     	; 0xb6a <st_powerOff+0x5e>
+
+                timerCountDownActivated = NOT_ACTIVATED;
+ b2a:	10 92 67 02 	sts	0x0267, r1
+                setTimerIn100ms(ZERO);
+ b2e:	80 e0       	ldi	r24, 0x00	; 0
+ b30:	90 e0       	ldi	r25, 0x00	; 0
+ b32:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+                setHeartBeat(OFF);
+ b36:	80 e0       	ldi	r24, 0x00	; 0
+ b38:	0e 94 d0 02 	call	0x5a0	; 0x5a0 <setHeartBeat>
+                return BOOTING;
+ b3c:	81 e0       	ldi	r24, 0x01	; 1
+ b3e:	08 95       	ret
+        //May hangs here
+        return POWEROFF;        
+    }
+
+    //Press the button for POWER_BUTTON_PRESSED time and switch state
+    if (activityDetected()) {
+ b40:	0e 94 4a 00 	call	0x94	; 0x94 <activityDetected>
+ b44:	88 23       	and	r24, r24
+ b46:	99 f0       	breq	.+38     	; 0xb6e <st_powerOff+0x62>
+		powerSupplyON(ON);		
+ b48:	81 e0       	ldi	r24, 0x01	; 1
+ b4a:	0e 94 39 03 	call	0x672	; 0x672 <powerSupplyON>
+        powerButtonPressed(PRESSED);
+ b4e:	81 e0       	ldi	r24, 0x01	; 1
+ b50:	0e 94 22 02 	call	0x444	; 0x444 <powerButtonPressed>
+        timerCountDownActivated = POWER_BUTTON_ON;
+ b54:	81 e0       	ldi	r24, 0x01	; 1
+ b56:	80 93 67 02 	sts	0x0267, r24
+        setTimerIn100ms(POWER_BUTTON_PRESSED);
+ b5a:	83 e2       	ldi	r24, 0x23	; 35
+ b5c:	90 e0       	ldi	r25, 0x00	; 0
+ b5e:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+    }
+
+    return POWEROFF;
+ b62:	80 e0       	ldi	r24, 0x00	; 0
+ b64:	08 95       	ret
+                return BOOTING;
+            }
+        }
+
+        //May hangs here
+        return POWEROFF;        
+ b66:	80 e0       	ldi	r24, 0x00	; 0
+ b68:	08 95       	ret
+ b6a:	80 e0       	ldi	r24, 0x00	; 0
+ b6c:	08 95       	ret
+        powerButtonPressed(PRESSED);
+        timerCountDownActivated = POWER_BUTTON_ON;
+        setTimerIn100ms(POWER_BUTTON_PRESSED);
+    }
+
+    return POWEROFF;
+ b6e:	80 e0       	ldi	r24, 0x00	; 0
+}
+ b70:	08 95       	ret
+
+00000b72 <st_run>:
+    }
+}
+
+unsigned char st_run(void){
+
+      if (timerCountDownActivated == POWER_SUPPLY) {
+ b72:	80 91 67 02 	lds	r24, 0x0267
+ b76:	83 30       	cpi	r24, 0x03	; 3
+ b78:	89 f4       	brne	.+34     	; 0xb9c <st_run+0x2a>
+
+         if (isPowerLED_ON()== OFF) {
+ b7a:	0e 94 10 03 	call	0x620	; 0x620 <isPowerLED_ON>
+ b7e:	88 23       	and	r24, r24
+ b80:	09 f0       	breq	.+2      	; 0xb84 <st_run+0x12>
+ b82:	46 c0       	rjmp	.+140    	; 0xc10 <st_run+0x9e>
+				
+                timerCountDownActivated = NOT_ACTIVATED;
+ b84:	10 92 67 02 	sts	0x0267, r1
+                setTracking(OFF);
+ b88:	0e 94 81 03 	call	0x702	; 0x702 <setTracking>
+                setHeartBeat(OFF);
+ b8c:	80 e0       	ldi	r24, 0x00	; 0
+ b8e:	0e 94 d0 02 	call	0x5a0	; 0x5a0 <setHeartBeat>
+                setActivityDetected(FALSE);
+ b92:	80 e0       	ldi	r24, 0x00	; 0
+ b94:	0e 94 54 00 	call	0xa8	; 0xa8 <setActivityDetected>
+                return POWEROFF;
+ b98:	80 e0       	ldi	r24, 0x00	; 0
+ b9a:	08 95       	ret
+         }			
+        
+		return RUN;        
+      } 
+      else if (timerCountDownActivated == SUSPEND_ACK_WAITING) {
+ b9c:	84 30       	cpi	r24, 0x04	; 4
+ b9e:	e9 f4       	brne	.+58     	; 0xbda <st_run+0x68>
+
+          if (timerExpired()) {
+ ba0:	0e 94 62 03 	call	0x6c4	; 0x6c4 <timerExpired>
+ ba4:	88 23       	and	r24, r24
+ ba6:	21 f0       	breq	.+8      	; 0xbb0 <st_run+0x3e>
+              //Computer might hangs
+              //Heartbeat = TRUE but never ACK SUSPEND
+              timerCountDownActivated = NOT_ACTIVATED;
+ ba8:	10 92 67 02 	sts	0x0267, r1
+              setHeartBeat(OFF);
+              setActivityDetected(FALSE);
+              return SUSPEND;
+          }
+		  
+		  return RUN;
+ bac:	82 e0       	ldi	r24, 0x02	; 2
+ bae:	08 95       	ret
+          if (timerExpired()) {
+              //Computer might hangs
+              //Heartbeat = TRUE but never ACK SUSPEND
+              timerCountDownActivated = NOT_ACTIVATED;
+              
+		 }else if (getSuspendAcknowledge()) {
+ bb0:	0e 94 3c 03 	call	0x678	; 0x678 <getSuspendAcknowledge>
+ bb4:	88 23       	and	r24, r24
+ bb6:	71 f1       	breq	.+92     	; 0xc14 <st_run+0xa2>
+
+              timerCountDownActivated = NOT_ACTIVATED;
+ bb8:	10 92 67 02 	sts	0x0267, r1
+              setTimerIn100ms(ZERO);
+ bbc:	80 e0       	ldi	r24, 0x00	; 0
+ bbe:	90 e0       	ldi	r25, 0x00	; 0
+ bc0:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+              setTracking(OFF);
+ bc4:	80 e0       	ldi	r24, 0x00	; 0
+ bc6:	0e 94 81 03 	call	0x702	; 0x702 <setTracking>
+              setHeartBeat(OFF);
+ bca:	80 e0       	ldi	r24, 0x00	; 0
+ bcc:	0e 94 d0 02 	call	0x5a0	; 0x5a0 <setHeartBeat>
+              setActivityDetected(FALSE);
+ bd0:	80 e0       	ldi	r24, 0x00	; 0
+ bd2:	0e 94 54 00 	call	0xa8	; 0xa8 <setActivityDetected>
+              return SUSPEND;
+ bd6:	83 e0       	ldi	r24, 0x03	; 3
+ bd8:	08 95       	ret
+		  
+		  return RUN;
+      }
+
+    
+    if (getHeartBeatInactiveTimeInS() > HEARTBEAT_THRESOLD_SEC) {
+ bda:	0e 94 e8 02 	call	0x5d0	; 0x5d0 <getHeartBeatInactiveTimeInS>
+ bde:	8d 33       	cpi	r24, 0x3D	; 61
+ be0:	40 f0       	brcs	.+16     	; 0xbf2 <st_run+0x80>
+        //Ubuntu hangs -> Turn it off
+        powerSupplyON(OFF);
+ be2:	80 e0       	ldi	r24, 0x00	; 0
+ be4:	0e 94 39 03 	call	0x672	; 0x672 <powerSupplyON>
+		timerCountDownActivated = POWER_SUPPLY;
+ be8:	83 e0       	ldi	r24, 0x03	; 3
+ bea:	80 93 67 02 	sts	0x0267, r24
+        sendSuspendRequest();
+        timerCountDownActivated = SUSPEND_ACK_WAITING;
+        setTimerIn100ms(SUSPENSION_WAIT);
+    }
+
+    return RUN;
+ bee:	82 e0       	ldi	r24, 0x02	; 2
+ bf0:	08 95       	ret
+    
+    if (getHeartBeatInactiveTimeInS() > HEARTBEAT_THRESOLD_SEC) {
+        //Ubuntu hangs -> Turn it off
+        powerSupplyON(OFF);
+		timerCountDownActivated = POWER_SUPPLY;
+    }else if (getTracking()==OFF) {
+ bf2:	0e 94 72 03 	call	0x6e4	; 0x6e4 <getTracking>
+ bf6:	88 23       	and	r24, r24
+ bf8:	79 f4       	brne	.+30     	; 0xc18 <st_run+0xa6>
+        //Ubuntu not tracking -> Suspend
+        sendSuspendRequest();
+ bfa:	0e 94 44 03 	call	0x688	; 0x688 <sendSuspendRequest>
+        timerCountDownActivated = SUSPEND_ACK_WAITING;
+ bfe:	84 e0       	ldi	r24, 0x04	; 4
+ c00:	80 93 67 02 	sts	0x0267, r24
+        setTimerIn100ms(SUSPENSION_WAIT);
+ c04:	84 e6       	ldi	r24, 0x64	; 100
+ c06:	90 e0       	ldi	r25, 0x00	; 0
+ c08:	0e 94 4a 03 	call	0x694	; 0x694 <setTimerIn100ms>
+    }
+
+    return RUN;
+ c0c:	82 e0       	ldi	r24, 0x02	; 2
+ c0e:	08 95       	ret
+                setHeartBeat(OFF);
+                setActivityDetected(FALSE);
+                return POWEROFF;
+         }			
+        
+		return RUN;        
+ c10:	82 e0       	ldi	r24, 0x02	; 2
+ c12:	08 95       	ret
+              setHeartBeat(OFF);
+              setActivityDetected(FALSE);
+              return SUSPEND;
+          }
+		  
+		  return RUN;
+ c14:	82 e0       	ldi	r24, 0x02	; 2
+ c16:	08 95       	ret
+        sendSuspendRequest();
+        timerCountDownActivated = SUSPEND_ACK_WAITING;
+        setTimerIn100ms(SUSPENSION_WAIT);
+    }
+
+    return RUN;
+ c18:	82 e0       	ldi	r24, 0x02	; 2
+}
+ c1a:	08 95       	ret
+
+00000c1c <st_booting>:
+
+    return POWEROFF;
+}
+unsigned char st_booting(void){
+
+    if (getHeartBeat()) {
+ c1c:	0e 94 c6 02 	call	0x58c	; 0x58c <getHeartBeat>
+ c20:	88 23       	and	r24, r24
+ c22:	41 f0       	breq	.+16     	; 0xc34 <st_booting+0x18>
+		//Need to reset the tracking timer 
+		setTracking(ON);
+ c24:	81 e0       	ldi	r24, 0x01	; 1
+ c26:	0e 94 81 03 	call	0x702	; 0x702 <setTracking>
+        setHeartBeat(ON);
+ c2a:	81 e0       	ldi	r24, 0x01	; 1
+ c2c:	0e 94 d0 02 	call	0x5a0	; 0x5a0 <setHeartBeat>
+		return RUN;
+ c30:	82 e0       	ldi	r24, 0x02	; 2
+ c32:	08 95       	ret
+    }
+    else
+    {
+        return BOOTING;
+ c34:	81 e0       	ldi	r24, 0x01	; 1
+    }
+}
+ c36:	08 95       	ret
+
+00000c38 <getInitialState>:
+unsigned char (*const Ubuntu_State[])(void) = {st_powerOff, st_booting, st_run, st_suspend,st_beforePowerOff}; 
+unsigned char timerCountDownActivated = FALSE;
+
+unsigned char getInitialState(void){
+	
+	powerSupplyON(OFF);
+ c38:	80 e0       	ldi	r24, 0x00	; 0
+ c3a:	0e 94 39 03 	call	0x672	; 0x672 <powerSupplyON>
+	return POWEROFF;
+}
+ c3e:	80 e0       	ldi	r24, 0x00	; 0
+ c40:	08 95       	ret
+
+00000c42 <stateTransition>:
+unsigned char stateTransition(unsigned char currentState){
+
+    static unsigned char pastState = POWEROFF;
+    unsigned char result ;
+
+    result = (pastState == currentState);
+ c42:	91 e0       	ldi	r25, 0x01	; 1
+ c44:	20 91 68 02 	lds	r18, 0x0268
+ c48:	28 13       	cpse	r18, r24
+ c4a:	90 e0       	ldi	r25, 0x00	; 0
+    pastState = currentState;
+ c4c:	80 93 68 02 	sts	0x0268, r24
+
+    return result;
+}
+ c50:	89 2f       	mov	r24, r25
+ c52:	08 95       	ret
+
+00000c54 <UART_Init>:
+#include "avr/io.h"
+
+/*************************************** U A R T *****************************************/
+
+void UART_Init(uint32_t Baud)
+{
+ c54:	dc 01       	movw	r26, r24
+ c56:	cb 01       	movw	r24, r22
+	unsigned int BaudRate = OSCSPEED / (16 * Baud) - 1;		//calculate BaudRate from page 145
+
+	//set BaudRate into registers
+	UBRRH = (unsigned char) BaudRate>>8;
+ c58:	10 bc       	out	0x20, r1	; 32
+
+/*************************************** U A R T *****************************************/
+
+void UART_Init(uint32_t Baud)
+{
+	unsigned int BaudRate = OSCSPEED / (16 * Baud) - 1;		//calculate BaudRate from page 145
+ c5a:	88 0f       	add	r24, r24
+ c5c:	99 1f       	adc	r25, r25
+ c5e:	aa 1f       	adc	r26, r26
+ c60:	bb 1f       	adc	r27, r27
+ c62:	88 0f       	add	r24, r24
+ c64:	99 1f       	adc	r25, r25
+ c66:	aa 1f       	adc	r26, r26
+ c68:	bb 1f       	adc	r27, r27
+ c6a:	9c 01       	movw	r18, r24
+ c6c:	ad 01       	movw	r20, r26
+ c6e:	22 0f       	add	r18, r18
+ c70:	33 1f       	adc	r19, r19
+ c72:	44 1f       	adc	r20, r20
+ c74:	55 1f       	adc	r21, r21
+ c76:	22 0f       	add	r18, r18
+ c78:	33 1f       	adc	r19, r19
+ c7a:	44 1f       	adc	r20, r20
+ c7c:	55 1f       	adc	r21, r21
+ c7e:	60 e0       	ldi	r22, 0x00	; 0
+ c80:	74 e2       	ldi	r23, 0x24	; 36
+ c82:	84 ef       	ldi	r24, 0xF4	; 244
+ c84:	90 e0       	ldi	r25, 0x00	; 0
+ c86:	0e 94 62 06 	call	0xcc4	; 0xcc4 <__udivmodsi4>
+ c8a:	21 50       	subi	r18, 0x01	; 1
+ c8c:	30 40       	sbci	r19, 0x00	; 0
+
+	//set BaudRate into registers
+	UBRRH = (unsigned char) BaudRate>>8;
+	UBRRL = (unsigned char) BaudRate;
+ c8e:	29 b9       	out	0x09, r18	; 9
+	
+
+	UCSRB = UCSRB | 0b00011000;		// RXEN & TXEN enable (Bits 4, 3 = 1)
+ c90:	8a b1       	in	r24, 0x0a	; 10
+ c92:	88 61       	ori	r24, 0x18	; 24
+ c94:	8a b9       	out	0x0a, r24	; 10
+	UCSRC = UCSRC | 0b10000110;		// set Frame Format 8 bits per frame (Bit1 = 1, Bit2 = 1), 1 stop bit(Bit3 =0)
+ c96:	80 b5       	in	r24, 0x20	; 32
+ c98:	86 68       	ori	r24, 0x86	; 134
+ c9a:	80 bd       	out	0x20, r24	; 32
+}
+ c9c:	08 95       	ret
+
+00000c9e <UART_Receive>:
+
+unsigned char UART_Receive()
+{
+	if (UCSRA & 0b10000000)
+ c9e:	5f 9b       	sbis	0x0b, 7	; 11
+ ca0:	02 c0       	rjmp	.+4      	; 0xca6 <UART_Receive+0x8>
+		return UDR;
+ ca2:	8c b1       	in	r24, 0x0c	; 12
+ ca4:	08 95       	ret
+	else
+		return 0;
+ ca6:	80 e0       	ldi	r24, 0x00	; 0
+}
+ ca8:	08 95       	ret
+
+00000caa <UART_ReceiveSuccess>:
+
+unsigned char UART_ReceiveSuccess(char* data)
+{
+	if (UCSRA & 0b10000000)
+ caa:	5f 9b       	sbis	0x0b, 7	; 11
+ cac:	05 c0       	rjmp	.+10     	; 0xcb8 <UART_ReceiveSuccess+0xe>
+	{
+		*data = UDR;
+ cae:	2c b1       	in	r18, 0x0c	; 12
+ cb0:	fc 01       	movw	r30, r24
+ cb2:	20 83       	st	Z, r18
+		return TRUE;
+ cb4:	81 e0       	ldi	r24, 0x01	; 1
+ cb6:	08 95       	ret
+	}else
+	{		
+		return FALSE;	
+ cb8:	80 e0       	ldi	r24, 0x00	; 0
+	}
+}
+ cba:	08 95       	ret
+
+00000cbc <UART_Transmit>:
+
+void UART_Transmit(unsigned char Data)
+{
+	while (!(UCSRA & 0b00100000));
+ cbc:	5d 9b       	sbis	0x0b, 5	; 11
+ cbe:	fe cf       	rjmp	.-4      	; 0xcbc <UART_Transmit>
+	UDR = Data;
+ cc0:	8c b9       	out	0x0c, r24	; 12
+ cc2:	08 95       	ret
+
+00000cc4 <__udivmodsi4>:
+ cc4:	a1 e2       	ldi	r26, 0x21	; 33
+ cc6:	1a 2e       	mov	r1, r26
+ cc8:	aa 1b       	sub	r26, r26
+ cca:	bb 1b       	sub	r27, r27
+ ccc:	fd 01       	movw	r30, r26
+ cce:	0d c0       	rjmp	.+26     	; 0xcea <__udivmodsi4_ep>
+
+00000cd0 <__udivmodsi4_loop>:
+ cd0:	aa 1f       	adc	r26, r26
+ cd2:	bb 1f       	adc	r27, r27
+ cd4:	ee 1f       	adc	r30, r30
+ cd6:	ff 1f       	adc	r31, r31
+ cd8:	a2 17       	cp	r26, r18
+ cda:	b3 07       	cpc	r27, r19
+ cdc:	e4 07       	cpc	r30, r20
+ cde:	f5 07       	cpc	r31, r21
+ ce0:	20 f0       	brcs	.+8      	; 0xcea <__udivmodsi4_ep>
+ ce2:	a2 1b       	sub	r26, r18
+ ce4:	b3 0b       	sbc	r27, r19
+ ce6:	e4 0b       	sbc	r30, r20
+ ce8:	f5 0b       	sbc	r31, r21
+
+00000cea <__udivmodsi4_ep>:
+ cea:	66 1f       	adc	r22, r22
+ cec:	77 1f       	adc	r23, r23
+ cee:	88 1f       	adc	r24, r24
+ cf0:	99 1f       	adc	r25, r25
+ cf2:	1a 94       	dec	r1
+ cf4:	69 f7       	brne	.-38     	; 0xcd0 <__udivmodsi4_loop>
+ cf6:	60 95       	com	r22
+ cf8:	70 95       	com	r23
+ cfa:	80 95       	com	r24
+ cfc:	90 95       	com	r25
+ cfe:	9b 01       	movw	r18, r22
+ d00:	ac 01       	movw	r20, r24
+ d02:	bd 01       	movw	r22, r26
+ d04:	cf 01       	movw	r24, r30
+ d06:	08 95       	ret
+
+00000d08 <memcpy>:
+ d08:	fb 01       	movw	r30, r22
+ d0a:	dc 01       	movw	r26, r24
+ d0c:	02 c0       	rjmp	.+4      	; 0xd12 <memcpy+0xa>
+ d0e:	01 90       	ld	r0, Z+
+ d10:	0d 92       	st	X+, r0
+ d12:	41 50       	subi	r20, 0x01	; 1
+ d14:	50 40       	sbci	r21, 0x00	; 0
+ d16:	d8 f7       	brcc	.-10     	; 0xd0e <memcpy+0x6>
+ d18:	08 95       	ret
+
+00000d1a <_exit>:
+ d1a:	f8 94       	cli
+
+00000d1c <__stop_program>:
+ d1c:	ff cf       	rjmp	.-2      	; 0xd1c <__stop_program>
