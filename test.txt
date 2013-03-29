@@ -1,0 +1,1 @@
+This is a branch test of the camera trap repo. This branch will update the firmware to include capabilities for simultaneously controlling motors and processing video frames

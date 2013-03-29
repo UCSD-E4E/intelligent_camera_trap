@@ -1,4 +1,6 @@
 FILE(REMOVE_RECURSE
+  "srv_gen"
+  "src/ICT_Viper/srv"
   "CMakeFiles/test-results"
 )
 

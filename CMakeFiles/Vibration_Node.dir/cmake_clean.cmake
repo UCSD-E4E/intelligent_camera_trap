@@ -1,4 +1,6 @@
 FILE(REMOVE_RECURSE
+  "srv_gen"
+  "src/ICT_Viper/srv"
   "CMakeFiles/Vibration_Node.dir/src/Vibration_Node.cpp.o"
   "bin/Vibration_Node.pdb"
   "bin/Vibration_Node"

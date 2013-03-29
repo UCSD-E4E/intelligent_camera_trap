@@ -2,4 +2,4 @@
 # generated from catkin/cmake/templates/setup.bash.in
 
 CATKIN_SHELL=bash
-. "/home/viki/groovy_workspace/ICT_Viper/devel/setup.sh"
+. "/home/riley/fuerte_workspace/sandbox/ICT_Viper/devel/setup.sh"

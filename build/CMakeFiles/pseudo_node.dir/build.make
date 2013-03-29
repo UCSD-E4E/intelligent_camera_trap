@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS/build
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/pseudo_node.dir/depend.make
@@ -46,51 +46,59 @@ include CMakeFiles/pseudo_node.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/pseudo_node.dir/flags.make
 
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: CMakeFiles/pseudo_node.dir/flags.make
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: ../src/pseudo_node.cpp
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: ../manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/roslang/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/roscpp/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/geometry_msgs/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/sensor_msgs/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/vision_opencv/opencv2/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/vision_opencv/cv_bridge/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/std_msgs/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/ros/core/rosbuild/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/roslib/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/rosconsole/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/pluginlib/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/share/message_filters/manifest.xml
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o: /opt/ros/fuerte/stacks/image_common/image_transport/manifest.xml
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/pseudo_node.dir/src/pseudo_node.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/pseudo_node.dir/src/pseudo_node.o -c /home/sealab/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: CMakeFiles/pseudo_node.dir/flags.make
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: ../src/pseudo_node.cpp
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: ../manifest.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/cpp_common/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/rostime/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/roscpp_traits/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/roscpp_serialization/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/message_runtime/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/std_msgs/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/genmsg/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/genpy/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/rosgraph/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/rosgraph_msgs/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/rospack/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/roslib/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/rospy/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/rosconsole/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/xmlrpcpp/package.xml
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o: /opt/ros/groovy/share/roscpp/package.xml
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/ICT_Viper/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o -c /home/viki/groovy_workspace/ICT_Viper/src/pseudo_node.cpp
 
-CMakeFiles/pseudo_node.dir/src/pseudo_node.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pseudo_node.dir/src/pseudo_node.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/sealab/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp > CMakeFiles/pseudo_node.dir/src/pseudo_node.i
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/viki/groovy_workspace/ICT_Viper/src/pseudo_node.cpp > CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.i
 
-CMakeFiles/pseudo_node.dir/src/pseudo_node.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pseudo_node.dir/src/pseudo_node.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/sealab/fuerte_workspace/sandbox/ViperROS/src/pseudo_node.cpp -o CMakeFiles/pseudo_node.dir/src/pseudo_node.s
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/viki/groovy_workspace/ICT_Viper/src/pseudo_node.cpp -o CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.s
 
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o.requires:
-.PHONY : CMakeFiles/pseudo_node.dir/src/pseudo_node.o.requires
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.requires:
+.PHONY : CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.requires
 
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o.provides: CMakeFiles/pseudo_node.dir/src/pseudo_node.o.requires
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.o.provides.build
-.PHONY : CMakeFiles/pseudo_node.dir/src/pseudo_node.o.provides
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.provides: CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.requires
+	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.provides.build
+.PHONY : CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.provides
 
-CMakeFiles/pseudo_node.dir/src/pseudo_node.o.provides.build: CMakeFiles/pseudo_node.dir/src/pseudo_node.o
+CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.provides.build: CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o
 
 # Object files for target pseudo_node
 pseudo_node_OBJECTS = \
-"CMakeFiles/pseudo_node.dir/src/pseudo_node.o"
+"CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o"
 
 # External object files for target pseudo_node
 pseudo_node_EXTERNAL_OBJECTS =
 
-../bin/pseudo_node: CMakeFiles/pseudo_node.dir/src/pseudo_node.o
+../bin/pseudo_node: CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o
+../bin/pseudo_node: /usr/lib/libboost_signals-mt.so
+../bin/pseudo_node: /usr/lib/libboost_filesystem-mt.so
+../bin/pseudo_node: /usr/lib/libboost_date_time-mt.so
+../bin/pseudo_node: /usr/lib/libboost_system-mt.so
+../bin/pseudo_node: /usr/lib/libboost_thread-mt.so
 ../bin/pseudo_node: CMakeFiles/pseudo_node.dir/build.make
 ../bin/pseudo_node: CMakeFiles/pseudo_node.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable ../bin/pseudo_node"
@@ -100,7 +108,7 @@ pseudo_node_EXTERNAL_OBJECTS =
 CMakeFiles/pseudo_node.dir/build: ../bin/pseudo_node
 .PHONY : CMakeFiles/pseudo_node.dir/build
 
-CMakeFiles/pseudo_node.dir/requires: CMakeFiles/pseudo_node.dir/src/pseudo_node.o.requires
+CMakeFiles/pseudo_node.dir/requires: CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o.requires
 .PHONY : CMakeFiles/pseudo_node.dir/requires
 
 CMakeFiles/pseudo_node.dir/clean:
@@ -108,6 +116,6 @@ CMakeFiles/pseudo_node.dir/clean:
 .PHONY : CMakeFiles/pseudo_node.dir/clean
 
 CMakeFiles/pseudo_node.dir/depend:
-	cd /home/sealab/fuerte_workspace/sandbox/ViperROS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/pseudo_node.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/ICT_Viper/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/build /home/viki/groovy_workspace/ICT_Viper/build /home/viki/groovy_workspace/ICT_Viper/build/CMakeFiles/pseudo_node.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/pseudo_node.dir/depend
 

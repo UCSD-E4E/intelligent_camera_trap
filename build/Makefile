@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS/build
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -54,6 +54,47 @@ edit_cache:
 edit_cache/fast: edit_cache
 .PHONY : edit_cache/fast
 
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: install/local
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: install/strip
+.PHONY : install/strip/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -66,9 +107,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/viki/groovy_workspace/ICT_Viper/build/CMakeFiles /home/viki/groovy_workspace/ICT_Viper/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/viki/groovy_workspace/ICT_Viper/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -109,19 +150,6 @@ ROSBUILD_genmsg_cpp/fast:
 .PHONY : ROSBUILD_genmsg_cpp/fast
 
 #=============================================================================
-# Target rules for targets named ROSBUILD_genmsg_lisp
-
-# Build rule for target.
-ROSBUILD_genmsg_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ROSBUILD_genmsg_lisp
-.PHONY : ROSBUILD_genmsg_lisp
-
-# fast build rule for target.
-ROSBUILD_genmsg_lisp/fast:
-	$(MAKE) -f CMakeFiles/ROSBUILD_genmsg_lisp.dir/build.make CMakeFiles/ROSBUILD_genmsg_lisp.dir/build
-.PHONY : ROSBUILD_genmsg_lisp/fast
-
-#=============================================================================
 # Target rules for targets named ROSBUILD_gensrv_cpp
 
 # Build rule for target.
@@ -135,69 +163,121 @@ ROSBUILD_gensrv_cpp/fast:
 .PHONY : ROSBUILD_gensrv_cpp/fast
 
 #=============================================================================
-# Target rules for targets named ROSBUILD_gensrv_lisp
+# Target rules for targets named ROSBUILD_gensrv_py
 
 # Build rule for target.
-ROSBUILD_gensrv_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ROSBUILD_gensrv_lisp
-.PHONY : ROSBUILD_gensrv_lisp
+ROSBUILD_gensrv_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ROSBUILD_gensrv_py
+.PHONY : ROSBUILD_gensrv_py
 
 # fast build rule for target.
-ROSBUILD_gensrv_lisp/fast:
-	$(MAKE) -f CMakeFiles/ROSBUILD_gensrv_lisp.dir/build.make CMakeFiles/ROSBUILD_gensrv_lisp.dir/build
-.PHONY : ROSBUILD_gensrv_lisp/fast
+ROSBUILD_gensrv_py/fast:
+	$(MAKE) -f CMakeFiles/ROSBUILD_gensrv_py.dir/build.make CMakeFiles/ROSBUILD_gensrv_py.dir/build
+.PHONY : ROSBUILD_gensrv_py/fast
 
 #=============================================================================
-# Target rules for targets named Vibration_Node
+# Target rules for targets named clean_test_results
 
 # Build rule for target.
-Vibration_Node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Vibration_Node
-.PHONY : Vibration_Node
+clean_test_results: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 clean_test_results
+.PHONY : clean_test_results
 
 # fast build rule for target.
-Vibration_Node/fast:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/build
-.PHONY : Vibration_Node/fast
+clean_test_results/fast:
+	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/build
+.PHONY : clean_test_results/fast
 
 #=============================================================================
-# Target rules for targets named clean-test-results
+# Target rules for targets named com
 
 # Build rule for target.
-clean-test-results: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clean-test-results
-.PHONY : clean-test-results
+com: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 com
+.PHONY : com
 
 # fast build rule for target.
-clean-test-results/fast:
-	$(MAKE) -f CMakeFiles/clean-test-results.dir/build.make CMakeFiles/clean-test-results.dir/build
-.PHONY : clean-test-results/fast
+com/fast:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/build
+.PHONY : com/fast
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named cv
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main
-.PHONY : main
+cv: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cv
+.PHONY : cv
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+cv/fast:
+	$(MAKE) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/build
+.PHONY : cv/fast
 
 #=============================================================================
-# Target rules for targets named pseudo_node
+# Target rules for targets named doxygen
 
 # Build rule for target.
-pseudo_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 pseudo_node
-.PHONY : pseudo_node
+doxygen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 doxygen
+.PHONY : doxygen
 
 # fast build rule for target.
-pseudo_node/fast:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/build
-.PHONY : pseudo_node/fast
+doxygen/fast:
+	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/build
+.PHONY : doxygen/fast
+
+#=============================================================================
+# Target rules for targets named hypervisor
+
+# Build rule for target.
+hypervisor: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 hypervisor
+.PHONY : hypervisor
+
+# fast build rule for target.
+hypervisor/fast:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/build
+.PHONY : hypervisor/fast
+
+#=============================================================================
+# Target rules for targets named log
+
+# Build rule for target.
+log: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 log
+.PHONY : log
+
+# fast build rule for target.
+log/fast:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/build
+.PHONY : log/fast
+
+#=============================================================================
+# Target rules for targets named motors
+
+# Build rule for target.
+motors: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 motors
+.PHONY : motors
+
+# fast build rule for target.
+motors/fast:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/build
+.PHONY : motors/fast
+
+#=============================================================================
+# Target rules for targets named rosbuild_clean-test-results
+
+# Build rule for target.
+rosbuild_clean-test-results: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosbuild_clean-test-results
+.PHONY : rosbuild_clean-test-results
+
+# fast build rule for target.
+rosbuild_clean-test-results/fast:
+	$(MAKE) -f CMakeFiles/rosbuild_clean-test-results.dir/build.make CMakeFiles/rosbuild_clean-test-results.dir/build
+.PHONY : rosbuild_clean-test-results/fast
 
 #=============================================================================
 # Target rules for targets named rosbuild_precompile
@@ -291,6 +371,19 @@ rospack_gensrv_all/fast:
 .PHONY : rospack_gensrv_all/fast
 
 #=============================================================================
+# Target rules for targets named run_tests
+
+# Build rule for target.
+run_tests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_tests
+.PHONY : run_tests
+
+# fast build rule for target.
+run_tests/fast:
+	$(MAKE) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
+.PHONY : run_tests/fast
+
+#=============================================================================
 # Target rules for targets named test
 
 # Build rule for target.
@@ -355,50 +448,188 @@ tests/fast:
 	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
 .PHONY : tests/fast
 
+#=============================================================================
+# Target rules for targets named webcam
+
+# Build rule for target.
+webcam: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 webcam
+.PHONY : webcam
+
+# fast build rule for target.
+webcam/fast:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/build
+.PHONY : webcam/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
+src/node_com/node_com.o: src/node_com/node_com.cpp.o
+.PHONY : src/node_com/node_com.o
+
 # target to build an object file
-src/Vibration_Node.o:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/src/Vibration_Node.o
-.PHONY : src/Vibration_Node.o
+src/node_com/node_com.cpp.o:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/src/node_com/node_com.cpp.o
+.PHONY : src/node_com/node_com.cpp.o
+
+src/node_com/node_com.i: src/node_com/node_com.cpp.i
+.PHONY : src/node_com/node_com.i
 
 # target to preprocess a source file
-src/Vibration_Node.i:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/src/Vibration_Node.i
-.PHONY : src/Vibration_Node.i
+src/node_com/node_com.cpp.i:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/src/node_com/node_com.cpp.i
+.PHONY : src/node_com/node_com.cpp.i
+
+src/node_com/node_com.s: src/node_com/node_com.cpp.s
+.PHONY : src/node_com/node_com.s
 
 # target to generate assembly for a file
-src/Vibration_Node.s:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/src/Vibration_Node.s
-.PHONY : src/Vibration_Node.s
+src/node_com/node_com.cpp.s:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/src/node_com/node_com.cpp.s
+.PHONY : src/node_com/node_com.cpp.s
+
+src/node_cv/node_cv.o: src/node_cv/node_cv.cpp.o
+.PHONY : src/node_cv/node_cv.o
 
 # target to build an object file
-src/main.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.o
-.PHONY : src/main.o
+src/node_cv/node_cv.cpp.o:
+	$(MAKE) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/src/node_cv/node_cv.cpp.o
+.PHONY : src/node_cv/node_cv.cpp.o
+
+src/node_cv/node_cv.i: src/node_cv/node_cv.cpp.i
+.PHONY : src/node_cv/node_cv.i
 
 # target to preprocess a source file
-src/main.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.i
-.PHONY : src/main.i
+src/node_cv/node_cv.cpp.i:
+	$(MAKE) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/src/node_cv/node_cv.cpp.i
+.PHONY : src/node_cv/node_cv.cpp.i
+
+src/node_cv/node_cv.s: src/node_cv/node_cv.cpp.s
+.PHONY : src/node_cv/node_cv.s
 
 # target to generate assembly for a file
-src/main.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.s
-.PHONY : src/main.s
+src/node_cv/node_cv.cpp.s:
+	$(MAKE) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/src/node_cv/node_cv.cpp.s
+.PHONY : src/node_cv/node_cv.cpp.s
+
+src/node_hypervisor/node_hypervisor.o: src/node_hypervisor/node_hypervisor.cpp.o
+.PHONY : src/node_hypervisor/node_hypervisor.o
 
 # target to build an object file
-src/pseudo_node.o:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.o
-.PHONY : src/pseudo_node.o
+src/node_hypervisor/node_hypervisor.cpp.o:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/src/node_hypervisor/node_hypervisor.cpp.o
+.PHONY : src/node_hypervisor/node_hypervisor.cpp.o
+
+src/node_hypervisor/node_hypervisor.i: src/node_hypervisor/node_hypervisor.cpp.i
+.PHONY : src/node_hypervisor/node_hypervisor.i
 
 # target to preprocess a source file
-src/pseudo_node.i:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.i
-.PHONY : src/pseudo_node.i
+src/node_hypervisor/node_hypervisor.cpp.i:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/src/node_hypervisor/node_hypervisor.cpp.i
+.PHONY : src/node_hypervisor/node_hypervisor.cpp.i
+
+src/node_hypervisor/node_hypervisor.s: src/node_hypervisor/node_hypervisor.cpp.s
+.PHONY : src/node_hypervisor/node_hypervisor.s
 
 # target to generate assembly for a file
-src/pseudo_node.s:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.s
-.PHONY : src/pseudo_node.s
+src/node_hypervisor/node_hypervisor.cpp.s:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/src/node_hypervisor/node_hypervisor.cpp.s
+.PHONY : src/node_hypervisor/node_hypervisor.cpp.s
+
+src/node_log/node_log.o: src/node_log/node_log.cpp.o
+.PHONY : src/node_log/node_log.o
+
+# target to build an object file
+src/node_log/node_log.cpp.o:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/src/node_log/node_log.cpp.o
+.PHONY : src/node_log/node_log.cpp.o
+
+src/node_log/node_log.i: src/node_log/node_log.cpp.i
+.PHONY : src/node_log/node_log.i
+
+# target to preprocess a source file
+src/node_log/node_log.cpp.i:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/src/node_log/node_log.cpp.i
+.PHONY : src/node_log/node_log.cpp.i
+
+src/node_log/node_log.s: src/node_log/node_log.cpp.s
+.PHONY : src/node_log/node_log.s
+
+# target to generate assembly for a file
+src/node_log/node_log.cpp.s:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/src/node_log/node_log.cpp.s
+.PHONY : src/node_log/node_log.cpp.s
+
+src/node_motors/node_motors.o: src/node_motors/node_motors.cpp.o
+.PHONY : src/node_motors/node_motors.o
+
+# target to build an object file
+src/node_motors/node_motors.cpp.o:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.o
+.PHONY : src/node_motors/node_motors.cpp.o
+
+src/node_motors/node_motors.i: src/node_motors/node_motors.cpp.i
+.PHONY : src/node_motors/node_motors.i
+
+# target to preprocess a source file
+src/node_motors/node_motors.cpp.i:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.i
+.PHONY : src/node_motors/node_motors.cpp.i
+
+src/node_motors/node_motors.s: src/node_motors/node_motors.cpp.s
+.PHONY : src/node_motors/node_motors.s
+
+# target to generate assembly for a file
+src/node_motors/node_motors.cpp.s:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.s
+.PHONY : src/node_motors/node_motors.cpp.s
+
+src/node_webcam/node_webcam.o: src/node_webcam/node_webcam.cpp.o
+.PHONY : src/node_webcam/node_webcam.o
+
+# target to build an object file
+src/node_webcam/node_webcam.cpp.o:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/node_webcam/node_webcam.cpp.o
+.PHONY : src/node_webcam/node_webcam.cpp.o
+
+src/node_webcam/node_webcam.i: src/node_webcam/node_webcam.cpp.i
+.PHONY : src/node_webcam/node_webcam.i
+
+# target to preprocess a source file
+src/node_webcam/node_webcam.cpp.i:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/node_webcam/node_webcam.cpp.i
+.PHONY : src/node_webcam/node_webcam.cpp.i
+
+src/node_webcam/node_webcam.s: src/node_webcam/node_webcam.cpp.s
+.PHONY : src/node_webcam/node_webcam.s
+
+# target to generate assembly for a file
+src/node_webcam/node_webcam.cpp.s:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/node_webcam/node_webcam.cpp.s
+.PHONY : src/node_webcam/node_webcam.cpp.s
 
 # Help Target
 help:
@@ -407,15 +638,22 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... ROSBUILD_genmsg_cpp"
-	@echo "... ROSBUILD_genmsg_lisp"
 	@echo "... ROSBUILD_gensrv_cpp"
-	@echo "... ROSBUILD_gensrv_lisp"
-	@echo "... Vibration_Node"
-	@echo "... clean-test-results"
+	@echo "... ROSBUILD_gensrv_py"
+	@echo "... clean_test_results"
+	@echo "... com"
+	@echo "... cv"
+	@echo "... doxygen"
 	@echo "... edit_cache"
-	@echo "... main"
-	@echo "... pseudo_node"
+	@echo "... hypervisor"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
+	@echo "... log"
+	@echo "... motors"
 	@echo "... rebuild_cache"
+	@echo "... rosbuild_clean-test-results"
 	@echo "... rosbuild_precompile"
 	@echo "... rosbuild_premsgsrvgen"
 	@echo "... rospack_genmsg"
@@ -423,20 +661,33 @@ help:
 	@echo "... rospack_genmsg_libexe"
 	@echo "... rospack_gensrv"
 	@echo "... rospack_gensrv_all"
+	@echo "... run_tests"
 	@echo "... test"
 	@echo "... test-future"
 	@echo "... test-results"
 	@echo "... test-results-run"
 	@echo "... tests"
-	@echo "... src/Vibration_Node.o"
-	@echo "... src/Vibration_Node.i"
-	@echo "... src/Vibration_Node.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
-	@echo "... src/pseudo_node.o"
-	@echo "... src/pseudo_node.i"
-	@echo "... src/pseudo_node.s"
+	@echo "... webcam"
+	@echo "... gtest"
+	@echo "... gtest_main"
+	@echo "... src/node_com/node_com.o"
+	@echo "... src/node_com/node_com.i"
+	@echo "... src/node_com/node_com.s"
+	@echo "... src/node_cv/node_cv.o"
+	@echo "... src/node_cv/node_cv.i"
+	@echo "... src/node_cv/node_cv.s"
+	@echo "... src/node_hypervisor/node_hypervisor.o"
+	@echo "... src/node_hypervisor/node_hypervisor.i"
+	@echo "... src/node_hypervisor/node_hypervisor.s"
+	@echo "... src/node_log/node_log.o"
+	@echo "... src/node_log/node_log.i"
+	@echo "... src/node_log/node_log.s"
+	@echo "... src/node_motors/node_motors.o"
+	@echo "... src/node_motors/node_motors.i"
+	@echo "... src/node_motors/node_motors.s"
+	@echo "... src/node_webcam/node_webcam.o"
+	@echo "... src/node_webcam/node_webcam.i"
+	@echo "... src/node_webcam/node_webcam.s"
 .PHONY : help
 
 

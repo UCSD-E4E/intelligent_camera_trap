@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS/build
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper/build
 
 # Utility rule file for test-results.
 
@@ -43,7 +43,7 @@ CMAKE_BINARY_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS/build
 include CMakeFiles/test-results.dir/progress.make
 
 CMakeFiles/test-results:
-	/opt/ros/fuerte/share/rosunit/bin/summarize_results.py --nodeps ViperROS
+	/opt/ros/groovy/share/rosunit/scripts/summarize_results.py --nodeps ICT_Viper
 
 test-results: CMakeFiles/test-results
 test-results: CMakeFiles/test-results.dir/build.make
@@ -58,6 +58,6 @@ CMakeFiles/test-results.dir/clean:
 .PHONY : CMakeFiles/test-results.dir/clean
 
 CMakeFiles/test-results.dir/depend:
-	cd /home/sealab/fuerte_workspace/sandbox/ViperROS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/test-results.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/ICT_Viper/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/build /home/viki/groovy_workspace/ICT_Viper/build /home/viki/groovy_workspace/ICT_Viper/build/CMakeFiles/test-results.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test-results.dir/depend
 

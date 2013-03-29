@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sealab/fuerte_workspace/sandbox/ViperROS/build
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper/build
 
 # Utility rule file for test-future.
 
@@ -57,6 +57,6 @@ CMakeFiles/test-future.dir/clean:
 .PHONY : CMakeFiles/test-future.dir/clean
 
 CMakeFiles/test-future.dir/depend:
-	cd /home/sealab/fuerte_workspace/sandbox/ViperROS/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build /home/sealab/fuerte_workspace/sandbox/ViperROS/build/CMakeFiles/test-future.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/ICT_Viper/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/build /home/viki/groovy_workspace/ICT_Viper/build /home/viki/groovy_workspace/ICT_Viper/build/CMakeFiles/test-future.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test-future.dir/depend
 

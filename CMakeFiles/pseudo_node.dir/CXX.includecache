@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/viki/groovy_workspace/ICT_Viper/src/pseudo_node.cpp
+/home/riley/fuerte_workspace/sandbox/ICT_Viper/src/pseudo_node.cpp
 ros/ros.h
-/home/viki/groovy_workspace/ICT_Viper/src/ros/ros.h
+/home/riley/fuerte_workspace/sandbox/ICT_Viper/src/ros/ros.h
 std_msgs/String.h
-/home/viki/groovy_workspace/ICT_Viper/src/std_msgs/String.h
+/home/riley/fuerte_workspace/sandbox/ICT_Viper/src/std_msgs/String.h
 sstream
 -
 

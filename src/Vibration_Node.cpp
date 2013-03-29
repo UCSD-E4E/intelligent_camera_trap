@@ -1,6 +1,5 @@
-#include </opt/ros/groovy/include/ros/ros.h>
-#include </opt/ros/groovy/include/ros/duration.h>
-#include </opt/ros/groovy/include/std_msgs/String.h>
+#include "ros/ros.h"
+#include "std_msgs/String.h"
 #include <sstream>
 
 #include <fcntl.h>
@@ -13,7 +12,7 @@ int main(int argc, char** argv){
 	ros::init(argc, argv, "Vibration_Node");
 	ros::NodeHandle n;
 	//Advertise Vibration Service, sends an integer corresponding to a sensor node trigger 
-	ros::Publisher vibration = n.advertise<std_msgs::String>("Vibration_Node", 0);
+	ros::Publisher vibration = n.advertise<std_msgs::String>("Vibration_Node", 10);
 	
 	int fd, i;
 	ssize_t rd;
@@ -46,8 +45,7 @@ int main(int argc, char** argv){
 				ROS_INFO("Node trigger on node %d", node_id);
 				sprintf(msgBuf, "%d", node_id);
 				msg.data = msgBuf;
-				vibration.publish(msg); 
-				ros::Duration(5).sleep();	
+				vibration.publish(msg); 	
 			}
 			else{
 				ROS_INFO("Node ID Parse Error");

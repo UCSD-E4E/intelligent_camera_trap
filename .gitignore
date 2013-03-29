@@ -1,0 +1,4 @@
+#ignore compiled .o files
+*.o
+#ignore executable files
+bin/*

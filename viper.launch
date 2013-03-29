@@ -1,4 +1,8 @@
 <launch>
-	<node name="Vibration_Node" pkg="ViperROS" type="Vibration_Node" />
-	<node name="main" pkg="ViperROS" type="main" />
+	<node pkg="ICT_Viper" type="hypervisor" name="hypervisor"/>
+	<node pkg="ICT_Viper" type="cv" name="cv"/>
+	<node pkg="ICT_Viper" type="webcam" name="webcam"/>	
+	<node pkg="ICT_Viper" type="com" name="com"/>
+	<node pkg="ICT_Viper" type="motors" name="motors"/>
+	<node pkg="ICT_Viper" type="log" name="log"/>
 </launch>

@@ -22,15 +22,24 @@ rosbuild_genmsg()
 rosbuild_gensrv()
 
 
-
-
-rosbuild_add_executable(main src/main.cpp)
-rosbuild_add_executable(pseudo_node src/pseudo_node.cpp)
-rosbuild_add_executable(Vibration_Node src/Vibration_Node.cpp)
+rosbuild_add_executable(hypervisor src/node_hypervisor/node_hypervisor.cpp)
+rosbuild_add_executable(webcam src/node_webcam/node_webcam.cpp)
+#rosbuild_add_executable(log src/node_log/node_log.cpp)
+rosbuild_add_executable(motors src/node_motors/node_motors.cpp)
+rosbuild_add_executable(cv src/node_cv/node_cv.cpp)
+rosbuild_add_executable(com src/node_com/node_com.cpp)
+rosbuild_add_executable(log src/node_log/node_log.cpp)
 
 find_package(OpenCV REQUIRED)
-target_link_libraries(main ${OpenCV_Libs})
-target_link_libraries(main blob)
+target_link_libraries(cv ${OpenCV_LIBS})
+target_link_libraries(motors phidget21)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation)
+
+add_service_files(
+	FILES
+	CvService.srv
+)
+
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)

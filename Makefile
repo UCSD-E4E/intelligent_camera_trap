@@ -35,11 +35,14 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
+CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper
+CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -107,9 +110,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/viki/groovy_workspace/ICT_Viper/CMakeFiles /home/viki/groovy_workspace/ICT_Viper/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/viki/groovy_workspace/ICT_Viper/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -137,6 +140,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named Cv_Service
+
+# Build rule for target.
+Cv_Service: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Cv_Service
+.PHONY : Cv_Service
+
+# fast build rule for target.
+Cv_Service/fast:
+	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/build
+.PHONY : Cv_Service/fast
+
+#=============================================================================
 # Target rules for targets named ROSBUILD_genmsg_cpp
 
 # Build rule for target.
@@ -161,6 +177,19 @@ ROSBUILD_gensrv_cpp: cmake_check_build_system
 ROSBUILD_gensrv_cpp/fast:
 	$(MAKE) -f CMakeFiles/ROSBUILD_gensrv_cpp.dir/build.make CMakeFiles/ROSBUILD_gensrv_cpp.dir/build
 .PHONY : ROSBUILD_gensrv_cpp/fast
+
+#=============================================================================
+# Target rules for targets named ROSBUILD_gensrv_py
+
+# Build rule for target.
+ROSBUILD_gensrv_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ROSBUILD_gensrv_py
+.PHONY : ROSBUILD_gensrv_py
+
+# fast build rule for target.
+ROSBUILD_gensrv_py/fast:
+	$(MAKE) -f CMakeFiles/ROSBUILD_gensrv_py.dir/build.make CMakeFiles/ROSBUILD_gensrv_py.dir/build
+.PHONY : ROSBUILD_gensrv_py/fast
 
 #=============================================================================
 # Target rules for targets named Vibration_Node
@@ -459,6 +488,30 @@ src/Vibration_Node.cpp.s:
 	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/src/Vibration_Node.cpp.s
 .PHONY : src/Vibration_Node.cpp.s
 
+src/cv_service.o: src/cv_service.cpp.o
+.PHONY : src/cv_service.o
+
+# target to build an object file
+src/cv_service.cpp.o:
+	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/src/cv_service.cpp.o
+.PHONY : src/cv_service.cpp.o
+
+src/cv_service.i: src/cv_service.cpp.i
+.PHONY : src/cv_service.i
+
+# target to preprocess a source file
+src/cv_service.cpp.i:
+	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/src/cv_service.cpp.i
+.PHONY : src/cv_service.cpp.i
+
+src/cv_service.s: src/cv_service.cpp.s
+.PHONY : src/cv_service.s
+
+# target to generate assembly for a file
+src/cv_service.cpp.s:
+	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/src/cv_service.cpp.s
+.PHONY : src/cv_service.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -513,8 +566,10 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... Cv_Service"
 	@echo "... ROSBUILD_genmsg_cpp"
 	@echo "... ROSBUILD_gensrv_cpp"
+	@echo "... ROSBUILD_gensrv_py"
 	@echo "... Vibration_Node"
 	@echo "... clean_test_results"
 	@echo "... doxygen"
@@ -545,6 +600,9 @@ help:
 	@echo "... src/Vibration_Node.o"
 	@echo "... src/Vibration_Node.i"
 	@echo "... src/Vibration_Node.s"
+	@echo "... src/cv_service.o"
+	@echo "... src/cv_service.i"
+	@echo "... src/cv_service.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

@@ -1,4 +1,6 @@
 FILE(REMOVE_RECURSE
+  "srv_gen"
+  "src/ICT_Viper/srv"
   "CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o"
   "bin/pseudo_node.pdb"
   "bin/pseudo_node"
