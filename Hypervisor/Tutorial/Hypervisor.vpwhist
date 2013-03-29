@@ -1,0 +1,110 @@
+[Global]
+CurrentProject=Hypervisor.vpj
+[ProjectDates]
+Hypervisor.vpj=20130107234515157
+[ActiveConfig]
+Hypervisor.vpj=Debug
+[TreeExpansion2]
+-@ Hypervisor.vpj
+  - src
+    - asf
+      + common
+        + boards
+        + utils
+          + interrupt
+      + mega
+        + boards
+          + stk600
+            + rcx_x
+        + utils
+          + assembler
+    - config
+    - HAL
+      - Header
+scroll:0
+[State]
+SCREEN: 1366 768 160 54 1113 659 0 0 N 0 0 0 0 671 447 0
+CWD: ..\..\..\ICT\Hypervisor
+BUFFER: BN="src\main.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=33554432 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.677 CL=18 LE=0 CX=18 CY=20 WI=5 BI=13 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\HAL\Activity.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=33554432 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.1043 CL=38 LE=0 CX=38 CY=20 WI=5 BI=14 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\HAL\PowerLED.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=33554432 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.425 CL=14 LE=0 CX=14 CY=20 WI=5 BI=15 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\port.h"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=33554432 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.202 CL=1 LE=0 CX=1 CY=10 WI=5 BI=21 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\HAL\Header\PowerSupply.h"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=33554432 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.51 CL=1 LE=0 CX=1 CY=2 WI=5 BI=20 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\HAL\PowerSupply.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=33554432 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.169 CL=6 LE=0 CX=6 CY=10 WI=5 BI=16 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\StateFunctions.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=0 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.1158 CL=13 LE=0 CX=13 CY=20 WI=5 BI=17 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\HAL\PowerButton.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=33554432 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.215 CL=8 LE=0 CX=8 CY=12 WI=5 BI=18 HT=0 HN=0 HF=0 HC=4
+BUFFER: BN="src\port.c"
+BI: MA=1 74 1  TABS=1 5  WWS=1 IWT=0 ST=0 IN=2 BW=0 US=32000 RO=0 SE=1 SN=0 BIN=0 MN=C/C++	HM=0 MF=50332256 TL=0 MLL=0 ASE=0 LNL=1 LCF=0 CAPS=0 E=0 ESBU2=1 CL="" SC="" SCE= SCU=
+VIEW: LN=.859 CL=6 LE=0 CX=6 CY=21 WI=5 BI=19 HT=0 HN=0 HF=0 HC=4
+WINDOW: 0 0 519 309 0 0 N  WF=0 WT=1 ",,,"
+BUFFER: BN="src\main.c"
+VIEW: LN=.677 CL=18 LE=0 CX=18 CY=20 WI=100 BI=13 HT=0 HN=0 HF=0 HC=4
+WINDOW: 8 29 519 309 0 0 N  WF=0 WT=2 ",,,"
+BUFFER: BN="src\HAL\Activity.c"
+VIEW: LN=.1043 CL=38 LE=0 CX=38 CY=20 WI=102 BI=14 HT=0 HN=0 HF=0 HC=4
+WINDOW: 16 58 519 309 0 0 N  WF=0 WT=4 ",,,"
+BUFFER: BN="src\HAL\PowerLED.c"
+VIEW: LN=.425 CL=14 LE=0 CX=14 CY=20 WI=104 BI=15 HT=0 HN=0 HF=0 HC=4
+WINDOW: 24 87 519 309 0 0 N  WF=0 WT=5 ",,,"
+BUFFER: BN="src\port.h"
+VIEW: LN=.202 CL=1 LE=0 CX=1 CY=10 WI=106 BI=21 HT=0 HN=0 HF=0 HC=4
+WINDOW: 32 116 519 309 0 0 N  WF=0 WT=7 ",,,"
+BUFFER: BN="src\HAL\Header\PowerSupply.h"
+VIEW: LN=.51 CL=1 LE=0 CX=1 CY=2 WI=108 BI=20 HT=0 HN=0 HF=0 HC=4
+WINDOW: 40 0 519 309 0 0 N  WF=0 WT=6 ",,,"
+BUFFER: BN="src\HAL\PowerSupply.c"
+VIEW: LN=.169 CL=6 LE=0 CX=6 CY=10 WI=110 BI=16 HT=0 HN=0 HF=0 HC=4
+WINDOW: 48 29 519 309 0 0 N  WF=0 WT=8 ",,,"
+BUFFER: BN="src\StateFunctions.c"
+VIEW: LN=.1158 CL=13 LE=0 CX=13 CY=20 WI=112 BI=17 HT=0 HN=0 HF=0 HC=4
+WINDOW: 56 58 519 309 0 0 N  WF=0 WT=9 ",,,"
+BUFFER: BN="src\HAL\PowerButton.c"
+VIEW: LN=.215 CL=8 LE=0 CX=8 CY=12 WI=114 BI=18 HT=0 HN=0 HF=0 HC=4
+WINDOW: 64 87 672 448 0 0 M  WF=0 WT=10 ",,,"
+BUFFER: BN="src\port.c"
+VIEW: LN=.708 CL=1 LE=0 CX=1 CY=7 WI=116 BI=19 HT=0 HN=0 HF=0 HC=4
+FILEHIST: 9
+src\main.c
+src\HAL\Activity.c
+src\HAL\PowerLED.c
+src\port.h
+src\HAL\Header\PowerSupply.h
+src\HAL\PowerSupply.c
+src\StateFunctions.c
+src\HAL\PowerButton.c
+src\port.c
+TBCLASS: 0 0
+DEBUG: 0 0 1 0 3 0 gdb
+00st_runsrc\StateFunctions.c11400
+printf
+strcpy
+std::*
+DEBUG2: 1
+00st_runsrc\StateFunctions.c1140055
+timerCountDownActivated=POWER_SUPPLY;
+}elseif(getTracking()==OFF){
+//Ubuntunottracking->Suspend
+sendSuspendRequest();
+timerCountDownActivated=SUSPEND_ACK_WAITING;
+setTimerIn100ms(SUSPENSION_WAIT);
+}
+
+returnRUN;
+}
+unsignedcharst_suspend(void){

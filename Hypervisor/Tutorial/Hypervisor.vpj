@@ -1,0 +1,298 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+	Version="10.0"
+	VendorName="SlickEdit"
+	TemplateName="GNU C/C++"
+	WorkingDir="."
+	BuildSystem="vsbuild">
+	<Config
+		Name="Debug"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+		OutputFile="%bd.exe"
+		CompilerConfigName="Latest Version">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='gcc -c %xup  %defd -g -o "%bd%n%oe" %i "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				Dialog="_gnuc_options_form Link"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='gcc %xup -g -o "%o" %f %libs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t build'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t rebuild'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+			<Target
+				Name="dash"
+				MenuCaption="-"
+				Deletable="0">
+				<Exec/>
+			</Target>
+			<Target
+				Name="GNU C Options"
+				MenuCaption="GNU C &amp;Options..."
+				ShowOnMenu="HideIfNoCmdLine"
+				Deletable="0"
+				SaveOption="SaveNone">
+				<Exec
+					CmdLine="gnucoptions"
+					Type="Slick-C"/>
+			</Target>
+		</Menu>
+		<List Name="GNUC Options">
+			<Item
+				Name="LinkerOutputType"
+				Value="Executable"/>
+		</List>
+	</Config>
+	<Config
+		Name="Release"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+		OutputFile="%bd.exe"
+		CompilerConfigName="Latest Version">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='gcc -c %xup %defd -o "%bd%n%oe" %i "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				Dialog="_gnuc_options_form Link"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='gcc %xup -o "%o" %f %libs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t build'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" "%w" "%r" -t rebuild'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+			<Target
+				Name="dash"
+				MenuCaption="-"
+				Deletable="0">
+				<Exec/>
+			</Target>
+			<Target
+				Name="GNU C Options"
+				MenuCaption="GNU C &amp;Options..."
+				ShowOnMenu="HideIfNoCmdLine"
+				Deletable="0"
+				SaveOption="SaveNone">
+				<Exec
+					CmdLine="gnucoptions"
+					Type="Slick-C"/>
+			</Target>
+		</Menu>
+		<List Name="GNUC Options">
+			<Item
+				Name="LinkerOutputType"
+				Value="Executable"/>
+		</List>
+	</Config>
+	<CustomFolders>
+		<Folder
+			Name="Source Files"
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm">
+		</Folder>
+		<Folder
+			Name="Header Files"
+			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.inc;*.sh;*.cpy;*.if">
+		</Folder>
+		<Folder
+			Name="Resource Files"
+			Filters="*.ico;*.cur;*.dlg"/>
+		<Folder
+			Name="Bitmaps"
+			Filters="*.bmp"/>
+		<Folder
+			Name="Other Files"
+			Filters=""/>
+	</CustomFolders>
+	<Files AutoFolders="DirectoryView">
+		<Folder Name="src">
+			<Folder Name="asf">
+				<Folder Name="common">
+					<Folder Name="boards">
+						<F N="src/asf/common/boards/board.h"/>
+					</Folder>
+					<Folder Name="utils">
+						<Folder Name="interrupt">
+							<F N="src/asf/common/utils/interrupt/interrupt_avr8.h"/>
+						</Folder>
+						<F N="src/asf/common/utils/interrupt.h"/>
+						<F N="src/asf/common/utils/parts.h"/>
+					</Folder>
+				</Folder>
+				<Folder Name="mega">
+					<Folder Name="boards">
+						<Folder Name="stk600">
+							<Folder Name="rcx_x">
+								<F N="src/asf/mega/boards/stk600/rcx_x/init.c"/>
+							</Folder>
+						</Folder>
+					</Folder>
+					<Folder Name="utils">
+						<Folder Name="assembler">
+							<F N="src/asf/mega/utils/assembler/gas.h"/>
+						</Folder>
+						<F N="src/asf/mega/utils/assembler.h"/>
+						<F N="src/asf/mega/utils/compiler.h"/>
+						<F N="src/asf/mega/utils/progmem.h"/>
+						<F N="src/asf/mega/utils/status_codes.h"/>
+					</Folder>
+				</Folder>
+			</Folder>
+			<Folder Name="config">
+				<F N="src/config/conf_board.h"/>
+			</Folder>
+			<Folder Name="HAL">
+				<Folder Name="Header">
+					<F N="src/HAL/Header/Activity.h"/>
+					<F N="src/HAL/Header/driver-tester.h"/>
+					<F N="src/HAL/Header/HAL.h"/>
+					<F N="src/HAL/Header/HeartBeat.h"/>
+					<F N="src/HAL/Header/HyperVisor.h"/>
+					<F N="src/HAL/Header/MessagePrint.h"/>
+					<F N="src/HAL/Header/MessageRX.h"/>
+					<F N="src/HAL/Header/MessageTX.h"/>
+					<F N="src/HAL/Header/PowerButton.h"/>
+					<F N="src/HAL/Header/PowerLED.h"/>
+					<F N="src/HAL/Header/PowerOffRequest.h"/>
+					<F N="src/HAL/Header/PowerSupply.h"/>
+					<F N="src/HAL/Header/SuspendRequest.h"/>
+					<F N="src/HAL/Header/Timer.h"/>
+					<F N="src/HAL/Header/Tracking.h"/>
+				</Folder>
+				<F N="src/HAL/Activity.c"/>
+				<F N="src/HAL/driver-tester.c"/>
+				<F N="src/HAL/HeartBeat.c"/>
+				<F N="src/HAL/MessagePrint.c"/>
+				<F N="src/HAL/MessageRX.c"/>
+				<F N="src/HAL/MessageTX.c"/>
+				<F N="src/HAL/PowerButton.c"/>
+				<F N="src/HAL/PowerLED.c"/>
+				<F N="src/HAL/PowerOffRequest.c"/>
+				<F N="src/HAL/PowerSupply.c"/>
+				<F N="src/HAL/SuspendRequest.c"/>
+				<F N="src/HAL/Timer.c"/>
+				<F N="src/HAL/Tracking.c"/>
+			</Folder>
+			<F N="src/asf.h"/>
+			<F N="src/HyperVisorCommand.c"/>
+			<F N="src/HyperVisorCommand.h"/>
+			<F N="src/main.c"/>
+			<F N="src/port.c"/>
+			<F N="src/port.h"/>
+			<F N="src/StateFunctions.c"/>
+			<F N="src/StateFunctions.h"/>
+			<F N="src/uart.c"/>
+			<F N="src/uart.h"/>
+		</Folder>
+	</Files>
+</Project>
