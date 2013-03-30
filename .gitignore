@@ -1,4 +1,11 @@
 #ignore compiled .o files
 *.o
+
 #ignore executable files
-bin/*
+bin
+build
+catkin
+catkin_generated
+CMakeFiles
+Makefile
+
