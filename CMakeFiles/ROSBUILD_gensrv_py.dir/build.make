@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # Utility rule file for ROSBUILD_gensrv_py.
 
@@ -48,14 +45,15 @@ include CMakeFiles/ROSBUILD_gensrv_py.dir/progress.make
 CMakeFiles/ROSBUILD_gensrv_py: src/ICT_Viper/srv/__init__.py
 
 src/ICT_Viper/srv/__init__.py: src/ICT_Viper/srv/_CvService.py
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating src/ICT_Viper/srv/__init__.py"
-	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --initpy /home/riley/fuerte_workspace/sandbox/ICT_Viper/srv/CvService.srv
+	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --initpy /home/viki/groovy_workspace/ICT_Viper/srv/CvService.srv
 
 src/ICT_Viper/srv/_CvService.py: srv/CvService.srv
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/lib/roslib/gendeps
 src/ICT_Viper/srv/_CvService.py: manifest.xml
+src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/catkin/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/opencv2/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/cpp_common/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rostime/package.xml
@@ -76,14 +74,13 @@ src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/message_filters/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/console_bridge/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/class_loader/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/catkin/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rospack/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/roslib/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/pluginlib/package.xml
 src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/image_transport/package.xml
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating src/ICT_Viper/srv/_CvService.py"
-	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --noinitpy /home/riley/fuerte_workspace/sandbox/ICT_Viper/srv/CvService.srv
+	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --noinitpy /home/viki/groovy_workspace/ICT_Viper/srv/CvService.srv
 
 ROSBUILD_gensrv_py: CMakeFiles/ROSBUILD_gensrv_py
 ROSBUILD_gensrv_py: src/ICT_Viper/srv/__init__.py
@@ -100,6 +97,6 @@ CMakeFiles/ROSBUILD_gensrv_py.dir/clean:
 .PHONY : CMakeFiles/ROSBUILD_gensrv_py.dir/clean
 
 CMakeFiles/ROSBUILD_gensrv_py.dir/depend:
-	cd /home/riley/fuerte_workspace/sandbox/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles/ROSBUILD_gensrv_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/CMakeFiles/ROSBUILD_gensrv_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ROSBUILD_gensrv_py.dir/depend
 

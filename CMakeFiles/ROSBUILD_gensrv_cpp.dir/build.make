@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # Utility rule file for ROSBUILD_gensrv_cpp.
 
@@ -52,6 +49,7 @@ srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/roscpp/rosbuild
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/roscpp/rosbuild/scripts/genmsg_cpp.py
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/lib/roslib/gendeps
 srv_gen/cpp/include/ICT_Viper/CvService.h: manifest.xml
+srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/catkin/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/opencv2/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/cpp_common/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/rostime/package.xml
@@ -72,14 +70,13 @@ srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/roscpp/package.
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/message_filters/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/console_bridge/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/class_loader/package.xml
-srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/catkin/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/rospack/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/roslib/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/pluginlib/package.xml
 srv_gen/cpp/include/ICT_Viper/CvService.h: /opt/ros/groovy/share/image_transport/package.xml
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating srv_gen/cpp/include/ICT_Viper/CvService.h"
-	/opt/ros/groovy/share/roscpp/rosbuild/scripts/gensrv_cpp.py /home/riley/fuerte_workspace/sandbox/ICT_Viper/srv/CvService.srv
+	/opt/ros/groovy/share/roscpp/rosbuild/scripts/gensrv_cpp.py /home/viki/groovy_workspace/ICT_Viper/srv/CvService.srv
 
 ROSBUILD_gensrv_cpp: CMakeFiles/ROSBUILD_gensrv_cpp
 ROSBUILD_gensrv_cpp: srv_gen/cpp/include/ICT_Viper/CvService.h
@@ -95,6 +92,6 @@ CMakeFiles/ROSBUILD_gensrv_cpp.dir/clean:
 .PHONY : CMakeFiles/ROSBUILD_gensrv_cpp.dir/clean
 
 CMakeFiles/ROSBUILD_gensrv_cpp.dir/depend:
-	cd /home/riley/fuerte_workspace/sandbox/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles/ROSBUILD_gensrv_cpp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/CMakeFiles/ROSBUILD_gensrv_cpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ROSBUILD_gensrv_cpp.dir/depend
 

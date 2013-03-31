@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # Utility rule file for test-results.
 
@@ -61,6 +58,6 @@ CMakeFiles/test-results.dir/clean:
 .PHONY : CMakeFiles/test-results.dir/clean
 
 CMakeFiles/test-results.dir/depend:
-	cd /home/riley/fuerte_workspace/sandbox/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles/test-results.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/CMakeFiles/test-results.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test-results.dir/depend
 

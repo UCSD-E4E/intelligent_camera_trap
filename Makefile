@@ -35,14 +35,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -110,9 +107,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/viki/groovy_workspace/ICT_Viper/CMakeFiles /home/viki/groovy_workspace/ICT_Viper/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/viki/groovy_workspace/ICT_Viper/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -138,19 +135,6 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
-
-#=============================================================================
-# Target rules for targets named Cv_Service
-
-# Build rule for target.
-Cv_Service: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Cv_Service
-.PHONY : Cv_Service
-
-# fast build rule for target.
-Cv_Service/fast:
-	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/build
-.PHONY : Cv_Service/fast
 
 #=============================================================================
 # Target rules for targets named ROSBUILD_genmsg_cpp
@@ -192,19 +176,6 @@ ROSBUILD_gensrv_py/fast:
 .PHONY : ROSBUILD_gensrv_py/fast
 
 #=============================================================================
-# Target rules for targets named Vibration_Node
-
-# Build rule for target.
-Vibration_Node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Vibration_Node
-.PHONY : Vibration_Node
-
-# fast build rule for target.
-Vibration_Node/fast:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/build
-.PHONY : Vibration_Node/fast
-
-#=============================================================================
 # Target rules for targets named clean_test_results
 
 # Build rule for target.
@@ -216,6 +187,32 @@ clean_test_results: cmake_check_build_system
 clean_test_results/fast:
 	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/build
 .PHONY : clean_test_results/fast
+
+#=============================================================================
+# Target rules for targets named com
+
+# Build rule for target.
+com: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 com
+.PHONY : com
+
+# fast build rule for target.
+com/fast:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/build
+.PHONY : com/fast
+
+#=============================================================================
+# Target rules for targets named cvsim
+
+# Build rule for target.
+cvsim: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cvsim
+.PHONY : cvsim
+
+# fast build rule for target.
+cvsim/fast:
+	$(MAKE) -f CMakeFiles/cvsim.dir/build.make CMakeFiles/cvsim.dir/build
+.PHONY : cvsim/fast
 
 #=============================================================================
 # Target rules for targets named doxygen
@@ -231,30 +228,43 @@ doxygen/fast:
 .PHONY : doxygen/fast
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named hypervisor
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main
-.PHONY : main
+hypervisor: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 hypervisor
+.PHONY : hypervisor
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+hypervisor/fast:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/build
+.PHONY : hypervisor/fast
 
 #=============================================================================
-# Target rules for targets named pseudo_node
+# Target rules for targets named log
 
 # Build rule for target.
-pseudo_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 pseudo_node
-.PHONY : pseudo_node
+log: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 log
+.PHONY : log
 
 # fast build rule for target.
-pseudo_node/fast:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/build
-.PHONY : pseudo_node/fast
+log/fast:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/build
+.PHONY : log/fast
+
+#=============================================================================
+# Target rules for targets named motors
+
+# Build rule for target.
+motors: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 motors
+.PHONY : motors
+
+# fast build rule for target.
+motors/fast:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/build
+.PHONY : motors/fast
 
 #=============================================================================
 # Target rules for targets named rosbuild_clean-test-results
@@ -439,6 +449,19 @@ tests/fast:
 .PHONY : tests/fast
 
 #=============================================================================
+# Target rules for targets named webcam
+
+# Build rule for target.
+webcam: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 webcam
+.PHONY : webcam
+
+# fast build rule for target.
+webcam/fast:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/build
+.PHONY : webcam/fast
+
+#=============================================================================
 # Target rules for targets named gtest
 
 # Build rule for target.
@@ -464,101 +487,149 @@ gtest_main/fast:
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-src/Vibration_Node.o: src/Vibration_Node.cpp.o
-.PHONY : src/Vibration_Node.o
+src/node_com/node_com.o: src/node_com/node_com.cpp.o
+.PHONY : src/node_com/node_com.o
 
 # target to build an object file
-src/Vibration_Node.cpp.o:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/src/Vibration_Node.cpp.o
-.PHONY : src/Vibration_Node.cpp.o
+src/node_com/node_com.cpp.o:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/src/node_com/node_com.cpp.o
+.PHONY : src/node_com/node_com.cpp.o
 
-src/Vibration_Node.i: src/Vibration_Node.cpp.i
-.PHONY : src/Vibration_Node.i
+src/node_com/node_com.i: src/node_com/node_com.cpp.i
+.PHONY : src/node_com/node_com.i
 
 # target to preprocess a source file
-src/Vibration_Node.cpp.i:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/src/Vibration_Node.cpp.i
-.PHONY : src/Vibration_Node.cpp.i
+src/node_com/node_com.cpp.i:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/src/node_com/node_com.cpp.i
+.PHONY : src/node_com/node_com.cpp.i
 
-src/Vibration_Node.s: src/Vibration_Node.cpp.s
-.PHONY : src/Vibration_Node.s
+src/node_com/node_com.s: src/node_com/node_com.cpp.s
+.PHONY : src/node_com/node_com.s
 
 # target to generate assembly for a file
-src/Vibration_Node.cpp.s:
-	$(MAKE) -f CMakeFiles/Vibration_Node.dir/build.make CMakeFiles/Vibration_Node.dir/src/Vibration_Node.cpp.s
-.PHONY : src/Vibration_Node.cpp.s
+src/node_com/node_com.cpp.s:
+	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/src/node_com/node_com.cpp.s
+.PHONY : src/node_com/node_com.cpp.s
 
-src/cv_service.o: src/cv_service.cpp.o
-.PHONY : src/cv_service.o
+src/node_cvsim/node_cvsim.o: src/node_cvsim/node_cvsim.cpp.o
+.PHONY : src/node_cvsim/node_cvsim.o
 
 # target to build an object file
-src/cv_service.cpp.o:
-	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/src/cv_service.cpp.o
-.PHONY : src/cv_service.cpp.o
+src/node_cvsim/node_cvsim.cpp.o:
+	$(MAKE) -f CMakeFiles/cvsim.dir/build.make CMakeFiles/cvsim.dir/src/node_cvsim/node_cvsim.cpp.o
+.PHONY : src/node_cvsim/node_cvsim.cpp.o
 
-src/cv_service.i: src/cv_service.cpp.i
-.PHONY : src/cv_service.i
+src/node_cvsim/node_cvsim.i: src/node_cvsim/node_cvsim.cpp.i
+.PHONY : src/node_cvsim/node_cvsim.i
 
 # target to preprocess a source file
-src/cv_service.cpp.i:
-	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/src/cv_service.cpp.i
-.PHONY : src/cv_service.cpp.i
+src/node_cvsim/node_cvsim.cpp.i:
+	$(MAKE) -f CMakeFiles/cvsim.dir/build.make CMakeFiles/cvsim.dir/src/node_cvsim/node_cvsim.cpp.i
+.PHONY : src/node_cvsim/node_cvsim.cpp.i
 
-src/cv_service.s: src/cv_service.cpp.s
-.PHONY : src/cv_service.s
+src/node_cvsim/node_cvsim.s: src/node_cvsim/node_cvsim.cpp.s
+.PHONY : src/node_cvsim/node_cvsim.s
 
 # target to generate assembly for a file
-src/cv_service.cpp.s:
-	$(MAKE) -f CMakeFiles/Cv_Service.dir/build.make CMakeFiles/Cv_Service.dir/src/cv_service.cpp.s
-.PHONY : src/cv_service.cpp.s
+src/node_cvsim/node_cvsim.cpp.s:
+	$(MAKE) -f CMakeFiles/cvsim.dir/build.make CMakeFiles/cvsim.dir/src/node_cvsim/node_cvsim.cpp.s
+.PHONY : src/node_cvsim/node_cvsim.cpp.s
 
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
+src/node_hypervisor/node_hypervisor.o: src/node_hypervisor/node_hypervisor.cpp.o
+.PHONY : src/node_hypervisor/node_hypervisor.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/node_hypervisor/node_hypervisor.cpp.o:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/src/node_hypervisor/node_hypervisor.cpp.o
+.PHONY : src/node_hypervisor/node_hypervisor.cpp.o
 
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+src/node_hypervisor/node_hypervisor.i: src/node_hypervisor/node_hypervisor.cpp.i
+.PHONY : src/node_hypervisor/node_hypervisor.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/node_hypervisor/node_hypervisor.cpp.i:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/src/node_hypervisor/node_hypervisor.cpp.i
+.PHONY : src/node_hypervisor/node_hypervisor.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+src/node_hypervisor/node_hypervisor.s: src/node_hypervisor/node_hypervisor.cpp.s
+.PHONY : src/node_hypervisor/node_hypervisor.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/node_hypervisor/node_hypervisor.cpp.s:
+	$(MAKE) -f CMakeFiles/hypervisor.dir/build.make CMakeFiles/hypervisor.dir/src/node_hypervisor/node_hypervisor.cpp.s
+.PHONY : src/node_hypervisor/node_hypervisor.cpp.s
 
-src/pseudo_node.o: src/pseudo_node.cpp.o
-.PHONY : src/pseudo_node.o
+src/node_log/node_log.o: src/node_log/node_log.cpp.o
+.PHONY : src/node_log/node_log.o
 
 # target to build an object file
-src/pseudo_node.cpp.o:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.o
-.PHONY : src/pseudo_node.cpp.o
+src/node_log/node_log.cpp.o:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/src/node_log/node_log.cpp.o
+.PHONY : src/node_log/node_log.cpp.o
 
-src/pseudo_node.i: src/pseudo_node.cpp.i
-.PHONY : src/pseudo_node.i
+src/node_log/node_log.i: src/node_log/node_log.cpp.i
+.PHONY : src/node_log/node_log.i
 
 # target to preprocess a source file
-src/pseudo_node.cpp.i:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.i
-.PHONY : src/pseudo_node.cpp.i
+src/node_log/node_log.cpp.i:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/src/node_log/node_log.cpp.i
+.PHONY : src/node_log/node_log.cpp.i
 
-src/pseudo_node.s: src/pseudo_node.cpp.s
-.PHONY : src/pseudo_node.s
+src/node_log/node_log.s: src/node_log/node_log.cpp.s
+.PHONY : src/node_log/node_log.s
 
 # target to generate assembly for a file
-src/pseudo_node.cpp.s:
-	$(MAKE) -f CMakeFiles/pseudo_node.dir/build.make CMakeFiles/pseudo_node.dir/src/pseudo_node.cpp.s
-.PHONY : src/pseudo_node.cpp.s
+src/node_log/node_log.cpp.s:
+	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/src/node_log/node_log.cpp.s
+.PHONY : src/node_log/node_log.cpp.s
+
+src/node_motors/node_motors.o: src/node_motors/node_motors.cpp.o
+.PHONY : src/node_motors/node_motors.o
+
+# target to build an object file
+src/node_motors/node_motors.cpp.o:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.o
+.PHONY : src/node_motors/node_motors.cpp.o
+
+src/node_motors/node_motors.i: src/node_motors/node_motors.cpp.i
+.PHONY : src/node_motors/node_motors.i
+
+# target to preprocess a source file
+src/node_motors/node_motors.cpp.i:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.i
+.PHONY : src/node_motors/node_motors.cpp.i
+
+src/node_motors/node_motors.s: src/node_motors/node_motors.cpp.s
+.PHONY : src/node_motors/node_motors.s
+
+# target to generate assembly for a file
+src/node_motors/node_motors.cpp.s:
+	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.s
+.PHONY : src/node_motors/node_motors.cpp.s
+
+src/node_webcam/node_webcam.o: src/node_webcam/node_webcam.cpp.o
+.PHONY : src/node_webcam/node_webcam.o
+
+# target to build an object file
+src/node_webcam/node_webcam.cpp.o:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/node_webcam/node_webcam.cpp.o
+.PHONY : src/node_webcam/node_webcam.cpp.o
+
+src/node_webcam/node_webcam.i: src/node_webcam/node_webcam.cpp.i
+.PHONY : src/node_webcam/node_webcam.i
+
+# target to preprocess a source file
+src/node_webcam/node_webcam.cpp.i:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/node_webcam/node_webcam.cpp.i
+.PHONY : src/node_webcam/node_webcam.cpp.i
+
+src/node_webcam/node_webcam.s: src/node_webcam/node_webcam.cpp.s
+.PHONY : src/node_webcam/node_webcam.s
+
+# target to generate assembly for a file
+src/node_webcam/node_webcam.cpp.s:
+	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/src/node_webcam/node_webcam.cpp.s
+.PHONY : src/node_webcam/node_webcam.cpp.s
 
 # Help Target
 help:
@@ -566,20 +637,21 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... Cv_Service"
 	@echo "... ROSBUILD_genmsg_cpp"
 	@echo "... ROSBUILD_gensrv_cpp"
 	@echo "... ROSBUILD_gensrv_py"
-	@echo "... Vibration_Node"
 	@echo "... clean_test_results"
+	@echo "... com"
+	@echo "... cvsim"
 	@echo "... doxygen"
 	@echo "... edit_cache"
+	@echo "... hypervisor"
 	@echo "... install"
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
-	@echo "... main"
-	@echo "... pseudo_node"
+	@echo "... log"
+	@echo "... motors"
 	@echo "... rebuild_cache"
 	@echo "... rosbuild_clean-test-results"
 	@echo "... rosbuild_precompile"
@@ -595,20 +667,27 @@ help:
 	@echo "... test-results"
 	@echo "... test-results-run"
 	@echo "... tests"
+	@echo "... webcam"
 	@echo "... gtest"
 	@echo "... gtest_main"
-	@echo "... src/Vibration_Node.o"
-	@echo "... src/Vibration_Node.i"
-	@echo "... src/Vibration_Node.s"
-	@echo "... src/cv_service.o"
-	@echo "... src/cv_service.i"
-	@echo "... src/cv_service.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
-	@echo "... src/pseudo_node.o"
-	@echo "... src/pseudo_node.i"
-	@echo "... src/pseudo_node.s"
+	@echo "... src/node_com/node_com.o"
+	@echo "... src/node_com/node_com.i"
+	@echo "... src/node_com/node_com.s"
+	@echo "... src/node_cvsim/node_cvsim.o"
+	@echo "... src/node_cvsim/node_cvsim.i"
+	@echo "... src/node_cvsim/node_cvsim.s"
+	@echo "... src/node_hypervisor/node_hypervisor.o"
+	@echo "... src/node_hypervisor/node_hypervisor.i"
+	@echo "... src/node_hypervisor/node_hypervisor.s"
+	@echo "... src/node_log/node_log.o"
+	@echo "... src/node_log/node_log.i"
+	@echo "... src/node_log/node_log.s"
+	@echo "... src/node_motors/node_motors.o"
+	@echo "... src/node_motors/node_motors.i"
+	@echo "... src/node_motors/node_motors.s"
+	@echo "... src/node_webcam/node_webcam.o"
+	@echo "... src/node_webcam/node_webcam.i"
+	@echo "... src/node_webcam/node_webcam.s"
 .PHONY : help
 
 

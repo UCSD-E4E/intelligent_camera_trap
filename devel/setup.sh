@@ -6,7 +6,7 @@
 # Supported command line options:
 # --extend: skips the undoing of changes from a previously sourced setup file
 
-SETUP_UTIL="/home/riley/fuerte_workspace/sandbox/ICT_Viper/devel/_setup_util.py"
+SETUP_UTIL="/home/viki/groovy_workspace/ICT_Viper/devel/_setup_util.py"
 
 if [ ! -f "$SETUP_UTIL" ]; then
   echo "Missing Python script: $SETUP_UTIL"
