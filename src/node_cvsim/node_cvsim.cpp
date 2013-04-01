@@ -11,14 +11,14 @@
 
 #include "ICT_Viper/CvService.h"
 #include "parameters.h"
-
+#include "cv_localizer.h"
 
 int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "cv_service");
-	ros::NodeHandle n;
+	ros::NodeHandle n;	
 
-	CVLocalizer object_tracker(240, 320, 480, 640);
+	CVLocalizer object_tracker(320, 240, 640, 480);
 	object_tracker.setTimestamp(0);
 
 
@@ -27,11 +27,12 @@ int main(int argc, char **argv)
 	
 	double start = ros::Time::now().toSec();
 	double current_time = start;
-	delta = 10;
+	int delta = 10;
 	while(ros::ok())
 	{
 		current_time = ros::Time::now().toSec();
-		x += delta;
+		object_tracker.setX(delta + object_tracker.x);
+
 		if (object_tracker.x >= 640)
 		{
 			object_tracker.x = 640;
@@ -45,6 +46,7 @@ int main(int argc, char **argv)
 
 		object_tracker.setTimestamp(current_time - start);
 		ros::Duration(1).sleep();
+		ros::spinOnce();
 	}
 
 	return 0;

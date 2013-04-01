@@ -1,43 +1,35 @@
 #include "ICT_Viper/CvService.h"
+#include "cv_localizer.h"
 
-class CVLocalizer
+
+void CVLocalizer::updateLocation(int updated_x, int updated_y)
 {
-		int x, y, imgWidth, imgHeight; 
-		double timestamp;
-	public:
-		CVLocalizer(int x_init, int y_init, int imgW, int imgH);
-		void updateLocation(int updated_x, int updated_y)
-		{
-			x = updated_x;
-			y = updated_y;
-		};
-
-		int getX(void)
-		{
-			return x;
-		}
-
-		int getY(void)
-		{
-			return y;
-		}
-
-		double getTimsestamp(void)
-		{
-			return Timestamp();
-		}
-
-		void setTimestamp(double new_timestamp)
-		{
-			timestamp = new_timestamp;
-		}
-
-		bool newCoords(ICT_Viper::CvService::Request &req, ICT_Viper::CvService::Response &res); 	
-
-
+	x = updated_x;
+	y = updated_y;
 };
 
-CVLocalizer(int x_init, int y_init, int imgW, int imgH)
+void CVLocalizer::setX(int new_x)
+{
+	x = new_x;
+}
+
+void CVLocalizer::setY(int new_y)
+{
+	y = new_y;
+}
+
+double CVLocalizer::getTimsestamp(void)
+{
+	return timestamp;
+}
+
+void CVLocalizer::setTimestamp(double new_timestamp)
+{
+	timestamp = new_timestamp;
+}
+
+
+CVLocalizer::CVLocalizer(int x_init, int y_init, int imgW, int imgH)
 {
 	x = x_init;
 	y = y_init;
@@ -48,12 +40,12 @@ CVLocalizer(int x_init, int y_init, int imgW, int imgH)
 	timestamp = 0;
 }
 
-bool newCoords(ICT_Viper::CvService::Request &req, ICT_Viper::CvService::Response &res)
+bool CVLocalizer::newCoords(ICT_Viper::CvService::Request &req, ICT_Viper::CvService::Response &res)
 {
 	if (req.A == 0)
 	{
 		ROS_INFO("Recieved CV localization request\n");
-		rex.Coords = x;
+		res.Coords = x;
 	}
 	return true;
 }

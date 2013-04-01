@@ -25,9 +25,10 @@ rosbuild_gensrv()
 rosbuild_add_executable(hypervisor src/node_hypervisor/node_hypervisor.cpp)
 rosbuild_add_executable(webcam src/node_webcam/node_webcam.cpp)
 rosbuild_add_executable(motors src/node_motors/node_motors.cpp)
-rosbuild_add_executable(cvsim src/node_cvsim/node_cvsim.cpp)
+rosbuild_add_executable(cvsim src/node_cvsim/node_cvsim.cpp src/node_cvsim/cv_localizer.cpp)
 rosbuild_add_executable(com src/node_com/node_com.cpp)
 rosbuild_add_executable(log src/node_log/node_log.cpp)
+
 
 find_package(OpenCV REQUIRED)
 target_link_libraries(cvsim ${OpenCV_LIBS})

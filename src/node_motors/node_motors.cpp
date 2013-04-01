@@ -6,7 +6,7 @@
 
 #include <sys/statvfs.h>
 #include <phidget21.h>
-
+#include "ICT_Viper/CvService.h"
 
 
 int CCONV AttachHandler(CPhidgetHandle MC, void *userptr)
@@ -93,11 +93,31 @@ int main(int argc, char** argv){
 	ros::init(argc, argv, "pan");
 	ros::NodeHandle n;
 
-	ROS_INFO("attempting to subscribe to Main Node");
-	ros::Subscriber sub = n.subscribe("Motor_Instructions", 10, motor_callback);
+	//connect to Hypervisor and com nodes
 	ros::Subscriber hv_sub = n.subscribe("Hypervisor_Output", 10, hvCallback);	
 	ros::Subscriber com_sub = n.subscribe("Com_Commands", 10, comCallback);
+	
+	//Open connection for Log node to connect to
 	ros::Publisher pub = n.advertise<std_msgs::String>("Motor_Movement",10);
+	
+	//Connect to CV service
+	ros::ServiceClient client = n.serviceClient<ICT_Viper::CvService>("cv_service");
+	ICT_Viper::CvService srv;
+	while (ros::ok())
+	{
+		ROS_INFO("making service request...\n");
+		srv.request.A = 0;
+		if (client.call(srv))
+		{
+			ROS_INFO("x offset = %d\n", (int) srv.response.Coords);
+		}
+		else
+		{
+			ROS_ERROR("cv service call failed");
+		}
+
+	}
+
 	
 	ros::spin();	
 

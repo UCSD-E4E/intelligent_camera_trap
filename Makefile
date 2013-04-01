@@ -511,6 +511,30 @@ src/node_com/node_com.cpp.s:
 	$(MAKE) -f CMakeFiles/com.dir/build.make CMakeFiles/com.dir/src/node_com/node_com.cpp.s
 .PHONY : src/node_com/node_com.cpp.s
 
+src/node_cvsim/cv_localizer.o: src/node_cvsim/cv_localizer.cpp.o
+.PHONY : src/node_cvsim/cv_localizer.o
+
+# target to build an object file
+src/node_cvsim/cv_localizer.cpp.o:
+	$(MAKE) -f CMakeFiles/cvsim.dir/build.make CMakeFiles/cvsim.dir/src/node_cvsim/cv_localizer.cpp.o
+.PHONY : src/node_cvsim/cv_localizer.cpp.o
+
+src/node_cvsim/cv_localizer.i: src/node_cvsim/cv_localizer.cpp.i
+.PHONY : src/node_cvsim/cv_localizer.i
+
+# target to preprocess a source file
+src/node_cvsim/cv_localizer.cpp.i:
+	$(MAKE) -f CMakeFiles/cvsim.dir/build.make CMakeFiles/cvsim.dir/src/node_cvsim/cv_localizer.cpp.i
+.PHONY : src/node_cvsim/cv_localizer.cpp.i
+
+src/node_cvsim/cv_localizer.s: src/node_cvsim/cv_localizer.cpp.s
+.PHONY : src/node_cvsim/cv_localizer.s
+
+# target to generate assembly for a file
+src/node_cvsim/cv_localizer.cpp.s:
+	$(MAKE) -f CMakeFiles/cvsim.dir/build.make CMakeFiles/cvsim.dir/src/node_cvsim/cv_localizer.cpp.s
+.PHONY : src/node_cvsim/cv_localizer.cpp.s
+
 src/node_cvsim/node_cvsim.o: src/node_cvsim/node_cvsim.cpp.o
 .PHONY : src/node_cvsim/node_cvsim.o
 
@@ -673,6 +697,9 @@ help:
 	@echo "... src/node_com/node_com.o"
 	@echo "... src/node_com/node_com.i"
 	@echo "... src/node_com/node_com.s"
+	@echo "... src/node_cvsim/cv_localizer.o"
+	@echo "... src/node_cvsim/cv_localizer.i"
+	@echo "... src/node_cvsim/cv_localizer.s"
 	@echo "... src/node_cvsim/node_cvsim.o"
 	@echo "... src/node_cvsim/node_cvsim.i"
 	@echo "... src/node_cvsim/node_cvsim.s"

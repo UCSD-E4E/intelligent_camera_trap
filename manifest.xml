@@ -9,7 +9,7 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/ViperROS</url>
  
-  <depend package ="image_geometry"/> 
+  <depend package="image_geometry"/> 
   <depend package="sensor_msgs"/>
   <depend package="opencv2"/>
   <depend package="cv_bridge"/>

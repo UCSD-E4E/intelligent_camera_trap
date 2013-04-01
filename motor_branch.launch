@@ -1,0 +1,8 @@
+<launch>
+	<node pkg="ICT_Viper" type="hypervisor" name="hypervisor"/>
+	<node pkg="ICT_Viper" type="cvsim" name="cvsim"/>
+	<node pkg="ICT_Viper" type="webcam" name="webcam"/>	
+	<node pkg="ICT_Viper" type="com" name="com"/>
+	<node pkg="ICT_Viper" type="motors" name="motors"/>
+	<node pkg="ICT_Viper" type="log" name="log"/>
+</launch>
