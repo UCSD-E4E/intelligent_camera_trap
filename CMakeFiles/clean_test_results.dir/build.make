@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/CamTrap_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/CamTrap_Viper
 
 # Utility rule file for clean_test_results.
 
@@ -46,7 +43,7 @@ CMAKE_BINARY_DIR = /home/riley/fuerte_workspace/sandbox/ICT_Viper
 include CMakeFiles/clean_test_results.dir/progress.make
 
 CMakeFiles/clean_test_results:
-	/usr/bin/cmake -E remove_directory /home/riley/fuerte_workspace/sandbox/ICT_Viper/test_results
+	/usr/bin/cmake -E remove_directory /home/viki/groovy_workspace/CamTrap_Viper/test_results
 
 clean_test_results: CMakeFiles/clean_test_results
 clean_test_results: CMakeFiles/clean_test_results.dir/build.make
@@ -61,6 +58,6 @@ CMakeFiles/clean_test_results.dir/clean:
 .PHONY : CMakeFiles/clean_test_results.dir/clean
 
 CMakeFiles/clean_test_results.dir/depend:
-	cd /home/riley/fuerte_workspace/sandbox/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper /home/riley/fuerte_workspace/sandbox/ICT_Viper/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/CamTrap_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clean_test_results.dir/depend
 

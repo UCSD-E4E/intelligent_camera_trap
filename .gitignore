@@ -1,11 +1,8 @@
 #ignore compiled .o files
-*.o
-
-#ignore executable files
 bin
 build
 catkin
 catkin_generated
 CMakeFiles
 Makefile
-
+CMakeCache.txt

@@ -3,5 +3,5 @@
 
 CATKIN_SHELL=zsh
 emulate sh # emulate POSIX
-. "/home/riley/fuerte_workspace/sandbox/ICT_Viper/devel/setup.sh"
+. "/home/viki/groovy_workspace/CamTrap_Viper/devel/setup.sh"
 emulate zsh # back to zsh mode
