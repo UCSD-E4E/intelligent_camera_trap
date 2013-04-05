@@ -32,59 +32,59 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/CamTrap_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/CamTrap_Viper
 
 # Utility rule file for ROSBUILD_gensrv_py.
 
 # Include the progress variables for this target.
 include CMakeFiles/ROSBUILD_gensrv_py.dir/progress.make
 
-CMakeFiles/ROSBUILD_gensrv_py: src/ICT_Viper/srv/__init__.py
+CMakeFiles/ROSBUILD_gensrv_py: src/CamTrap_Viper/srv/__init__.py
 
-src/ICT_Viper/srv/__init__.py: src/ICT_Viper/srv/_CvService.py
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating src/ICT_Viper/srv/__init__.py"
-	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --initpy /home/viki/groovy_workspace/ICT_Viper/srv/CvService.srv
+src/CamTrap_Viper/srv/__init__.py: src/CamTrap_Viper/srv/_CvService.py
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating src/CamTrap_Viper/srv/__init__.py"
+	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --initpy /home/viki/groovy_workspace/CamTrap_Viper/srv/CvService.srv
 
-src/ICT_Viper/srv/_CvService.py: srv/CvService.srv
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/lib/roslib/gendeps
-src/ICT_Viper/srv/_CvService.py: manifest.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/catkin/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/opencv2/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/cpp_common/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rostime/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp_traits/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp_serialization/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/genmsg/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/genpy/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/message_runtime/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/std_msgs/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/geometry_msgs/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/sensor_msgs/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/image_geometry/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rosconsole/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/cv_bridge/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rosgraph_msgs/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/xmlrpcpp/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/message_filters/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/console_bridge/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/class_loader/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/rospack/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/roslib/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/pluginlib/package.xml
-src/ICT_Viper/srv/_CvService.py: /opt/ros/groovy/share/image_transport/package.xml
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/ICT_Viper/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating src/ICT_Viper/srv/_CvService.py"
-	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --noinitpy /home/viki/groovy_workspace/ICT_Viper/srv/CvService.srv
+src/CamTrap_Viper/srv/_CvService.py: srv/CvService.srv
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/lib/roslib/gendeps
+src/CamTrap_Viper/srv/_CvService.py: manifest.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/catkin/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/opencv2/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/cpp_common/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/rostime/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp_traits/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp_serialization/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/genmsg/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/genpy/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/message_runtime/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/std_msgs/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/geometry_msgs/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/sensor_msgs/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/image_geometry/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/rosconsole/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/cv_bridge/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/rosgraph_msgs/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/xmlrpcpp/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/message_filters/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/console_bridge/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/class_loader/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/rospack/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/roslib/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/pluginlib/package.xml
+src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/image_transport/package.xml
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating src/CamTrap_Viper/srv/_CvService.py"
+	/opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py --noinitpy /home/viki/groovy_workspace/CamTrap_Viper/srv/CvService.srv
 
 ROSBUILD_gensrv_py: CMakeFiles/ROSBUILD_gensrv_py
-ROSBUILD_gensrv_py: src/ICT_Viper/srv/__init__.py
-ROSBUILD_gensrv_py: src/ICT_Viper/srv/_CvService.py
+ROSBUILD_gensrv_py: src/CamTrap_Viper/srv/__init__.py
+ROSBUILD_gensrv_py: src/CamTrap_Viper/srv/_CvService.py
 ROSBUILD_gensrv_py: CMakeFiles/ROSBUILD_gensrv_py.dir/build.make
 .PHONY : ROSBUILD_gensrv_py
 
@@ -97,6 +97,6 @@ CMakeFiles/ROSBUILD_gensrv_py.dir/clean:
 .PHONY : CMakeFiles/ROSBUILD_gensrv_py.dir/clean
 
 CMakeFiles/ROSBUILD_gensrv_py.dir/depend:
-	cd /home/viki/groovy_workspace/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/CMakeFiles/ROSBUILD_gensrv_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/CamTrap_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/ROSBUILD_gensrv_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ROSBUILD_gensrv_py.dir/depend
 

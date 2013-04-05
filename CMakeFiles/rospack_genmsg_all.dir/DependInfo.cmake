@@ -5,7 +5,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
 
 # Preprocessor definitions for this target.
 SET(CMAKE_TARGET_DEFINITIONS
-  "ROS_PACKAGE_NAME=\"ICT_Viper\""
+  "ROS_PACKAGE_NAME=\"CamTrap_Viper\""
   )
 
 # Targets to which this target links.

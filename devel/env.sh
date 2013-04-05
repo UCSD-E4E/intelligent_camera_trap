@@ -6,6 +6,6 @@ if [ $# -eq 0 ] ; then
   /bin/echo "Calling env.sh without arguments is not supported anymore. Instead spawn a subshell and source a setup file manually."
   exit 1
 else
-  . "/home/viki/groovy_workspace/ICT_Viper/devel/setup.sh"
+  . "/home/viki/groovy_workspace/CamTrap_Viper/devel/setup.sh"
   exec "$@"
 fi

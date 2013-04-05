@@ -43,7 +43,7 @@ import sys
 
 # environment at generation time
 CMAKE_PREFIX_PATH = '/opt/ros/groovy'.split(';')
-setup_dir = '/home/viki/groovy_workspace/ICT_Viper/devel'
+setup_dir = '/home/viki/groovy_workspace/CamTrap_Viper/devel'
 if setup_dir not in CMAKE_PREFIX_PATH:
     CMAKE_PREFIX_PATH.insert(0, setup_dir)
 CMAKE_PREFIX_PATH = os.pathsep.join(CMAKE_PREFIX_PATH)

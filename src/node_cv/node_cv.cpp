@@ -69,7 +69,7 @@ bool CVLocalizer::newCoords(ICT_Viper::CvService::Request &req, ICT_Viper::CvSer
 {
 	if (req.A == 0)
 	{
-		ROS_INFO("Recieved CV localization request\n");
+//		ROS_INFO("Recieved CV localization request\n");
 		res.Coords = x;
 		//res.Coords[1] = y;
 	} 

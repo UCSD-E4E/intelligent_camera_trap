@@ -1,8 +1,8 @@
 <launch>
-	<node pkg="ICT_Viper" type="hypervisor" name="hypervisor"/>
-	<node pkg="ICT_Viper" type="cv" name="cv"/>
-	<node pkg="ICT_Viper" type="webcam" name="webcam"/>	
-	<node pkg="ICT_Viper" type="com" name="com"/>
-	<node pkg="ICT_Viper" type="motors" name="motors"/>
-	<node pkg="ICT_Viper" type="log" name="log"/>
+	<node pkg="CamTrap_Viper" type="hypervisor" name="hypervisor"/>
+	<node pkg="CamTrap_Viper" type="cv" name="cv"/>
+	<node pkg="CamTrap_Viper" type="webcam" name="webcam"/>	
+	<node pkg="CamTrap_Viper" type="com" name="com"/>
+	<node pkg="CamTrap_Viper" type="motors" name="motors"/>
+	<node pkg="CamTrap_Viper" type="log" name="log"/>
 </launch>

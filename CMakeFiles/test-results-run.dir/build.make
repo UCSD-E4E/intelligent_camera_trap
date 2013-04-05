@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/ICT_Viper
+CMAKE_SOURCE_DIR = /home/viki/groovy_workspace/CamTrap_Viper
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/viki/groovy_workspace/ICT_Viper
+CMAKE_BINARY_DIR = /home/viki/groovy_workspace/CamTrap_Viper
 
 # Utility rule file for test-results-run.
 
@@ -57,6 +57,6 @@ CMakeFiles/test-results-run.dir/clean:
 .PHONY : CMakeFiles/test-results-run.dir/clean
 
 CMakeFiles/test-results-run.dir/depend:
-	cd /home/viki/groovy_workspace/ICT_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper /home/viki/groovy_workspace/ICT_Viper/CMakeFiles/test-results-run.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/viki/groovy_workspace/CamTrap_Viper && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/test-results-run.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test-results-run.dir/depend
 
