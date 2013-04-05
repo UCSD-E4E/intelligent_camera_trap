@@ -254,17 +254,17 @@ log/fast:
 .PHONY : log/fast
 
 #=============================================================================
-# Target rules for targets named motors
+# Target rules for targets named motors_mock
 
 # Build rule for target.
-motors: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 motors
-.PHONY : motors
+motors_mock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 motors_mock
+.PHONY : motors_mock
 
 # fast build rule for target.
-motors/fast:
-	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/build
-.PHONY : motors/fast
+motors_mock/fast:
+	$(MAKE) -f CMakeFiles/motors_mock.dir/build.make CMakeFiles/motors_mock.dir/build
+.PHONY : motors_mock/fast
 
 #=============================================================================
 # Target rules for targets named rosbuild_clean-test-results
@@ -607,29 +607,29 @@ src/node_log/node_log.cpp.s:
 	$(MAKE) -f CMakeFiles/log.dir/build.make CMakeFiles/log.dir/src/node_log/node_log.cpp.s
 .PHONY : src/node_log/node_log.cpp.s
 
-src/node_motors/node_motors.o: src/node_motors/node_motors.cpp.o
-.PHONY : src/node_motors/node_motors.o
+src/node_motors_mock/node_motors_mock.o: src/node_motors_mock/node_motors_mock.cpp.o
+.PHONY : src/node_motors_mock/node_motors_mock.o
 
 # target to build an object file
-src/node_motors/node_motors.cpp.o:
-	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.o
-.PHONY : src/node_motors/node_motors.cpp.o
+src/node_motors_mock/node_motors_mock.cpp.o:
+	$(MAKE) -f CMakeFiles/motors_mock.dir/build.make CMakeFiles/motors_mock.dir/src/node_motors_mock/node_motors_mock.cpp.o
+.PHONY : src/node_motors_mock/node_motors_mock.cpp.o
 
-src/node_motors/node_motors.i: src/node_motors/node_motors.cpp.i
-.PHONY : src/node_motors/node_motors.i
+src/node_motors_mock/node_motors_mock.i: src/node_motors_mock/node_motors_mock.cpp.i
+.PHONY : src/node_motors_mock/node_motors_mock.i
 
 # target to preprocess a source file
-src/node_motors/node_motors.cpp.i:
-	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.i
-.PHONY : src/node_motors/node_motors.cpp.i
+src/node_motors_mock/node_motors_mock.cpp.i:
+	$(MAKE) -f CMakeFiles/motors_mock.dir/build.make CMakeFiles/motors_mock.dir/src/node_motors_mock/node_motors_mock.cpp.i
+.PHONY : src/node_motors_mock/node_motors_mock.cpp.i
 
-src/node_motors/node_motors.s: src/node_motors/node_motors.cpp.s
-.PHONY : src/node_motors/node_motors.s
+src/node_motors_mock/node_motors_mock.s: src/node_motors_mock/node_motors_mock.cpp.s
+.PHONY : src/node_motors_mock/node_motors_mock.s
 
 # target to generate assembly for a file
-src/node_motors/node_motors.cpp.s:
-	$(MAKE) -f CMakeFiles/motors.dir/build.make CMakeFiles/motors.dir/src/node_motors/node_motors.cpp.s
-.PHONY : src/node_motors/node_motors.cpp.s
+src/node_motors_mock/node_motors_mock.cpp.s:
+	$(MAKE) -f CMakeFiles/motors_mock.dir/build.make CMakeFiles/motors_mock.dir/src/node_motors_mock/node_motors_mock.cpp.s
+.PHONY : src/node_motors_mock/node_motors_mock.cpp.s
 
 src/node_webcam/node_webcam.o: src/node_webcam/node_webcam.cpp.o
 .PHONY : src/node_webcam/node_webcam.o
@@ -675,7 +675,7 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... log"
-	@echo "... motors"
+	@echo "... motors_mock"
 	@echo "... rebuild_cache"
 	@echo "... rosbuild_clean-test-results"
 	@echo "... rosbuild_precompile"
@@ -709,9 +709,9 @@ help:
 	@echo "... src/node_log/node_log.o"
 	@echo "... src/node_log/node_log.i"
 	@echo "... src/node_log/node_log.s"
-	@echo "... src/node_motors/node_motors.o"
-	@echo "... src/node_motors/node_motors.i"
-	@echo "... src/node_motors/node_motors.s"
+	@echo "... src/node_motors_mock/node_motors_mock.o"
+	@echo "... src/node_motors_mock/node_motors_mock.i"
+	@echo "... src/node_motors_mock/node_motors_mock.s"
 	@echo "... src/node_webcam/node_webcam.o"
 	@echo "... src/node_webcam/node_webcam.i"
 	@echo "... src/node_webcam/node_webcam.s"

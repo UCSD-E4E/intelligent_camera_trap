@@ -41,7 +41,7 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
    "/usr/local/_setup_util.py")
-FILE(INSTALL DESTINATION "/usr/local" TYPE PROGRAM FILES "/home/viki/groovy_workspace/CamTrap_Viper/catkin_generated/installspace/_setup_util.py")
+FILE(INSTALL DESTINATION "/usr/local" TYPE PROGRAM FILES "/opt/ros/groovy/share/catkin/cmake/templates/_setup_util.py")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
@@ -52,14 +52,14 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/usr/local/setup.bash")
-FILE(INSTALL DESTINATION "/usr/local" TYPE FILE FILES "/home/viki/groovy_workspace/CamTrap_Viper/catkin_generated/installspace/setup.bash")
+   "/usr/local/setup.sh")
+FILE(INSTALL DESTINATION "/usr/local" TYPE FILE FILES "/home/viki/groovy_workspace/CamTrap_Viper/catkin_generated/installspace/setup.sh")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/usr/local/setup.sh")
-FILE(INSTALL DESTINATION "/usr/local" TYPE FILE FILES "/home/viki/groovy_workspace/CamTrap_Viper/catkin_generated/installspace/setup.sh")
+   "/usr/local/setup.bash")
+FILE(INSTALL DESTINATION "/usr/local" TYPE FILE FILES "/home/viki/groovy_workspace/CamTrap_Viper/catkin_generated/installspace/setup.bash")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")

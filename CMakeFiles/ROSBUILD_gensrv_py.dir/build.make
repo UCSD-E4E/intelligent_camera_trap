@@ -53,14 +53,11 @@ src/CamTrap_Viper/srv/_CvService.py: srv/CvService.srv
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/rospy/rosbuild/scripts/gensrv_py.py
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/lib/roslib/gendeps
 src/CamTrap_Viper/srv/_CvService.py: manifest.xml
-src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/catkin/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/opencv2/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/cpp_common/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/rostime/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp_traits/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/roscpp_serialization/package.xml
-src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/genmsg/package.xml
-src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/genpy/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/message_runtime/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/std_msgs/package.xml
 src/CamTrap_Viper/srv/_CvService.py: /opt/ros/groovy/share/geometry_msgs/package.xml

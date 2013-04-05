@@ -9,7 +9,7 @@
 /home/viki/groovy_workspace/CamTrap_Viper/gtest/CMakeFiles/gtest_main.dir
 /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/hypervisor.dir
 /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/log.dir
-/home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/motors.dir
+/home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/motors_mock.dir
 /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/rosbuild_clean-test-results.dir
 /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/rosbuild_precompile.dir
 /home/viki/groovy_workspace/CamTrap_Viper/CMakeFiles/rosbuild_premsgsrvgen.dir
