@@ -6,13 +6,13 @@ import struct
 
 
 class CvServiceRequest(genpy.Message):
-  _md5sum = "2f74de675724ea76427c4018b917fc67"
+  _md5sum = "fa787b34b2cdca0b9b49454a95e1f0ca"
   _type = "CamTrap_Viper/CvServiceRequest"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """int32 A
+  _full_text = """int32 localization_request
 
 """
-  __slots__ = ['A']
+  __slots__ = ['localization_request']
   _slot_types = ['int32']
 
   def __init__(self, *args, **kwds):
@@ -23,7 +23,7 @@ class CvServiceRequest(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       A
+       localization_request
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -32,10 +32,10 @@ class CvServiceRequest(genpy.Message):
     if args or kwds:
       super(CvServiceRequest, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
-      if self.A is None:
-        self.A = 0
+      if self.localization_request is None:
+        self.localization_request = 0
     else:
-      self.A = 0
+      self.localization_request = 0
 
   def _get_types(self):
     """
@@ -49,7 +49,7 @@ class CvServiceRequest(genpy.Message):
     :param buff: buffer, ``StringIO``
     """
     try:
-      buff.write(_struct_i.pack(self.A))
+      buff.write(_struct_i.pack(self.localization_request))
     except struct.error as se: self._check_types(se)
     except TypeError as te: self._check_types(te)
 
@@ -62,7 +62,7 @@ class CvServiceRequest(genpy.Message):
       end = 0
       start = end
       end += 4
-      (self.A,) = _struct_i.unpack(str[start:end])
+      (self.localization_request,) = _struct_i.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -75,7 +75,7 @@ class CvServiceRequest(genpy.Message):
     :param numpy: numpy python module
     """
     try:
-      buff.write(_struct_i.pack(self.A))
+      buff.write(_struct_i.pack(self.localization_request))
     except struct.error as se: self._check_types(se)
     except TypeError as te: self._check_types(te)
 
@@ -89,7 +89,7 @@ class CvServiceRequest(genpy.Message):
       end = 0
       start = end
       end += 4
-      (self.A,) = _struct_i.unpack(str[start:end])
+      (self.localization_request,) = _struct_i.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -104,15 +104,15 @@ import struct
 
 
 class CvServiceResponse(genpy.Message):
-  _md5sum = "50c4f9766cb0bd7ba2c25a50239aa53e"
+  _md5sum = "cc4124d8c0f1e37e69dcd90935f854ed"
   _type = "CamTrap_Viper/CvServiceResponse"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """int32 Coords
+  _full_text = """int32[1] localization
 
 
 """
-  __slots__ = ['Coords']
-  _slot_types = ['int32']
+  __slots__ = ['localization']
+  _slot_types = ['int32[1]']
 
   def __init__(self, *args, **kwds):
     """
@@ -122,7 +122,7 @@ class CvServiceResponse(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       Coords
+       localization
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -131,10 +131,10 @@ class CvServiceResponse(genpy.Message):
     if args or kwds:
       super(CvServiceResponse, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
-      if self.Coords is None:
-        self.Coords = 0
+      if self.localization is None:
+        self.localization = [0]
     else:
-      self.Coords = 0
+      self.localization = [0]
 
   def _get_types(self):
     """
@@ -148,7 +148,7 @@ class CvServiceResponse(genpy.Message):
     :param buff: buffer, ``StringIO``
     """
     try:
-      buff.write(_struct_i.pack(self.Coords))
+      buff.write(_struct_1i.pack(*self.localization))
     except struct.error as se: self._check_types(se)
     except TypeError as te: self._check_types(te)
 
@@ -161,7 +161,7 @@ class CvServiceResponse(genpy.Message):
       end = 0
       start = end
       end += 4
-      (self.Coords,) = _struct_i.unpack(str[start:end])
+      self.localization = _struct_1i.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -174,7 +174,7 @@ class CvServiceResponse(genpy.Message):
     :param numpy: numpy python module
     """
     try:
-      buff.write(_struct_i.pack(self.Coords))
+      buff.write(self.localization.tostring())
     except struct.error as se: self._check_types(se)
     except TypeError as te: self._check_types(te)
 
@@ -188,15 +188,15 @@ class CvServiceResponse(genpy.Message):
       end = 0
       start = end
       end += 4
-      (self.Coords,) = _struct_i.unpack(str[start:end])
+      self.localization = numpy.frombuffer(str[start:end], dtype=numpy.int32, count=1)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_i = struct.Struct("<i")
+_struct_1i = struct.Struct("<1i")
 class CvService(object):
   _type          = 'CamTrap_Viper/CvService'
-  _md5sum = '2c7788a4f8698f5dedc687abaee2c458'
+  _md5sum = '3807b278e4b5393dac7f26280a559c3a'
   _request_class  = CvServiceRequest
   _response_class = CvServiceResponse

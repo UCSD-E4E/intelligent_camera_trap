@@ -26,17 +26,17 @@ struct CvServiceRequest_ {
   typedef CvServiceRequest_<ContainerAllocator> Type;
 
   CvServiceRequest_()
-  : A(0)
+  : localization_request(0)
   {
   }
 
   CvServiceRequest_(const ContainerAllocator& _alloc)
-  : A(0)
+  : localization_request(0)
   {
   }
 
-  typedef int32_t _A_type;
-  int32_t A;
+  typedef int32_t _localization_request_type;
+  int32_t localization_request;
 
 
   typedef boost::shared_ptr< ::CamTrap_Viper::CvServiceRequest_<ContainerAllocator> > Ptr;
@@ -54,17 +54,19 @@ struct CvServiceResponse_ {
   typedef CvServiceResponse_<ContainerAllocator> Type;
 
   CvServiceResponse_()
-  : Coords(0)
+  : localization()
   {
+    localization.assign(0);
   }
 
   CvServiceResponse_(const ContainerAllocator& _alloc)
-  : Coords(0)
+  : localization()
   {
+    localization.assign(0);
   }
 
-  typedef int32_t _Coords_type;
-  int32_t Coords;
+  typedef boost::array<int32_t, 1>  _localization_type;
+  boost::array<int32_t, 1>  localization;
 
 
   typedef boost::shared_ptr< ::CamTrap_Viper::CvServiceResponse_<ContainerAllocator> > Ptr;
@@ -99,12 +101,12 @@ template<class ContainerAllocator>
 struct MD5Sum< ::CamTrap_Viper::CvServiceRequest_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "2f74de675724ea76427c4018b917fc67";
+    return "fa787b34b2cdca0b9b49454a95e1f0ca";
   }
 
   static const char* value(const  ::CamTrap_Viper::CvServiceRequest_<ContainerAllocator> &) { return value(); } 
-  static const uint64_t static_value1 = 0x2f74de675724ea76ULL;
-  static const uint64_t static_value2 = 0x427c4018b917fc67ULL;
+  static const uint64_t static_value1 = 0xfa787b34b2cdca0bULL;
+  static const uint64_t static_value2 = 0x9b49454a95e1f0caULL;
 };
 
 template<class ContainerAllocator>
@@ -121,7 +123,7 @@ template<class ContainerAllocator>
 struct Definition< ::CamTrap_Viper::CvServiceRequest_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "int32 A\n\
+    return "int32 localization_request\n\
 \n\
 ";
   }
@@ -144,12 +146,12 @@ template<class ContainerAllocator>
 struct MD5Sum< ::CamTrap_Viper::CvServiceResponse_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "50c4f9766cb0bd7ba2c25a50239aa53e";
+    return "cc4124d8c0f1e37e69dcd90935f854ed";
   }
 
   static const char* value(const  ::CamTrap_Viper::CvServiceResponse_<ContainerAllocator> &) { return value(); } 
-  static const uint64_t static_value1 = 0x50c4f9766cb0bd7bULL;
-  static const uint64_t static_value2 = 0xa2c25a50239aa53eULL;
+  static const uint64_t static_value1 = 0xcc4124d8c0f1e37eULL;
+  static const uint64_t static_value2 = 0x69dcd90935f854edULL;
 };
 
 template<class ContainerAllocator>
@@ -166,7 +168,7 @@ template<class ContainerAllocator>
 struct Definition< ::CamTrap_Viper::CvServiceResponse_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "int32 Coords\n\
+    return "int32[1] localization\n\
 \n\
 \n\
 ";
@@ -188,7 +190,7 @@ template<class ContainerAllocator> struct Serializer< ::CamTrap_Viper::CvService
 {
   template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
   {
-    stream.next(m.A);
+    stream.next(m.localization_request);
   }
 
   ROS_DECLARE_ALLINONE_SERIALIZER;
@@ -206,7 +208,7 @@ template<class ContainerAllocator> struct Serializer< ::CamTrap_Viper::CvService
 {
   template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
   {
-    stream.next(m.Coords);
+    stream.next(m.localization);
   }
 
   ROS_DECLARE_ALLINONE_SERIALIZER;
@@ -222,7 +224,7 @@ template<>
 struct MD5Sum<CamTrap_Viper::CvService> {
   static const char* value() 
   {
-    return "2c7788a4f8698f5dedc687abaee2c458";
+    return "3807b278e4b5393dac7f26280a559c3a";
   }
 
   static const char* value(const CamTrap_Viper::CvService&) { return value(); } 
@@ -242,7 +244,7 @@ template<class ContainerAllocator>
 struct MD5Sum<CamTrap_Viper::CvServiceRequest_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "2c7788a4f8698f5dedc687abaee2c458";
+    return "3807b278e4b5393dac7f26280a559c3a";
   }
 
   static const char* value(const CamTrap_Viper::CvServiceRequest_<ContainerAllocator> &) { return value(); } 
@@ -262,7 +264,7 @@ template<class ContainerAllocator>
 struct MD5Sum<CamTrap_Viper::CvServiceResponse_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "2c7788a4f8698f5dedc687abaee2c458";
+    return "3807b278e4b5393dac7f26280a559c3a";
   }
 
   static const char* value(const CamTrap_Viper::CvServiceResponse_<ContainerAllocator> &) { return value(); } 

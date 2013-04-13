@@ -9,7 +9,7 @@
 
 #include <ros/ros.h>
 
-#include "ICT_Viper/CvService.h"
+#include "CamTrap_Viper/CvService.h"
 #include "parameters.h"
 #include "cv_localizer.h"
 

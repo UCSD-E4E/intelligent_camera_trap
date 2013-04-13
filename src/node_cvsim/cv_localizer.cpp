@@ -1,4 +1,4 @@
-#include "ICT_Viper/CvService.h"
+#include "CamTrap_Viper/CvService.h"
 #include "cv_localizer.h"
 
 
@@ -40,11 +40,11 @@ CVLocalizer::CVLocalizer(int x_init, int y_init, int imgW, int imgH)
 	timestamp = 0;
 }
 
-bool CVLocalizer::newCoords(ICT_Viper::CvService::Request &req, ICT_Viper::CvService::Response &res)
+bool CVLocalizer::newCoords(CamTrap_Viper::CvService::Request &req, CamTrap_Viper::CvService::Response &res)
 {
 	if (req.localization_request == 0)
 	{
-		ROS_INFO("Recieved CV localization request\n");
+	//	ROS_INFO("Recieved CV localization request\n");
 		res.localization[0] = x;
 	}
 	return true;

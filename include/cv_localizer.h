@@ -1,4 +1,4 @@
-#include "ICT_Viper/CvService.h"
+#include "CamTrap_Viper/CvService.h"
 
 class CVLocalizer
 {
@@ -18,7 +18,7 @@ class CVLocalizer
 		
 		void setTimestamp(double new_timestamp);
 		
-		bool newCoords(ICT_Viper::CvService::Request &req, ICT_Viper::CvService::Response &res); 	
+		bool newCoords(CamTrap_Viper::CvService::Request &req, CamTrap_Viper::CvService::Response &res); 	
 
 
 };
