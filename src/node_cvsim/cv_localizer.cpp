@@ -42,10 +42,10 @@ CVLocalizer::CVLocalizer(int x_init, int y_init, int imgW, int imgH)
 
 bool CVLocalizer::newCoords(ICT_Viper::CvService::Request &req, ICT_Viper::CvService::Response &res)
 {
-	if (req.A == 0)
+	if (req.localization_request == 0)
 	{
 		ROS_INFO("Recieved CV localization request\n");
-		res.Coords = x;
+		res.localization[0] = x;
 	}
 	return true;
 }
