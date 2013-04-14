@@ -3,7 +3,7 @@ bin
 build
 catkin
 catkin_generated
-CMakeFiles
+#CMakeFiles
 Makefile
 CMakeCache.txt
 gtest
