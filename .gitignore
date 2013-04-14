@@ -6,7 +6,7 @@ bin
 build
 catkin
 catkin_generated
-CMakeFiles
+
 Makefile
 CMakeCache.txt
 
