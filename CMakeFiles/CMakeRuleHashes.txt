@@ -23,4 +23,3 @@ e0905bfa56523217f159306d352ea6ed src/CamTrap_Viper/srv/__init__.py
 a8c1d372367d16cede960ab0818c3cfb src/ICT_Viper/srv/_CvService.py
 999feb9ee19712297dea76ac48f1b808 src/ICT_Viper/srv/__init__.py
 4a297df736d171097b41cc36fb455382 srv_gen/cpp/include/CamTrap_Viper/CvService.h
-a7f6c8cd04a42f73bb1149d0cfbe2c23 srv_gen/cpp/include/ICT_Viper/CvService.h
