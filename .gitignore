@@ -1,7 +1,3 @@
-#ignore compiled .o files
-*.o
-
-#ignore executable files
 bin
 build
 catkin
@@ -10,3 +6,7 @@ CMakeFiles
 Makefile
 CMakeCache.txt
 gtest
+.rosinstall
+CATKIN_IGNORE
+cmake_install.cmake
+devel
