@@ -1,9 +1,19 @@
-#ignore compiled .o files
 bin
 build
 catkin
 catkin_generated
-#CMakeFiles
+CMakeFiles
 Makefile
 CMakeCache.txt
 gtest
+.rosinstall
+CATKIN_IGNORE
+cmake_install.cmake
+devel
+setup.bash
+setup.sh
+setup.zsh
+mainpage.dox
+ros-git-fix.sh
+srv_gen
+src/CamTrap_Viper
