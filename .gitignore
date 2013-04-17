@@ -10,3 +10,8 @@ gtest
 CATKIN_IGNORE
 cmake_install.cmake
 devel
+setup.bash
+setup.sh
+setup.zsh
+mainpage.dox
+ros-git-fix.sh
