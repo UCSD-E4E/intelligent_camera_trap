@@ -15,3 +15,5 @@ setup.sh
 setup.zsh
 mainpage.dox
 ros-git-fix.sh
+srv_gen
+src/CamTrap_Viper/
