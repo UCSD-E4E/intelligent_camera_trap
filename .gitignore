@@ -10,3 +10,5 @@ gtest
 CATKIN_IGNORE
 cmake_install.cmake
 devel
+srv_gen
+src/CamTrap_Viper/
