@@ -67,7 +67,7 @@ int main()
    	srv.localization_request = 0;
 		if (client.call(srv))
 		{
-			mctrl.new_pan = srv.response.localization[0];
+			mctrl.new_pan = srv.response.x_degree;
 			//mctrl.new_tilt = tilt coords;
 			mctrl.updatePosition();
 		}

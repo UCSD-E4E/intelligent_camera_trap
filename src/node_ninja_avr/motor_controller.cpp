@@ -1,10 +1,14 @@
 #include "motor_controller.h"
+#define TOLERANCE = 0
 
-void MotorController::setPosisition(int pan, int tilt)
+void MotorController::updatePosition(void)
 {
-	ROS_INFO("Setting pan, tilt to [%d,%d]", pan, tilt);
-	pan_pos = pan;
-	tilt_pos = tilt;
+	if ((abs(new_pan - pan_pos) >= TOLERANCE) || (abs(new_tilt - tilt_pos) >= TOLERANCE)
+		ROS_INFO("Setting pan, tilt to [%d,%d]", pan, tilt);
+		pan_pos = pan;
+		tilt_pos = tilt;
+	else
+		ROS_INFO("Change not big enough to move motors");
 	return
 }
 

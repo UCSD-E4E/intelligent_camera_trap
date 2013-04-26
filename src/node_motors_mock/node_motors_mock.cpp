@@ -35,23 +35,19 @@ int main(int argc, char** argv){
 	ros::ServiceClient client = n.serviceClient<CamTrap_Viper::CvService>("cv_service");
 	CamTrap_Viper::CvService srv;
 	
-	int x_offset = 0; 
+	int x_offset = 0;
+	float x_degree = 0; 
 	while (ros::ok())
 	{
 	//	ROS_INFO("making service request...\n");
 		srv.request.localization_request = 0;
 		if (client.call(srv))
 		{
-			ROS_INFO("x offset = %d\n", (int) srv.response.localization[0]);
-			x_offset = srv.response.localization[0];
-			if (x_offset >= 320)
-			{
-				ROS_INFO("motors- I'm turning one way...");
-			}
-			else
-			{
-				ROS_INFO("motors- I'm turning the other way!");
-			}
+			ROS_INFO("x offset = %d\n", (int) srv.response.x_offset);
+			x_offset = srv.response.x_offset;
+			x_degree = srv.response.x_degree;	
+			ROS_INFO("motors- Turn %f degrees to re-align center", x_degree);
+			
 		}
 		else
 		{
