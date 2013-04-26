@@ -46,6 +46,7 @@ bool CVLocalizer::newCoords(CamTrap_Viper::CvService::Request &req, CamTrap_Vipe
 	{
 	//	ROS_INFO("Recieved CV localization request\n");
 		res.localization[0] = x;
+//		res.localization[1] = y;
 	}
 	return true;
 }

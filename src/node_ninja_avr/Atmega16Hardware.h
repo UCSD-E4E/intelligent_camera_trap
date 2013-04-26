@@ -1,5 +1,5 @@
-#ifndef _ATMEGA32U4_HARDWARE_H
-#define _ATMEGA32U4_HARDWARE_H
+#ifndef _ATMEGA16_HARDWARE_H
+#define _ATMEGA16_HARDWARE_H
 
 extern "C"
 {
@@ -7,11 +7,12 @@ extern "C"
   #include <avr/wdt.h>
   #include "avr_time.h"
   #include "avr_uart.h"
+//  #include "port.h"
 }
 
-class Atmega32u4Hardware {
+class Atmega16Hardware {
   public:
-    Atmega32u4Hardware() {}
+    Atmega16Hardware() {}
 
 
     // Initialize the AVR
@@ -30,7 +31,6 @@ class Atmega32u4Hardware {
       return avr_uart_receive_byte();
     }
 
-
     // Send a byte of data to ROS connection
     void write(uint8_t* data, int length)
     {
@@ -39,7 +39,6 @@ class Atmega32u4Hardware {
         avr_uart_send_byte(data[i]);
       }
     }
-
 
     // Returns milliseconds since start of program
     unsigned long time()
