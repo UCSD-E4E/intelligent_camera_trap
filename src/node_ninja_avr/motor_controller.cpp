@@ -12,28 +12,28 @@ void MotorController::updatePosition(void)
 	return
 }
 
-void MotorController::commandCallback(const CamTrap_Viper::MotorCmd::ConstPtr& msg)
+/*void MotorController::commandCallback(const CamTrap_Viper::MotorCmd::ConstPtr& msg)
 {
 	new_pan = msg.new_x;
 	new_tilt = msg.new_y;
 	return
-}
+}*/
 
-int MotorController::getPan(void)
+double MotorController::getPan(void)
 {
 	//update pan position: read motors?
 	ROS_INFO("Current pan position: %d ", pan_pos);
 }
 
 
-int MotorController::getTilt(void)
+double MotorController::getTilt(void)
 {
 	//update pan position: read motors?
 	ROS_INFO("Current pan position: %d ", tilt_pos);
 }
 
 
-MotorController::MotorController(int pan_init, int tilt_init)
+MotorController::MotorController(double pan_init, double tilt_init)
 {
 	pan_pos = pan_init;
 	tilt_pos = tilt_init;

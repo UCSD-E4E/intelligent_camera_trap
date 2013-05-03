@@ -1,19 +1,43 @@
+#include "motor_controller.h"
+#define TOLERANCE = 0
 
-class MotorController
+void MotorController::updatePosition(void)
 {
-	public:
-	int pan_pos, tilt_pos, new_pan, new_tilt;
+	if ((abs(new_pan - pan_pos) >= TOLERANCE) || (abs(new_tilt - tilt_pos) >= TOLERANCE)
+		ROS_INFO("Setting pan, tilt to [%d,%d]", pan, tilt);
+		pan_pos = pan;
+		tilt_pos = tilt;
+	else
+		ROS_INFO("Change not big enough to move motors");
+	return
+}
 
-	MotorController(int pan_init, int tilt_init);
+/*void MotorController::commandCallback(const CamTrap_Viper::MotorCmd::ConstPtr& msg)
+{
+	new_pan = msg.new_x;
+	new_tilt = msg.new_y;
+	return
+}*/
 
-	int getPan(void);
+double MotorController::getPan(void)
+{
+	//update pan position: read motors?
+	ROS_INFO("Current pan position: %d ", pan_pos);
+}
 
-	int getTilt(void);
 
-	void updatePosition(void);
+double MotorController::getTilt(void)
+{
+	//update pan position: read motors?
+	ROS_INFO("Current pan position: %d ", tilt_pos);
+}
 
-	void commandCallback(const std_msgs::String::ConstPtr& msg);
 
-};
-
+MotorController::MotorController(double pan_init, double tilt_init)
+{
+	pan_pos = pan_init;
+	tilt_pos = tilt_init;
 	
+	new_pan = pan_pos;
+	new_tilt = tilt_pos;
+}
