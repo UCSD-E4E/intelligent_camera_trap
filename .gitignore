@@ -19,5 +19,17 @@ srv_gen
 srv_gen/generated
 src/CamTrap_Viper/
 
+#ignore atmel build files
+rosserial/src/*.eep
+rosserial/src/*.elf
+rosserial/src/*.hex
+rosserial/src/*.lss
+rosserial/src/*.lst
+rosserial/src/*.map
+rosserial/src/*.o
+rosserial/src/*.sym
 
+rosserial/src/.dep/*.o.d
+rosserial/src/ros_lib/*.lst
+rosserial/src/ros_lib/*.o
 

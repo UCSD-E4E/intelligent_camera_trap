@@ -5,8 +5,11 @@
 #include <time.h>
 
 #include <sys/statvfs.h>
-#include <phidget21.h>
 #include "CamTrap_Viper/CvService.h"
+#include "motor_controller.h"
+#include <boost/asio.hpp>
+
+//using namespace boost::asio;
 
 void hvCallback(const std_msgs::String::ConstPtr& msg)
 {
@@ -18,12 +21,10 @@ void comCallback(const std_msgs::String::ConstPtr& msg)
 	//Do stuff when the com node says so
 }
 
-
 int main(int argc, char** argv){
-	
-	ros::init(argc, argv, "pan");
+	ros::init(argc, argv, "motors");
 	ros::NodeHandle n;
-	
+	ROS_INFO("Running Ninja Controller");
 	//connect to Hypervisor and com nodes
 	ros::Subscriber hv_sub = n.subscribe("Hypervisor_Output", 10, hvCallback);	
 	ros::Subscriber com_sub = n.subscribe("Com_Commands", 10, comCallback);
@@ -34,24 +35,35 @@ int main(int argc, char** argv){
 	//Connect to CV service
 	ros::ServiceClient client = n.serviceClient<CamTrap_Viper::CvService>("cv_service");
 	CamTrap_Viper::CvService srv;
+
+	MotorController mctrl("/dev/ttyUSB0", 38400, 0.0, 0.0);
 	
-	int x_offset = 0;
-	float x_degree = 0; 
+	std::string response;
+	
+	//Check new Position (should be old plus 10)	
+	ROS_INFO("Checking position");
+
+	mctrl.updatePanTilt();	
+
+	mctrl.new_pan = mctrl.pan_pos - 30; 
+	mctrl.updatePosition();	
+
+	mctrl.updatePanTilt();	
 	while (ros::ok())
-	{
-	//	ROS_INFO("making service request...\n");
-		srv.request.localization_request = 0;
-		if (client.call(srv))
-		{
-			ROS_INFO("x offset = %d\n", (int) srv.response.x_offset);
-			x_offset = srv.response.x_offset;
-			x_degree = srv.response.x_degree;	
-			ROS_INFO("motors- Turn %f degrees to re-align center", x_degree);
-			
-		}
-		else
-		{
-			ROS_ERROR("cv service call failed");
-		}
-	}	
+	{  
+	 //Query new coordinates
+     srv.request.localization_request = 0;
+      if (client.call(srv))
+      {
+			mctrl.new_pan = mctrl.pan_pos + srv.response.x_degree;  
+			mctrl.new_tilt = mctrl.tilt_pos + srv.response.y_degree;
+       	mctrl.updatePosition();
+      }   
+      else
+      {   
+         ROS_ERROR("service call failed :(");
+      }
+		ros::spinOnce();
+		ros::Duration(1.0).sleep();
+	}
 }
