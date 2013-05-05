@@ -24,15 +24,19 @@ class MotorController
 		serial.set_option(boost::asio::serial_port_base::baud_rate(baudrate));
 	}
 
-	void getPanTilt();
+	void updatePanTilt();
 
 	void updatePosition();
 
 //	void commandCallback(const std_msgs::String::ConstPtr& msg);
 	
 	std::string readPort();
+	void readCoords();
+	void readResponse();	
+	void writeString(char* s);
 
-	int sendSteps(int deg_x, int deg_y);
+	int sendSteps(int steps_x, int steps_y);
+	int sendRelSteps(int steps_x, int steps_y);
 
 	private:
 		boost::asio::io_service io;

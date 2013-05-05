@@ -1,69 +1,159 @@
 #include "motor_controller.h"
 #define TOLERANCE 0.0
 #define PAN_STEPS 883.0
-#define PAN_RANGE 180
-#define TILT_STEPS 355
-#define TILT_RANGE 72
+#define PAN_RANGE 180.0
+#define TILT_STEPS 355.0
+#define TILT_RANGE 72.0
 
 using namespace boost::asio;
 
 void MotorController::updatePosition()
 {
 	//update current motor position
-	//getPanTilt();
-/*	if ((abs(new_pan - pan_pos) > TOLERANCE) || (abs(new_tilt - tilt_pos) > TOLERANCE))
+	updatePanTilt();
+	if ((abs(new_pan - pan_pos) > TOLERANCE) || (abs(new_tilt - tilt_pos) > TOLERANCE))
 	{
-		ROS_INFO("Setting pan, tilt to [%f,%f]", new_pan, new_tilt);
-		int pan_steps = (new_pan-pan_pos)*(PAN_STEPS/PAN_RANGE);
+		int pan_steps = (new_pan - pan_pos)*PAN_STEPS/PAN_RANGE; 
 		
 		//send to motor controller
-		sendSteps(pan_steps, 0);
+		sendRelSteps(pan_steps, 0);
 	}
 	else
 	{
 		ROS_INFO("Change not big enough to move motors");
 	}
-	return;*/
-	sendSteps(100,100);
+	return;
 }
 
-/*void MotorController::commandCallback(const CamTrap_Viper::MotorCmd::ConstPtr& msg)
-{
-	new_pan = msg.new_x;
-	new_tilt = msg.new_y;
-	return
-}*/
-
-void MotorController::getPanTilt()
+void MotorController::updatePanTilt()
 {
 	//update pan/tilt position: get steps
-/* 	char query[7];
+ 	char query[7];
  	sprintf(query, "STQ%c9A", 1);
-	char response[13];
-	int res_length = read(fd, response, 13);
-	int steps_x = -1;
-	int steps_y = -1;
-	
-	sscanf(response, "X:%dY:%d", steps_x, steps_y);
-	
-	double degrees_x = steps_x * (PAN_RANGE/PAN_STEPS);
-	double degrees_y = steps_y * (TILT_RANGE/TILT_STEPS);
-	ROS_INFO("Current pan position: %f", degrees_x);
-	ROS_INFO("Current tilt position: %f", degrees_y);
-	return;*/
+
+	writeString(query);
+	readCoords();
+	return;
 }
 
-
-/*double MotorController::getTilt(void)
+void MotorController::readCoords()
 {
-	//update pan position: read motors?
-	double degrees = 0;
-	ROS_INFO("Current pan position: %f", degrees);
-	return degrees;
-}*/
+	using namespace boost;
+	system::error_code ec;
+	int min_length = 7;	
+	char c[64];
 
+	//Give message a chance to transfer	
+	ros::Duration(0.1).sleep();
+	
+	asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
+
+	if (ec)
+	{	
+		ROS_ERROR("Boost Error at readCoords()");
+	}
+
+//	ROS_INFO("From Controller: %s", c);
+	
+	int x_steps, y_steps;
+	sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
+	
+	pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
+	tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
+	ROS_INFO("Current Position: [%f, %f]", pan_pos, tilt_pos);	
+	return;	
+}
+
+void MotorController::readResponse()
+{
+	using namespace boost;
+	system::error_code ec;
+	int min_length = 14;
+	char c[64];
+
+	ros::Duration(0.1).sleep();
+	
+	asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
+	if (ec)
+	{
+		ROS_ERROR("Boost Error at readResponse");
+	}
+
+	ROS_INFO("From Controller: %s", c);
+
+	int x_conf, y_conf;
+	sscanf(c, "Target X:%d Y:%d", &x_conf, &y_conf);
+
+	ROS_INFO("Confirmation: [%d, %d]", x_conf, y_conf);
+	return;
+	
+}
+
+void MotorController::writeString(char* s)
+{
+	boost::asio::write(serial, boost::asio::buffer(s, strlen(s)));
+	ROS_INFO("wrote %s to /dev/ttyUSB0", s);
+}
+
+int MotorController::sendSteps(int steps_x, int steps_y)
+{
+	//construct message
+//	unsigned char checksum = 'A';
+	char* packet = (char *)malloc(snprintf(NULL, 0, "X0%dY0%d", steps_x, steps_y) + 1);
+	char char_count = sprintf(packet, "X0%dY0%d", steps_x, steps_y);
+	
+	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", char_count, packet) + 1);
+	sprintf(cmd, "STC%c%sA", char_count, packet);
+	
+	writeString(cmd);
+
+	//check confirmation
+	ROS_INFO("Steps = [%d, %d]", steps_x, steps_y); 
+	return 0;
+}
+
+int MotorController::sendRelSteps(int steps_x, int steps_y)
+{
+	char dir_x, dir_y;
+	//Calculate direction code
+	if (steps_x >= 0)
+	{ 
+		dir_x = 'R';
+	}
+	else
+	{
+		dir_x = 'L';
+		steps_x*=-1;
+	}
+	
+	if (steps_y >= 0)
+	{
+		dir_y = 'U';
+	}
+	else
+	{
+		dir_y = 'D';
+		steps_y*=-1;
+	}
+
+	char* packet = (char *)malloc(snprintf(NULL, 0, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y) + 1);
+	char char_count = sprintf(packet, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y);
+	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", char_count, packet) + 1);
+
+	sprintf(cmd, "STD%c%sA", char_count, packet);
+
+	writeString(cmd);
+	readResponse();
+	ROS_INFO("Relative Steps: [%d, %d]", steps_x, steps_y);
+	
+	return 0;
+
+}
+
+	
 std::string MotorController::readPort()
 {
+	ROS_INFO("Reading port...");
 	using namespace boost;
 	char c;
 	std::string result;
@@ -82,33 +172,3 @@ std::string MotorController::readPort()
 		}
 	}
 }
-
-int MotorController::sendSteps(int steps_x, int steps_y)
-{
-	//construct message
-	unsigned char checksum = 'A';
-	char* packet = (char *)malloc(snprintf(NULL, 0, "X0%dY0%d", steps_x, steps_y) + 1);
-	char char_count = sprintf(packet, "X0%dY0%d", steps_x, steps_y);
-	
-	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", char_count, packet) + 1);
-	int length = sprintf(cmd, "STC%c%sA", char_count, packet);
-	
-	
-	ROS_INFO("Wrote to /dev/ttyUSB0: %s", cmd);
-	ROS_INFO("Steps = [%d, %d]", steps_x, steps_y); 
-	return 0;
-}
-	
-//}
-
-/*MotorController::MotorController(std::string port, unsigned int baudrate, double pan_init, double tilt_init) : io(), serial(io, port)
-{
-	pan_pos = pan_init;
-	tilt_pos = tilt_init;
-	
-	new_pan = pan_pos;
-	new_tilt = tilt_pos;
-	
-	serial.set_option(boost::asio::serial_port_base::baud_rate(baudrate));
-	
-}*/

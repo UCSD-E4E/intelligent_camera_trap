@@ -33,6 +33,7 @@ int main(int argc, char **argv)
 	double start = ros::Time::now().toSec();
 	double current_time = start;
 	int delta = 10;
+
 	while(ros::ok())
 	{
 		current_time = ros::Time::now().toSec();

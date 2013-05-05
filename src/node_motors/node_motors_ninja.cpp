@@ -36,24 +36,34 @@ int main(int argc, char** argv){
 	ros::ServiceClient client = n.serviceClient<CamTrap_Viper::CvService>("cv_service");
 	CamTrap_Viper::CvService srv;
 
-	MotorController mctrl("/dev/ttyUSB0", 57600, 0.0, 0.0);
+	MotorController mctrl("/dev/ttyUSB0", 38400, 0.0, 0.0);
 	
 	std::string response;
 	
-	
+	//Check new Position (should be old plus 10)	
+	ROS_INFO("Checking position");
+
+	mctrl.updatePanTilt();	
+
+	mctrl.new_pan = mctrl.pan_pos - 30; 
+	mctrl.updatePosition();	
+
+	mctrl.updatePanTilt();	
 	while (ros::ok())
 	{  
-		response = mctrl.readPort();
-		ROS_INFO("%s", response.c_str()); 
 	 //Query new coordinates
-     /* srv.request.localization_request = 0;
+     srv.request.localization_request = 0;
       if (client.call(srv))
-      {   
-       
+      {
+			mctrl.new_pan = mctrl.pan_pos + srv.response.x_degree;  
+			mctrl.new_tilt = mctrl.tilt_pos + srv.response.y_degree;
+       	mctrl.updatePosition();
       }   
       else
       {   
          ROS_ERROR("service call failed :(");
-      }*/
+      }
+		ros::spinOnce();
+		ros::Duration(1.0).sleep();
 	}
 }

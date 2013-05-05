@@ -39,7 +39,7 @@ CVLocalizer::CVLocalizer(int x_init, int y_init, const int imgW, const int imgH,
 	
 	offset_const_x = tan((PI/180)*(FOV_X/2))/(imgW/2); 
 	offset_const_y = tan((PI/180)*(FOV_Y/2))/(imgH/2);
-	ROS_INFO("offset_const_x = %f", offset_const_x);
+	//ROS_INFO("offset_const_x = %f", offset_const_x);
 	timestamp = 0;
 }
 
@@ -50,6 +50,9 @@ bool CVLocalizer::newCoords(CamTrap_Viper::CvService::Request &req, CamTrap_Vipe
 	//	ROS_INFO("Recieved CV localization request\n");
 		res.x_offset = x;
 		res.x_degree = (180/(PI))*atan2((x*offset_const_x),1);
+		
+		res.y_offset = y;
+		res.y_degree = (108/(PI))*atan2((y*offset_const_y),1);
 	}
 	return true;
 }
