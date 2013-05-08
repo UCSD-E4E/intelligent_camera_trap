@@ -26,10 +26,8 @@ int main(int argc, char **argv)
 	CVLocalizer object_tracker(0, 0, FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT, FLIR_FOV_X, FLIR_FOV_Y);
 	object_tracker.setTimestamp(0);
 
-
 	ros::ServiceServer service = n.advertiseService("cv_service", &CVLocalizer::newCoords, &object_tracker);
-	
-	
+		
 	double start = ros::Time::now().toSec();
 	double current_time = start;
 	int delta = 10;

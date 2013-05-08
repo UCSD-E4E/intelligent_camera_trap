@@ -1,45 +1,56 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(CamTrap_Viper)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation cv_bridge image_transport sensor_msgs)
 
-rosbuild_init()
-
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-#uncomment if you have defined messages
-rosbuild_genmsg()
-#uncomment if you have defined services
-rosbuild_gensrv()
-
-
-rosbuild_add_executable(hypervisor src/node_hypervisor/node_hypervisor.cpp)
-rosbuild_add_executable(webcam src/node_webcam/node_webcam.cpp)
-rosbuild_add_executable(motors src/node_motors/node_motors_ninja.cpp src/node_motors/motor_controller.cpp)
-#rosbuild_add_executable(motors_mock src/node_motors_mock/node_motors_mock.cpp)
-rosbuild_add_executable(cvsim src/node_cvsim/node_cvsim.cpp src/node_cvsim/cv_localizer.cpp)
-rosbuild_add_executable(com src/node_com/node_com.cpp)
-rosbuild_add_executable(log src/node_log/node_log.cpp)
-
-
-find_package(OpenCV REQUIRED)
-target_link_libraries(cvsim ${OpenCV_LIBS})
-#target_link_libraries(motors_mock phidget21)
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation)
-
+#declare services
 add_service_files(
 	FILES
 	CvService.srv
 )
+
+#generate services and messages
+generate_messages(
+	DEPENDENCIES
+	std_msgs
+)
+
+#build it!
+catkin_package(
+	CATKIN_DEPENDS message_runtime
+   INCLUDE_DIRS include
+)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include /usr/local)
+##target_link_libraries( , ${catkin_LIBRARIES})
+
+add_executable(hypervisor src/node_hypervisor/node_hypervisor.cpp)
+target_link_libraries(hypervisor ${catkin_LIBRARIES})
+
+add_executable(webcam src/node_webcam/node_webcam.cpp)
+target_link_libraries(webcam ${catkin_LIBRARIES})
+
+add_executable(motors src/node_motors/node_motors_ninja.cpp src/node_motors/motor_controller.cpp)
+target_link_libraries(motors ${catkin_LIBRARIES})
+add_dependencies(motors camtrap_viper_gencpp)
+#add_executable(motors_mock src/node_motors_mock/node_motors_mock.cpp)
+
+add_executable(cvsim src/node_cvsim/node_cvsim.cpp src/node_cvsim/cv_localizer.cpp)
+target_link_libraries(cvsim ${catkin_LIBRARIES})
+add_dependencies(cvsim camtrap_viper_gencpp)
+
+add_executable(com src/node_com/node_com.cpp)
+target_link_libraries(com ${catkin_LIBRARIES})
+
+add_executable(log src/node_log/node_log.cpp)
+target_link_libraries(log ${catkin_LIBRARIES})
+
+find_package(OpenCV REQUIRED)
+target_link_libraries(cvsim ${OpenCV_LIBS})
+target_link_libraries(webcam ${OpenCV_LIBS})
+#target_link_libraries(motors_mock phidget21)
+#find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation)
 
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
