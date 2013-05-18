@@ -1,4 +1,4 @@
-//FLIR Camera OpenCV Library
+/* FLIR node cpp file please send your feedback to ar.khodamoradi@gmail.com */
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
@@ -7,165 +7,192 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <iostream>
-#include </opt/ros/fuerte/include/opencv/cv.h>
-#include </opt/ros/fuerte/include/opencv/highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
-#include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include </opt/ros/fuerte/include/opencv/cxcore.h>
-#include </usr/local/include/cvblobs/BlobResult.h>
-#include </opt/ros/fuerte/include/opencv/cvblob.h>
-#include </usr/local/include/cvblobs/BlobOperators.h>
-#include "parameters.h"
-#include "karp.h"
+#include <opencv/cxcore.h>
+#include <opencv/cvblob.h>
 
-int PicHeight = 720;
-int PicWidth = 960;
+/* define picture size */
+#define h 320
+#define w 480
 
-void GetDegreesFromCenter(int x, int y,double out[2] )
-{
+using namespace cvb;
+using namespace std;
 
-	out[0] = ((double)x-PicWidth/2)/PicWidth/2; //+1 cuz pixel counting starts at 0 but width starts at 1
-	out[1] = ((double)y-PicHeight/2)/PicHeight/2;
 
-}
-
-int trackObject()
+int main()//int main(int argc, char* const argv[])
 {
 
 	/* set the norm to NTSC for FLIR - and input to 1 for capture device - */
-	system("v4l2-ctl -s NTCS -i 1");
+	system("v4l2-ctl -s NTSC -i 1");//if FLIR is video0
+/*	system("v4l2-ctl -d /dev/video1 -s NTSC -i 1");//if FLIR is video1
 	
-	/* Initialize the webcam */
-	CvCapture *capture1 = cvCaptureFromCAM(0);
-	cvSetCaptureProperty(capture1, CV_CAP_PROP_FRAME_WIDTH, PicWidth);
-	cvSetCaptureProperty(capture1, CV_CAP_PROP_FRAME_HEIGHT, PicHeight);
-	cvSetCaptureProperty(capture1, CV_CAP_PROP_FPS, 24);	
-     
+	/* Initialize the IRCam */
+	CvCapture *capture = cvCreateCameraCapture(0);
+	cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, w);
+	cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, h);
+  
 	/* Always check if the program can find a device */
-        if (!capture1){
+        if (!capture){
+		printf("error 1");
         	ROS_ERROR("Can not open flir");
                 return -1;}
 
-        /* Obtain a frame from the device */
-	IplImage  *img = cvQueryFrame( capture1 );
-	/* Always check if the device returns a frame */
-	if( !img )
-		{
-			ROS_ERROR("Error retrieving FLIR frame\n");
-			return -1;
-		}
+	/* creating display window */
+	//use only for testing
+	cvNamedWindow( "FLIR",CV_WINDOW_AUTOSIZE);
 
 	/* Create required images once */
- 	IplImage  *gray_img = cvCreateImage( cvGetSize(img), img->depth, 1);
- 	IplImage  *thres_img = cvCreateImage( cvGetSize(img), img->depth, 1);
-	IplImage  *blobs_img = cvCreateImage( cvGetSize(img), img->depth, 3);
+	IplImage *img = cvQueryFrame( capture );
+	IplImage  *gray_img = cvCreateImage( cvSize(w,h), img->depth, 1);
+ 	IplImage  *thres_img = cvCreateImage( cvSize(w,h), img->depth, 1);
+	IplImage  *label_img = cvCreateImage( cvSize(w,h), IPL_DEPTH_LABEL, 1);
 
-	/* Time */
-	time_t current_time;
-	current_time = time (NULL);
-	long int stop_time = current_time + 10;
-
+	/* Time ini */
+	time_t rawTime = time (NULL);
+	tm *pTime = gmtime(&rawTime);
+	
 	/* initialize video writer */
-	CvSize size;
-        size.width = img->width;
-        size.height = img->height;
-       	double fps_Logitech = 11;
-	CvVideoWriter *flirWriter = cvCreateVideoWriter("/home/sealab/Videos/flirOut.avi", CV_FOURCC('D','I','V','X'), fps_FLIR, size, 1); //needs time index
+	CvVideoWriter *flirWriter;
+	char fname[100];
+	sprintf(fname, "%s%d%d%d%s", "/home/viki/Videos/", pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
+	flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(w,h), 1);
 	
 	/* main loop */
-	CvScalar pixel;
-	IplImage* moments_img = cvCreateImage( cvGetSize(blobs_img), blobs_img->depth, 1);//movement
-	IplImage* temp_img = cvCreateImage( cvGetSize(blobs_img), blobs_img->depth, 3);//movement
-	int i,j,k,pval,pvaltg,T,MG,areaInt;
-  	int foundBlob=0,;
-	bool Movement;
-  	static int posX = 0;
-  	static int posY = 0;
-  	static int lastposX = 0;
-  	static int lastposY = 0;
-	CBlobResult blobs;
-	CBlob bigblob;
-	while(current_time < stop_time)
+	int T;
+	double moment10;
+	double moment01;
+	double area;
+	int X = 60;//period of each recorded video file .second
+	long int timecnt = time(&rawTime) + X;
+  	static int posX;
+  	static int posY;
+	CvBlobs blobs;
+	CvLabel bigstblob;
+	while(2>1)//ros::ok())
 	{   
         	/* Obtain a frame from the device */
-		img = cvQueryFrame( capture1 );
+		img = cvQueryFrame( capture );
 
-		pixel.val[0]=0.0;
+		/* Always check if the device returns a frame */
+		if( !img )
+			{
+				ROS_ERROR("Error retrieving FLIR frame\n");
+				return -1;
+			}
 
 		/* remove the watermark */
-		for(j=372;j<455;j++){
-		for(k=29;k<55;k++){
-			cvSet2D(img, k, j, pixel);}}
-		 
-  		/* Convert image from Color to grayscale */
-  		cvCvtColor(img,gray_img,CV_RGB2GRAY);
+		cvSetImageROI(img, cvRect((w*367)/480,(h*14)/320,(w*90)/480,(h*28)/320));
+		cvZero(img);
+		cvResetImageROI(img);
 
-		/* Find Average */
-	  	pvaltg=0;
-  		for(j=44;j<470;j++)
+		/* Time get */
+		rawTime = time (NULL);
+
+		/* reset video writer for every X second */
+		if (timecnt <= time(&rawTime))
 		{
-  		for(k=13;k<318;k++)
-		{
-			pixel = cvGet2D(gray_img, k, j);pval = pixel.val[0];
-  			pvaltg=pvaltg+pval;
+			cvReleaseVideoWriter(&flirWriter);
+			pTime = gmtime(&rawTime);
+			sprintf(fname, "%s%d%d%d%s", "/home/viki/Videos/", pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
+			flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(w,h), 1);
+			timecnt = time(&rawTime) + X;
 		}
-		}
-  		MG = pvaltg/129200;
-  		T=1.8*MG;//set the threshold to 1.8*mean
-  
-		/* Apply the threshold */
-  		cvThreshold(gray_img,thres_img,T,255,CV_THRESH_BINARY);
-	
-		/* Find Blobs that are White, Hence 'uchar backgroundColor = 0' (Black) */
-		blobs = CBlobResult(thres_img, NULL, 0);
-
-		/* Find biggest blob size */
-  		blobs.GetNthBlob(CBlobGetArea(), 0, bigblob);
-  		areaInt = bigblob.Area();
-  	
-		/* Remove blobs smaller than the biggest blob*/
-		blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(),B_LESS, areaInt);
-   	
-		/* determin the center of blob and it's movement */
-
-		cvCopy(blobs_img, temp_img);  
-		cvSetImageCOI( temp_img, 3);
-		cvCopy(temp_img, moments_img);
-		CvMoments *moments = (CvMoments*)malloc(sizeof(CvMoments));
-		cvMoments(moments_img, moments, 1);
-		double moment10 = cvGetSpatialMoment(moments, 1, 0);
-		double moment01 = cvGetSpatialMoment(moments, 0, 1);
-		double area = cvGetCentralMoment(moments, 0, 0);
-		posX = moment10/area;
-		posY = moment01/area;
 
 
-		if(blobs.GetNumBlobs()==0)
-		{	
-			posX = PicWidth/2; 
-			posY = PicHeight/2;
-			Movement = false;
-		}
-	
-		else
-		{
-			//pub posX, posY, Height and width to service
-			Movement = true;
-		}
-        
 		/* Write images to file */
 		cvWriteFrame(flirWriter, img);
+		
+		
+
+		/* Flipping the img if needed with motor node*/
+	/*	cvFlip(frame_img, frame_img, 1);
+
+  		/* Convert image from Color to grayscale */
+  		cvCvtColor(img, gray_img, CV_RGB2GRAY); //image channels
+
+		/* Filter by applying threshold */
+		T = 1.7*cvMean(gray_img);//set the threshold to 1.7*mean
+		cvThreshold(gray_img, thres_img, T, 255, CV_THRESH_BINARY);
+		cvSmooth(thres_img, thres_img, CV_MEDIAN, 7, 7);//optional smoothing
+	
+		/* Find Blobs that are White, Hence 'uchar backgroundColor = 0' (Black) */
+		unsigned int result = cvLabel(thres_img, label_img, blobs);
+
+		/* Filter vertical blobs ( between 1 & -1 rad)*/
+		
+		CvBlobs::iterator ita=blobs.begin();
+		while(ita!=blobs.end())
+		{
+			CvBlob *blob=(*ita).second;
+			if ((cvAngle(blob)<-1.0)||(cvAngle(blob)>1.0))
+			{
+				cvReleaseBlob(blob);
+
+				CvBlobs::iterator tmp=ita;
+				++ita;
+				blobs.erase(tmp);
+			}
+			else
+			++ita;
+		}	
+
+		/* Filter by area (less than biggest blob)*/
+		bigstblob = cvGreaterBlob(blobs);
+		cvFilterByLabel( blobs, bigstblob);
+
+		/* Rendering the blobs */
+		//for testing video only
+		cvRenderBlobs(label_img, blobs, img, img);
  
+		/* determin the center of blob and it's movement */
+		if(bigstblob)
+		{
+			CvBlobs::const_iterator it=blobs.begin();
+			moment10 = it->second->m10;
+			moment01 = it->second->m01;
+			area = it->second->area;
+			posX = (moment10/area)-(w/2);
+			posY = ((moment01/area)-(h/2));//height starts from the top, add a "-" to inverse posY if it's necessary
+		}
+		else
+		{posX = 0; posY = 0;}
+
+		/* Publishing videos */
+		//only for testing
+		
+		printf("\nx = %d, y = %d, Time = %d", posX, posY, time(&rawTime));//print only for testing
+		cvShowImage( "FLIR", img);
+		//for use in node if cvShowImage didn't work
+	/*	cv::Mat flir (img);
+		cv::namedWindow (FLIR, CV_WINDOW_AUTOSIZE);
+		cv::imshow ("FLIR", flir);
+
+		/* cleaning memory */
+		cvWaitKey(1);
+		cvZero(img);
+		cvZero(gray_img);
+		cvZero(thres_img);
+		cvZero(label_img);
+
+		/* escape sequence */
+		//for video stream testing only
+	/*	char c=cvWaitKey(33);
+		if(c==27)
+		break;
+ 	*/
 	}
  	
 	/* Clean up memory */
-	cvReleaseCapture( &capture1 );
-	cvReleaseVideoWriter(&flirWriter);
+	//since the loop will break by ros::ok this part is not useable
+/*	cvReleaseCapture( &capture );
+	cvDestroyAllWindows();
 
 	return 0;
+*/
 }
-
