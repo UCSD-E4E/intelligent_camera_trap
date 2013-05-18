@@ -40,7 +40,7 @@ add_dependencies(motors camtrap_viper_gencpp)
 #target_link_libraries(cvsim ${catkin_LIBRARIES})
 #add_dependencies(cvsim camtrap_viper_gencpp)
 
-add_executable(cv src/node_cv/node_cv.cpp src/node_cvsim/cv_localizer.cpp)
+add_executable(cv src/node_cv/node_cv.cpp include/cv_localizer.cpp)
 target_link_libraries(cv ${catkin_LIBRARIES})
 add_dependencies(cv camtrap_viper_gencpp)
 

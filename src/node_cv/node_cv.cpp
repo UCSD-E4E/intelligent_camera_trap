@@ -17,7 +17,6 @@
 #include <opencv/cvblob.h>
 
 #include "CamTrap_Viper/CvService.h"
-#include "parameters.h"
 #include "cv_localizer.h"
 
 using namespace cvb;
@@ -63,9 +62,9 @@ int main(int argc, char **argv)
 
 	/* Create required images once */
 	IplImage *img = cvQueryFrame(capture);
-	IplImage  *gray_img = cvCreateImage(cvSize(w,h), img->depth, 1);
- 	IplImage  *thres_img = cvCreateImage(cvSize(w,h), img->depth, 1);
-	IplImage  *label_img = cvCreateImage(cvSize(w,h), IPL_DEPTH_LABEL, 1);
+	IplImage  *gray_img = cvCreateImage(cvSize(FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT), img->depth, 1);
+ 	IplImage  *thres_img = cvCreateImage(cvSize(FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT), img->depth, 1);
+	IplImage  *label_img = cvCreateImage(cvSize(FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT), IPL_DEPTH_LABEL, 1);
 
 	/* Time init */
 	time_t rawTime = time (NULL);
@@ -180,7 +179,7 @@ while (ros::ok())
 	object_tracker.y = posY;
 	
 	/* Publish videos */
-	ROS_INFO("\nx = %d, y = %d, Time = %d", posX, posY, time(&rawTime));
+	ROS_INFO("\nx = %d, y = %d, Time = %ld", posX, posY, time(&rawTime));
 	cvShowImage( "FLIR", img);
 
 	//for use in node if cvShowImage didn't work
