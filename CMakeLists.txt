@@ -52,6 +52,7 @@ target_link_libraries(log ${catkin_LIBRARIES})
 
 find_package(OpenCV REQUIRED)
 target_link_libraries(cv ${OpenCV_LIBS})
+target_link_libraries(cv /usr/local/lib/libcvblob.so)
 target_link_libraries(webcam ${OpenCV_LIBS})
 #target_link_libraries(motors_mock phidget21)
 #find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation)

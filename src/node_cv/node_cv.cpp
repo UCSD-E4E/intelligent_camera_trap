@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 	CvVideoWriter *flirWriter;
 	char fname[100];
 	sprintf(fname, "%s%d%d%d%s", "/home/viki/Videos/", pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
-	flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(w,h), 1);
+	flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT), 1);
 	
 	/* main loop */
 	int T;
@@ -114,7 +114,7 @@ while (ros::ok())
 		cvReleaseVideoWriter(&flirWriter);
 		pTime = gmtime(&rawTime);
 		sprintf(fname, "%s%d%d%d%s", "/home/viki/Videos/", pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
-		flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(w,h), 1);
+		flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT), 1);
 		timecnt = time(&rawTime) + duration_sec;
 	}
 
