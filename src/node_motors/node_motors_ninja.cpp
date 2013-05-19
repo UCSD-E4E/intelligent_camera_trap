@@ -24,7 +24,7 @@ void comCallback(const std_msgs::String::ConstPtr& msg)
 int main(int argc, char** argv){
 	ros::init(argc, argv, "motors");
 	ros::NodeHandle n;
-	ROS_INFO("Running Ninja Controller");
+	ROS_INFO("Running THIS Ninja Controller");
 	//connect to Hypervisor and com nodes
 	ros::Subscriber hv_sub = n.subscribe("Hypervisor_Output", 10, hvCallback);	
 	ros::Subscriber com_sub = n.subscribe("Com_Commands", 10, comCallback);
@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 	ros::ServiceClient client = n.serviceClient<CamTrap_Viper::CvService>("cv_service");
 	CamTrap_Viper::CvService srv;
 
-	MotorController mctrl("/dev/ttyUSB0", 38400, 0.0, 0.0);
+	MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
 	
 	std::string response;
 	
@@ -44,15 +44,15 @@ int main(int argc, char** argv){
 	ROS_INFO("Checking position");
 
 	mctrl.updatePanTilt();	
+	//ros::Duration(1).sleep();
+	//mctrl.new_pan = mctrl.pan_pos - 30; 
+	//mctrl.updatePosition();	
 
-	mctrl.new_pan = mctrl.pan_pos - 30; 
-	mctrl.updatePosition();	
-
-	mctrl.updatePanTilt();	
+	
 	while (ros::ok())
 	{  
 	 //Query new coordinates
-     srv.request.localization_request = 0;
+      srv.request.localization_request = 0;
       if (client.call(srv))
       {
 			mctrl.new_pan = mctrl.pan_pos + srv.response.x_degree;  
