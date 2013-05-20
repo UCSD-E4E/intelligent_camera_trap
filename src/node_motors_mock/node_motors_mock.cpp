@@ -43,7 +43,7 @@ int main(int argc, char** argv){
 		srv.request.localization_request = 0;
 		if (client.call(srv))
 		{
-			ROS_INFO("x offset = %d\n", (int) srv.response.x_offset);
+			ROS_INFO("[x,y] = [%d,%d]\n", (int) srv.response.x_offset, srv.response.y_offset);
 			x_offset = srv.response.x_offset;
 			x_degree = srv.response.x_degree;	
 			ROS_INFO("motors- Turn %f degrees to re-align center", x_degree);
@@ -53,5 +53,7 @@ int main(int argc, char** argv){
 		{
 			ROS_ERROR("cv service call failed");
 		}
+		ros::spinOnce();
+		ros::Duration(1.0).sleep();
 	}	
 }

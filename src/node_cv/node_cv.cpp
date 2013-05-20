@@ -122,7 +122,7 @@ while (ros::ok())
 	cvWriteFrame(flirWriter, img);
 		
 	// Flipping the img if needed with motor node
-	//	cvFlip(frame_img, frame_img, 1);
+		cvFlip(img, img, -1);
 
   	/* Convert image from Color to grayscale */
   	cvCvtColor(img, gray_img, CV_RGB2GRAY); 
@@ -166,7 +166,7 @@ while (ros::ok())
 		moment01 = it->second->m01;
 		area = it->second->area;
 		posX = (moment10/area)-(FLIR_FRAME_WIDTH/2);
-		posY = ((moment01/area)-(FLIR_FRAME_HEIGHT/2));
+		posY = -1*((moment01/area)-(FLIR_FRAME_HEIGHT/2));
 		//height starts from the top, add a "-" to inverse posY if it's necessary
 	}
 	else
@@ -179,7 +179,7 @@ while (ros::ok())
 	object_tracker.y = posY;
 	
 	/* Publish videos */
-	ROS_INFO("\nx = %d, y = %d, Time = %ld", posX, posY, time(&rawTime));
+//	ROS_INFO("\nx = %d, y = %d, Time = %ld", posX, posY, time(&rawTime));
 	cvShowImage( "FLIR", img);
 
 	//for use in node if cvShowImage didn't work
@@ -194,6 +194,7 @@ while (ros::ok())
 	cvZero(thres_img);
 	cvZero(label_img);
 
+	ros::spinOnce();
 	}
  	
 	/* Clean up memory */

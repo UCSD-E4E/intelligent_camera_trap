@@ -14,8 +14,6 @@ void MotorController::updatePosition()
 	if ((abs(new_pan - pan_pos) > TOLERANCE) || (abs(new_tilt - tilt_pos) > TOLERANCE))
 	{
 		int pan_steps = (new_pan - pan_pos)*PAN_STEPS/PAN_RANGE; 
-		
-		//send to motor controller
 		sendRelSteps(pan_steps, 0);
 	}
 	else
@@ -40,11 +38,13 @@ void MotorController::readCoords()
 {
 	using namespace boost;
 	system::error_code ec;
-	int min_length = 7;	
+	int min_length = 24;	
 	char c[64];
-
+	int LR, UD;
+	LR = UD = -10;
+	int i;
 	//Give message a chance to transfer	
-	ros::Duration(0.1).sleep();
+//	ros::Duration(0.5).sleep();
 	
 	asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
 
@@ -53,11 +53,32 @@ void MotorController::readCoords()
 		ROS_ERROR("Boost Error at readCoords()");
 	}
 
-//	ROS_INFO("From Controller: %s", c);
+	ROS_INFO("From Controller: %s", c);
+
+	int coord_len;
+	for (coord_len = 0; coord_len < min_length; coord_len++)
+	{
+		if ((c[coord_len] == '\n') && (coord_len > 7))
+			break;
+	} 	
+	ROS_INFO("Read %d chars before newline", coord_len);	
+	char* filtered = (char *) malloc(coord_len);
 	
+	for (i = 0; i < coord_len; i++)
+	{
+		filtered[i] = c[i];
+	}	
+
+	ROS_INFO("filtered input: %s", filtered);
 	int x_steps, y_steps;
-	sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
-	
+	sscanf(filtered, "X:%d Y:%d", &x_steps, &y_steps);
+
+	if (x_steps > 883)
+	{
+		ROS_INFO("Confirmation read failure");
+		return;
+	}
+
 	pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
 	tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
 	ROS_INFO("Current Position: [%f, %f]", pan_pos, tilt_pos);	
@@ -68,10 +89,10 @@ void MotorController::readResponse()
 {
 	using namespace boost;
 	system::error_code ec;
-	int min_length = 14;
+	int min_length = 18;
 	char c[64];
 
-	ros::Duration(0.1).sleep();
+//	ros::Duration(0.1).sleep();
 	
 	asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
 	if (ec)

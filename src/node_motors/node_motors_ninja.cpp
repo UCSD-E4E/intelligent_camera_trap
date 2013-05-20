@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 	ros::ServiceClient client = n.serviceClient<CamTrap_Viper::CvService>("cv_service");
 	CamTrap_Viper::CvService srv;
 
-	MotorController mctrl("/dev/ttyUSB0", 38400, 0.0, 0.0);
+	MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
 	
 	std::string response;
 	
@@ -45,10 +45,6 @@ int main(int argc, char** argv){
 
 	mctrl.updatePanTilt();	
 
-	mctrl.new_pan = mctrl.pan_pos - 30; 
-	mctrl.updatePosition();	
-
-	mctrl.updatePanTilt();	
 	while (ros::ok())
 	{  
 	 //Query new coordinates

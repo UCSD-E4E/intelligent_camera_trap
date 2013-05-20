@@ -1,7 +1,7 @@
 <launch>
 	<node pkg="CamTrap_Viper" type="hypervisor" name="hypervisor"/>
 	<node pkg="CamTrap_Viper" type="cv" name="cv"/>
-	<node pkg="CamTrap_Viper" type="webcam" name="webcam"/>	
+		
 	<node pkg="CamTrap_Viper" type="com" name="com"/>
 	<node pkg="CamTrap_Viper" type="motors_mock" name="motors_mock"/>
 	<node pkg="CamTrap_Viper" type="log" name="log"/>

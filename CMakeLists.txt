@@ -31,10 +31,13 @@ target_link_libraries(hypervisor ${catkin_LIBRARIES})
 add_executable(webcam src/node_webcam/node_webcam.cpp)
 target_link_libraries(webcam ${catkin_LIBRARIES})
 
-add_executable(motors src/node_motors/node_motors_ninja.cpp src/node_motors/motor_controller.cpp)
-target_link_libraries(motors ${catkin_LIBRARIES})
-add_dependencies(motors camtrap_viper_gencpp)
+add_executable(motors_ninja src/node_motors/node_motors_ninja.cpp src/node_motors/motor_controller.cpp)
+target_link_libraries(motors_ninja ${catkin_LIBRARIES})
+add_dependencies(motors_ninja camtrap_viper_gencpp)
+
 #add_executable(motors_mock src/node_motors_mock/node_motors_mock.cpp)
+#target_link_libraries(motors_mock ${catkin_LIBRARIES})
+#add_dependencies(motors_mock camtrap_viper_gencpp)
 
 #add_executable(cvsim src/node_cvsim/node_cvsim.cpp src/node_cvsim/cv_localizer.cpp)
 #target_link_libraries(cvsim ${catkin_LIBRARIES})
