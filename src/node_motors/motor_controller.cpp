@@ -40,23 +40,72 @@ void MotorController::readCoords()
 	system::error_code ec;
 	int min_length = 24;	
 	char c[64];
+	char b;
 	int LR, UD;
 	LR = UD = -10;
 	int i;
-	//Give message a chance to transfer	
-//	ros::Duration(0.5).sleep();
+	int x_steps, y_steps;
+	int read_coords;
+	int read_lrud;
+	read_coords = read_lrud = 0;
 	
-	asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
+	//asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
+	//asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
+	//asio::async_read_until(serial, asio::buffer(b), '\n', handler);
 
-	if (ec)
-	{	
-		ROS_ERROR("Boost Error at readCoords()");
+//read both inputs:
+while (!(read_coords && read_lrud))
+{
+	//read until newline
+	for (i=0;i<64;i++)
+	{
+		asio::read(serial, asio::buffer(&b,1));
+		if (b == '\n')
+			break;
+		else
+			c[i] = b;
+	}	
+	
+	//pattern matching
+	if (c[0] == 'L')
+	{
+		ROS_INFO("LRUD indicator: %s", c);
+		sscanf(c, "LR:%d UD:%d", &LR, &UD); 
+		ROS_INFO("[LR, UD] = [%d,%d]", LR, UD);
+		read_lrud = 1;
 	}
+	else if (c[0] == 'X')
+	{
+		ROS_INFO("Offset message: %s", c);
+		sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
+		pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
+		tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
+		ROS_INFO("Current Position: [%f, %f]", pan_pos, tilt_pos);	
+		read_coords = 1;
+	}
+	else
+	{
+		ROS_INFO("read error, input: %s", c);
+	}
+	
+	//clean out c buffer for future use
+	for (i = 0; i < 64; i++)
+	{
+		c[i] = '\0';
+	} 	
 
-	ROS_INFO("From Controller: %s", c);
+}
 
-	int coord_len;
-	for (coord_len = 0; coord_len < min_length; coord_len++)
+//	if (ec)
+//	{	
+//		ROS_ERROR("Boost Error at readCoords()");
+//	}
+
+
+	//ROS_INFO("From Controller: %s", c);
+
+//	int coord_len;
+/*	for (coord_len = 0; coord_len < min_length; coord_len++)
 	{
 		if ((c[coord_len] == '\n') && (coord_len > 7))
 			break;
@@ -69,19 +118,14 @@ void MotorController::readCoords()
 		filtered[i] = c[i];
 	}	
 
-	ROS_INFO("filtered input: %s", filtered);
-	int x_steps, y_steps;
-	sscanf(filtered, "X:%d Y:%d", &x_steps, &y_steps);
+	ROS_INFO("filtered input: %s", filtered);*/
 
-	if (x_steps > 883)
+	/*if (x_steps > 883)
 	{
 		ROS_INFO("Confirmation read failure");
 		return;
-	}
+	}*/
 
-	pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
-	tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
-	ROS_INFO("Current Position: [%f, %f]", pan_pos, tilt_pos);	
 	return;	
 }
 
@@ -135,6 +179,8 @@ int MotorController::sendSteps(int steps_x, int steps_y)
 
 int MotorController::sendRelSteps(int steps_x, int steps_y)
 {
+	steps_x *= 0.9;
+	steps_y *= 0.9;
 	char dir_x, dir_y;
 	//Calculate direction code
 	if (steps_x >= 0)
