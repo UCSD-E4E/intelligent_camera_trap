@@ -6,10 +6,12 @@
 *  $Revision: 1.6 $
 */
 #include "mbed.h"
+#include "grid.h"
 #include <stdlib.h>
 #include "MLX620_API.h"
 
 Serial pc(USBTX, USBRX); // tx, rx
+Serial uart(p9, p10); // tx, rx
 
 double IRtempK[MLX620_IR_SENSORS];
 
@@ -93,6 +95,30 @@ uint8_t MLX90620_MeasureTemperature(double *pIRtempK, double *Ta)
 /** \fn int main(void)
 * \brief main
 */
+char packetNum = 10;
+
+char commandPan[15][6] =
+{"L0120",
+"L0100",
+"L0080",
+"L0060",
+"L0040",
+"L0020",
+"Z0000",
+"Z0000",
+"Z0000",
+"R0020",
+"R0040",
+"R0060",
+"R0080",
+"R0100",
+"R0120"};
+
+char commandTilt[3][6] =
+{"U0020",
+"Z0000",
+"D0020"};
+
 
 int main(void)
 {
@@ -101,9 +127,14 @@ int main(void)
   uint8_t pixIdx;   //pixel index
   uint16_t trimReg, confReg;
   
+  GRID inputGrid(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+  GRID trackingGrid(MLX620_IR_ROWS - 1,MLX620_IR_COLUMNS - 1);
+  
   MLX620_I2C_Driver_Init (1,1,1,1);
 
-  pc.baud(115200);    
+  pc.baud(115200);
+  uart.baud(19200);
+      
   ack = MLX90620_InitializeSensor(&trimReg, &confReg);
 
   if (ack == MLX620_ACK)
@@ -126,13 +157,18 @@ int main(void)
         if(ack == MLX620_ACK)
         {
             pc.printf("Ambient T= %4.1f\n", Ta);
-
+            inputGrid.cloneGrid(IRtempK);
+            trackingGrid.calculateSumGrid(&inputGrid,2);            
+            trackingGrid.updateMaxInformation();        
+            
             pc.printf("IR:");
             for(pixIdx = 0; pixIdx < MLX620_IR_SENSORS; pixIdx++)
             {
                 pc.printf("%4.1f ",IRtempK[pixIdx]);
             }
             pc.printf("\n");            
+            uart.printf("STC%c%s%sA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
+        
         }
         else
         {
