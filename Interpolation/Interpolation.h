@@ -1,15 +1,16 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
-/******************/
-//global variables//
-/******************/
+/*************************************************/
+//global variables/////////////////////////////////
+/*************************************************/
 
 #define R 4
 #define C 16
 #define polinomialApprox 0
 #define sensorVariation 2.0
-#define threshold 1
+#define alpha .1
+#define beta .01
 
 #define DEBUG = 0;
 #define inputPixels R*C
