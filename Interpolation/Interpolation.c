@@ -23,8 +23,9 @@ int main(){
      int i, j, k;
     
      for(i=0; i<inputPixels; i++) input[i]=90;
+     for(i=0; i<inputPixels; i++) input[i]=i;
      
-     input[0]=90;
+     //input[0]=90;
      
      interpolation(input, output);
      printInput();
