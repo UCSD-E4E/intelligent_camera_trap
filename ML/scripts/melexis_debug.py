@@ -6,15 +6,24 @@ import serial
 import Image
 import pygame
 
-def formImage(in_vector, zoom):
+def formImage(in_vector, zoom, norm_option):
 	img_max = max(in_vector)
 	img_min = min(in_vector)
 	
-	#normalize intensities to range [0,255]
-	for i in range(len(in_vector)):
-		in_vector[i] -= img_min
-		in_vector[i] *= (255/(img_max-img_min))
 	
+	#normalize intensities to range [0,255]
+	if norm_option == 'manual':
+		for i in range(len(in_vector)):
+			in_vector[i] -= 298;
+			if in_vector[i] < 0:
+				in_vector[i] = 0;
+			in_vector[i] *= (255/(310-298))
+	else:	
+		for i in range(len(in_vector)):
+			in_vector[i] -= img_min
+			in_vector[i] *= (255/(img_max-img_min))
+
+
 	#stack normalized intensity vector into image matrix
 	reshaped = in_vector.reshape(4,16, order='F').copy()
 	img = Image.fromarray(reshaped)
@@ -72,7 +81,7 @@ if ser.isOpen():
 		#make sure we read both the ambient and the data each cycle
 		read_amb = False
 		read_dat = False
-		
+		option = 'manual'
 		while True:
 			response = ser.readline()
 			if response.startswith("Ambient"):
@@ -92,7 +101,7 @@ if ser.isOpen():
 				print data_vector
 				
 				#turn vector of values into a human-viewable image
-				img = formImage(np.asarray(data_vector), zoom).convert('L')
+				img = formImage(np.asarray(data_vector), zoom, option).convert('L')
 				img.save("tmp.bmp")
 				output = pygame.image.load("tmp.bmp")
 				screen.blit(output, (0,0))
