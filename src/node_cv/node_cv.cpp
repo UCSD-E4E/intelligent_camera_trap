@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 	/* initialize video writer */
 	CvVideoWriter *flirWriter;
 	char fname[100];
-	sprintf(fname, "%s%d%d%d%s", "/home/viki/Videos/", pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
+	sprintf(fname, "%s%d-%d-%d:%d:%d%s", "/home/viki/Videos/", pTime->tm_mon, pTime->tm_mday, pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
 	flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT), 1);
 	
 	/* main loop */
@@ -113,7 +113,7 @@ while (ros::ok())
 	{
 		cvReleaseVideoWriter(&flirWriter);
 		pTime = gmtime(&rawTime);
-		sprintf(fname, "%s%d%d%d%s", "/home/viki/Videos/", pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
+		sprintf(fname, "%s%d-%d-%d:%d:%d%s", "/home/viki/Videos/", pTime->tm_mon, pTime->tm_mday, pTime->tm_hour, pTime->tm_min, pTime->tm_sec, ".avi");
 		flirWriter = cvCreateVideoWriter(fname, CV_FOURCC('D','I','V','X'), 17, cvSize(FLIR_FRAME_WIDTH, FLIR_FRAME_HEIGHT), 1);
 		timecnt = time(&rawTime) + duration_sec;
 	}
@@ -128,7 +128,7 @@ while (ros::ok())
   	cvCvtColor(img, gray_img, CV_RGB2GRAY); 
 
 	/* Filter by applying threshold */
-	T = 1.7*cvMean(gray_img);
+	T = 1.65*cvMean(gray_img);
 	cvThreshold(gray_img, thres_img, T, 255, CV_THRESH_BINARY);
 	cvSmooth(thres_img, thres_img, CV_MEDIAN, 7, 7);//optional smoothing
 	
@@ -136,11 +136,13 @@ while (ros::ok())
 	unsigned int result = cvLabel(thres_img, label_img, blobs);
 
 	/* Filter vertical blobs ( between 1 & -1 rad)*/
+	
 	CvBlobs::iterator ita=blobs.begin();
-	while(ita!=blobs.end())
+/*	while(ita!=blobs.end())
 	{
 		CvBlob *blob=(*ita).second;
-		if ((cvAngle(blob)<-1.0)||(cvAngle(blob)>1.0))
+		filter out horizontal blobs
+		if (((cvAngle(blob)<-1.0)||(cvAngle(blob)>1.0)))
 		{
 			cvReleaseBlob(blob);
 			CvBlobs::iterator tmp=ita;
@@ -149,7 +151,7 @@ while (ros::ok())
 		}
 		else
 			++ita;
-	}	
+	}	*/
 
 	/* Filter by area (less than biggest blob)*/
 	bigstblob = cvGreaterBlob(blobs);

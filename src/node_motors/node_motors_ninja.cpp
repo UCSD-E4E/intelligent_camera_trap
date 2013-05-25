@@ -60,6 +60,6 @@ int main(int argc, char** argv){
          ROS_ERROR("service call failed :(");
       }
 		ros::spinOnce();
-		ros::Duration(1.0).sleep();
+		//ros::Duration(1.0).sleep();
 	}
 }
