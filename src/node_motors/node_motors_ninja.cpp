@@ -45,10 +45,15 @@ int main(int argc, char** argv){
 
 	mctrl.updatePanTilt();	
 
+	mctrl.new_pan = mctrl.pan_pos + 20.39;
+	mctrl.new_tilt = mctrl.tilt_pos - 20.38;
+
+	mctrl.updatePosition();
+
 	while (ros::ok())
 	{  
 	 //Query new coordinates
-     srv.request.localization_request = 0;
+/*     srv.request.localization_request = 0;
       if (client.call(srv))
       {
 			mctrl.new_pan = mctrl.pan_pos + srv.response.x_degree;  
@@ -60,6 +65,6 @@ int main(int argc, char** argv){
          ROS_ERROR("service call failed :(");
       }
 		ros::spinOnce();
-		//ros::Duration(1.0).sleep();
+		ros::Duration(0.5).sleep();*/
 	}
 }
