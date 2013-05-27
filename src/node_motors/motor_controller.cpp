@@ -189,8 +189,8 @@ int MotorController::sendRelSteps(int steps_x, int steps_y)
 		steps_y*=-1;
 	}
 
-	char* packet = (char *)malloc(snprintf(NULL, 0, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y) + 1);
-	int char_count = sprintf(packet, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y);
+	char* packet = (char *)malloc(snprintf(NULL, 0, "%c0%03d%c0%03d", dir_x, steps_x, dir_y, steps_y) + 1);
+	int char_count = sprintf(packet, "%c0%03d%c0%03d", dir_x, steps_x, dir_y, steps_y);
 	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", (char)char_count, packet) + 1);
 
 	sprintf(cmd, "STD%c%sA", char_count, packet);
