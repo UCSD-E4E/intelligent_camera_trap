@@ -18,29 +18,7 @@ class Cell:
 	def render(self, intensity):
 		self.intensity = intensity
 		col = [intensity, intensity, intensity]
-		pygame.draw.rect(screen, col, (self.x, self.y, self.size, self.size), 0)
-
-def formImage(in_vector, zoom):
-	img_max = max(in_vector)
-	img_min = min(in_vector)
-	
-	#normalize intensities to range [0,255]
-	for i in range(len(in_vector)):
-		in_vector[i] -= img_min
-		in_vector[i] *= (255/(img_max-img_min))
-		if in_vector[i] > 255:
-			in_vector[i] = 255
-		if in_vector[i] < 0:
-			in_vector[i] = 0
-	
-	#stack normalized intensity vector into image matrix
-	reshaped = in_vector.reshape(4,16, order='F').copy()
-	img = Image.fromarray(reshaped)
-	
-	#Now,  scale it up for viewability
-	img = img.resize([zoom*16, zoom*4])
-	return img
-	
+		pygame.draw.rect(screen, col, (self.x, self.y, self.size, self.size), 0)	
 
 #check for command line arguments
 num_args = len(sys.argv)
@@ -50,8 +28,6 @@ if num_args == 3:
 else:	
 	print ("Example Usage: python melexis_debug.py ttyACM0 b115200")
 	exit()
-
-zoom = 30
 
 ser = serial.Serial()
 ser.port = "/dev/" + port_str[0]
@@ -76,19 +52,20 @@ except Exception, e:
 	exit()
 
 if ser.isOpen():
+	
+	cell_size = 30	
+	
 	#initialize pygame display
 	pygame.init()
 	white = [255,255,255]
-	size = [zoom*16, zoom*4]
+	size = [cell_size*16, cell_size*4]
 	screen = pygame.display.set_mode(size)
 	screen.fill(white);
 	grid = [];
 
-	cell_size = 30	
-
 	for i in range(16):
 		for j in range(4):
-			newCell = Cell(i*cell_size,j*cell_size, cell_size)
+			newCell = Cell(i*cell_size, (3-j)*cell_size, cell_size)
 			grid.append(newCell)
 			
 	for i in range(len(grid)):
@@ -122,8 +99,6 @@ if ser.isOpen():
 				print "Data: "
 				print data_vector
 				
-				#img_min = min(data_vector)
-				#img_max = max(data_vector)
 				for i in range(len(data_vector)):
 					data_vector[i] -= 298
 					data_vector[i] *= (255/(310-298))
@@ -131,13 +106,10 @@ if ser.isOpen():
 						data_vector[i] = 255
 					if data_vector[i] < 0:
 						data_vector[i] = 0
-				#turn vector of values into a human-viewable image
-				#img = formImage(np.asarray(data_vector), zoom).convert('L')
-				#img.save("tmp.bmp")
-				#output = pygame.image.load("tmp.bmp")
+				
 				for i in range(len(grid)):
 					grid[i].render(data_vector[i]);
-				#screen.blit(output, (0,0))
+				
 				pygame.display.flip()
 				read_amb = False
 				read_dat = False 
