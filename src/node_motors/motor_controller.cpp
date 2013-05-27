@@ -2,6 +2,7 @@
 #define TOLERANCE 0.0
 #define PAN_STEPS 883.0
 #define PAN_RANGE 180.0
+
 #define TILT_STEPS 355.0
 #define TILT_RANGE 72.0
 
@@ -15,8 +16,8 @@ void MotorController::updatePosition()
 	{
 		int pan_steps = (new_pan - pan_pos)*PAN_STEPS/PAN_RANGE;
 		int tilt_steps = (new_tilt - tilt_pos)*TILT_STEPS/TILT_RANGE;
-//		sendRelSteps(pan_steps, tilt_steps); 
-		sendRelSteps(pan_steps, 0);
+		sendRelSteps(pan_steps, tilt_steps); 
+//		sendRelSteps(pan_steps, 0);
 	}
 	else
 	{
@@ -126,6 +127,8 @@ void MotorController::readResponse()
 			readRes = 1;
 		}
 		
+		ROS_INFO("From Controller: %s", c);	
+		
 		//clean buffer
 		for (i=0;i<64;i++)
 		{
@@ -187,8 +190,8 @@ int MotorController::sendRelSteps(int steps_x, int steps_y)
 	}
 
 	char* packet = (char *)malloc(snprintf(NULL, 0, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y) + 1);
-	char char_count = sprintf(packet, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y);
-	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", char_count, packet) + 1);
+	int char_count = sprintf(packet, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y);
+	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", (char)char_count, packet) + 1);
 
 	sprintf(cmd, "STD%c%sA", char_count, packet);
 
