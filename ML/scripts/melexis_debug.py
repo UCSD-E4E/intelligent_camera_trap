@@ -6,6 +6,20 @@ import serial
 import Image
 import pygame
 
+class Cell:
+	x = 0;
+	y = 0;
+	size = 30;
+	intensity = 0;
+	def __init__(self, pos_x, pos_y, size):
+		self.x = pos_x
+		self.y = pos_y
+		self.size = size
+	def render(self, intensity):
+		self.intensity = intensity
+		col = [intensity, intensity, intensity]
+		pygame.draw.rect(screen, col, (self.x, self.y, self.size, self.size), 0)
+
 def formImage(in_vector, zoom):
 	img_max = max(in_vector)
 	img_min = min(in_vector)
@@ -63,7 +77,20 @@ if ser.isOpen():
 	white = [255,255,255]
 	size = [zoom*16, zoom*4]
 	screen = pygame.display.set_mode(size)
-	screen.fill(white)
+	screen.fill(white);
+	grid = [];
+
+	cell_size = 30	
+
+	for i in range(16):
+		for j in range(4):
+			newCell = Cell(i*cell_size,j*cell_size, cell_size)
+			grid.append(newCell)
+			
+	for i in range(len(grid)):
+		grid[i].render(127.6)
+
+	pygame.display.flip()
 	try:
 		#clean out buffers
 		ser.flushInput()
@@ -92,10 +119,12 @@ if ser.isOpen():
 				print data_vector
 				
 				#turn vector of values into a human-viewable image
-				img = formImage(np.asarray(data_vector), zoom).convert('L')
-				img.save("tmp.bmp")
-				output = pygame.image.load("tmp.bmp")
-				screen.blit(output, (0,0))
+				#img = formImage(np.asarray(data_vector), zoom).convert('L')
+				#img.save("tmp.bmp")
+				#output = pygame.image.load("tmp.bmp")
+				for i in range(len(grid)):
+					grid[i].render(data_vector[i]);
+				#screen.blit(output, (0,0))
 				pygame.display.flip()
 				read_amb = False
 				read_dat = False 
