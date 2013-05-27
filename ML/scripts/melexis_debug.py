@@ -7,9 +7,9 @@ import Image
 import pygame
 
 class Cell:
-	x = 0;
-	y = 0;
-	size = 30;
+	x = 0
+	y = 0
+	size = 30
 	intensity = 0;
 	def __init__(self, pos_x, pos_y, size):
 		self.x = pos_x
@@ -28,6 +28,10 @@ def formImage(in_vector, zoom):
 	for i in range(len(in_vector)):
 		in_vector[i] -= img_min
 		in_vector[i] *= (255/(img_max-img_min))
+		if in_vector[i] > 255:
+			in_vector[i] = 255
+		if in_vector[i] < 0:
+			in_vector[i] = 0
 	
 	#stack normalized intensity vector into image matrix
 	reshaped = in_vector.reshape(4,16, order='F').copy()
@@ -108,7 +112,7 @@ if ser.isOpen():
 			elif response.startswith("IR:"):
 				data = response.strip("IR: ")
 				read_dat = True
-
+	
 			if read_amb and read_dat:
 				print "Ambient: " + str(ambient)
 				#transform input string into float array
@@ -118,6 +122,15 @@ if ser.isOpen():
 				print "Data: "
 				print data_vector
 				
+				#img_min = min(data_vector)
+				#img_max = max(data_vector)
+				for i in range(len(data_vector)):
+					data_vector[i] -= 298
+					data_vector[i] *= (255/(310-298))
+					if data_vector[i] > 255:
+						data_vector[i] = 255
+					if data_vector[i] < 0:
+						data_vector[i] = 0
 				#turn vector of values into a human-viewable image
 				#img = formImage(np.asarray(data_vector), zoom).convert('L')
 				#img.save("tmp.bmp")
