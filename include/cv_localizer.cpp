@@ -52,7 +52,7 @@ bool CVLocalizer::newCoords(CamTrap_Viper::CvService::Request &req, CamTrap_Vipe
 		res.x_degree = (180/(PI))*atan2((x*offset_const_x),1);
 		
 		res.y_offset = y;
-		res.y_degree = (108/(PI))*atan2((y*offset_const_y),1);
+		res.y_degree = (180/(PI))*atan2((y*offset_const_y),1);
 	}
 	return true;
 }
