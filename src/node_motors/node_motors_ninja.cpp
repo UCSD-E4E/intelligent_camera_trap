@@ -44,10 +44,6 @@ int main(int argc, char** argv){
 	ROS_INFO("Checking position");
 
 	mctrl.updatePanTilt();	
-	//ros::Duration(1).sleep();
-	//mctrl.new_pan = mctrl.pan_pos - 30; 
-	//mctrl.updatePosition();	
-
 	
 	while (ros::ok())
 	{  
@@ -64,6 +60,6 @@ int main(int argc, char** argv){
          ROS_ERROR("service call failed :(");
       }
 		ros::spinOnce();
-		ros::Duration(1.0).sleep();
+		ros::Duration(0.5).sleep();
 	}
 }

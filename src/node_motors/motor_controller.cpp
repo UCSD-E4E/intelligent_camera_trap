@@ -2,6 +2,7 @@
 #define TOLERANCE 0.0
 #define PAN_STEPS 883.0
 #define PAN_RANGE 180.0
+
 #define TILT_STEPS 355.0
 #define TILT_RANGE 72.0
 
@@ -13,8 +14,9 @@ void MotorController::updatePosition()
 	updatePanTilt();
 	if ((abs(new_pan - pan_pos) > TOLERANCE) || (abs(new_tilt - tilt_pos) > TOLERANCE))
 	{
-		int pan_steps = (new_pan - pan_pos)*PAN_STEPS/PAN_RANGE; 
-		sendRelSteps(pan_steps, 0);
+		int pan_steps = (new_pan - pan_pos)*PAN_STEPS/PAN_RANGE;
+		int tilt_steps = (new_tilt - tilt_pos)*TILT_STEPS/TILT_RANGE;
+		sendRelSteps(pan_steps, tilt_steps); 
 	}
 	else
 	{
@@ -40,55 +42,99 @@ void MotorController::readCoords()
 	system::error_code ec;
 	int min_length = 24;	
 	char c[64];
+	char b;
 	int LR, UD;
 	LR = UD = -10;
-	//Give message a chance to transfer	
-	ros::Duration(0.5).sleep();
-	
-	asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
-
-	if (ec)
-	{	
-		ROS_ERROR("Boost Error at readCoords()");
-	}
-
-	ROS_INFO("From Controller: %s", c);
-	
+	int i;
 	int x_steps, y_steps;
-	sscanf(c, "X:%d Y:%d\nLR:%d DU:%d", &x_steps, &y_steps, &LR, &UD);
-
-	pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
-	tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
-	ROS_INFO("Current Position: [%f, %f]", pan_pos, tilt_pos);	
-
-	//read second piece
-	//asio::read(serial, asio::buffer(c), asio::transfer_at_least(8), ec);
-	//sscanf(c, "LR:%d UD:%d", &LR, &UD);
-	//ROS_INFO("LR:%d UD:%d", LR, UD);
+	int read_coords;
+	int read_lrud;
+	int read_count = 0;
+	read_coords = read_lrud = 0;
+	
+	//read both inputs:
+	while (!(read_coords && read_lrud) && read_count < 3)
+	{
+		//read until newline
+		for (i=0;i<64;i++)
+		{
+			asio::read(serial, asio::buffer(&b,1));
+			if (b == '\n')
+				break;
+			else
+				c[i] = b;
+		}	
+	
+		//pattern matching
+		if (c[0] == 'L')
+		{
+			ROS_INFO("LRUD indicator: %s", c);
+			sscanf(c, "LR:%d UD:%d", &LR, &UD); 
+			ROS_INFO("[LR, UD] = [%d,%d]", LR, UD);
+			read_lrud = 1;
+		}
+		else if (c[0] == 'X')
+		{
+			ROS_INFO("Offset message: %s", c);
+			sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
+			pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
+			tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
+			ROS_INFO("Current Position: [%f, %f]", pan_pos, tilt_pos);	
+			read_coords = 1;
+		}
+		else
+		{
+			ROS_INFO("read error, input: %s", c);
+		}
+	
+		//clean out c buffer for future use
+		for (i = 0; i < 64; i++)
+		{
+			c[i] = '\0';
+		} 	
+		read_count++;
+	}
 	return;	
 }
 
 void MotorController::readResponse()
 {
 	using namespace boost;
-	system::error_code ec;
-	int min_length = 14;
+	int min_length = 24;
 	char c[64];
-
-	ros::Duration(0.2).sleep();
+	char b;
+	int readRes = 0;
+	int x_conf, y_conf, i;
 	
-	asio::read(serial, asio::buffer(c), asio::transfer_at_least(min_length), ec);
-	if (ec)
-	{
-		ROS_ERROR("Boost Error at readResponse");
+	while(!readRes)
+	{	
+		//read line
+		for (i=0;i<64;i++)
+		{
+			asio::read(serial, asio::buffer(&b,1));
+			if (b == '\n')
+				break;
+			else
+				c[i] = b;
+		}
+		
+		//pattern match
+		if (c[0] == 'T')
+		{
+			sscanf(c, "Target X:%d Y:%d", &x_conf, &y_conf);
+			ROS_INFO("Confirmation: [%d, %d]", x_conf, y_conf);
+			readRes = 1;
+		}
+		
+		ROS_INFO("From Controller: %s", c);	
+		
+		//clean buffer
+		for (i=0;i<64;i++)
+		{
+			c[i] = '\n';	
+		}
 	}
-
-	ROS_INFO("From Controller: %s", c);
-
-	int x_conf, y_conf;
-	sscanf(c, "Target X:%d Y:%d", &x_conf, &y_conf);
-
-	ROS_INFO("Confirmation: [%d, %d]", x_conf, y_conf);
+ 
 	return;
 	
 }
@@ -118,6 +164,8 @@ int MotorController::sendSteps(int steps_x, int steps_y)
 
 int MotorController::sendRelSteps(int steps_x, int steps_y)
 {
+	//steps_x *= 0.9;
+	//steps_y *= 0.9;
 	char dir_x, dir_y;
 	//Calculate direction code
 	if (steps_x >= 0)
@@ -140,9 +188,9 @@ int MotorController::sendRelSteps(int steps_x, int steps_y)
 		steps_y*=-1;
 	}
 
-	char* packet = (char *)malloc(snprintf(NULL, 0, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y) + 1);
-	char char_count = sprintf(packet, "%c0%d%c0%d", dir_x, steps_x, dir_y, steps_y);
-	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", char_count, packet) + 1);
+	char* packet = (char *)malloc(snprintf(NULL, 0, "%c0%03d%c0%03d", dir_x, steps_x, dir_y, steps_y) + 1);
+	int char_count = sprintf(packet, "%c0%03d%c0%03d", dir_x, steps_x, dir_y, steps_y);
+	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", (char)char_count, packet) + 1);
 
 	sprintf(cmd, "STD%c%sA", char_count, packet);
 

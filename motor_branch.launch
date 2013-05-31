@@ -1,9 +1,7 @@
 <launch>
-	<group ns="CameraTrap">
-		<node pkg="CamTrap_Viper" type="hypervisor" name="hypervisor"/>
-		<node pkg="CamTrap_Viper" type="cvsim" name="cvsim"/>	
-		<node pkg="CamTrap_Viper" type="com" name="com"/>
-		<node pkg="CamTrap_Viper" type="motors_ninja" name="motors_ninja"/>
-		<node pkg="CamTrap_Viper" type="log" name="log"/>
-	</group>
+	<node pkg="CamTrap_Viper" type="hypervisor" name="hypervisor"/>	
+	<node pkg="CamTrap_Viper" type="cv" name="cv"/>
+	<node pkg="CamTrap_Viper" type="com" name="com"/>
+	<node pkg="CamTrap_Viper" type="motors_ninja" name="motors_ninja"/>
+	<node pkg="CamTrap_Viper" type="log" name="log"/>
 </launch>
