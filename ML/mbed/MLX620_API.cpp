@@ -244,11 +244,23 @@ uint32_t MLX620_Initialize(void)
     {
       memcpy(&confReg, MLX620_EEbuff + MLX620_EE_ConfReg, sizeof(confReg));
 
+      //Frame Refresh Rate
+      //MLX620_CONFIG_FPS_IR_MASK(0x0 ~ 0x5) = 512 Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0x6) = 256 Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0x7) = 128 Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0x8) = 64  Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0x9) = 32  Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0xA) = 16  Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0xB) = 8   Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0xC) = 4   Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0xD) = 2   Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0xE) = 1   Hz
+      //MLX620_CONFIG_FPS_IR_MASK(0xF) = 0.5 Hz
       if(confReg == 0 || confReg == 0xFFFF)
         err = MLX620_WriteConfig(MLX620_CONFIG_ADC_REFERENCE_MASK|
                                  MLX620_CONFIG_FPS_PTAT_MASK(3)|
                                  MLX620_CONFIG_POR_BROUT_BIT_MASK|
-                                 MLX620_CONFIG_FPS_IR_MASK(0xE));
+                                 MLX620_CONFIG_FPS_IR_MASK(0xB));
       else
         err = MLX620_WriteConfig(confReg);
 

@@ -72,12 +72,15 @@ To see the code documentation please click on the "Files" tab above.
   \def MLX620_IR_ROWS
   Number of rows in IR array.
 */
+#define INTERPOLATION_SCALE (3)
 #define MLX620_IR_ROWS (4U)
+#define MLX620_IR_ROWS_EXT ((MLX620_IR_ROWS - 1) * INTERPOLATION_SCALE + 1)
 /**
   \def MLX620_IR_COLUMNS
   Number of columns in IR array.
 */
 #define MLX620_IR_COLUMNS (16U)
+#define MLX620_IR_COLUMNS_EXT ((MLX620_IR_COLUMNS - 1) * INTERPOLATION_SCALE + 1)
 /**
   \def MLX620_IR_SENSORS
   Number of sensors in IR array.
@@ -87,7 +90,7 @@ To see the code documentation please click on the "Files" tab above.
   \def MLX620_IR_SENSOR_IDX(row, col)
   Index of a IR sensor in a 1D array.
 */
-#define MLX620_IR_SENSOR_IDX(row, col) ((col) * MLX620_IR_COLUMNS + (row))
+#define MLX620_IR_SENSOR_IDX(row, col) ((col) * MLX620_IR_ROWS + (row))
 /**
   \var MLX620_RAMbuff
   \brief Buffer of the device RAM memory.

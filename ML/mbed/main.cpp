@@ -11,9 +11,13 @@
 #include "MLX620_API.h"
 
 Serial pc(USBTX, USBRX); // tx, rx
+<<<<<<< HEAD
+Serial uart(p28, p27);     // TX, RX
+=======
 Serial uart(p9, p10); // tx, rx
+>>>>>>> origin/master
 
-double IRtempK[MLX620_IR_SENSORS];
+double IRtempC[MLX620_IR_SENSORS];
 
 /**
  * \file MLX620_Demo.C
@@ -37,14 +41,14 @@ double IRtempK[MLX620_IR_SENSORS];
 */
 uint8_t MLX90620_InitializeSensor(uint16_t *trim, uint16_t *conf);
 
-/** \fn uint8_t MLX90620_MeasureTemperature(double *pIRtempK, double *Ta)
+/** \fn uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta)
 * \brief Read measurement data from the sensor and calculate ambient and Infra Red (object's) temperature in Kelvin.
 * \details The temperature results for each pixel is saved in .\n
-* \param[in] *pIRtempK Pointer to buffer where the temperature results for each pixel would be stored
+* \param[in] *pIRtempC Pointer to buffer where the temperature results for each pixel would be stored
 * \param[out] *Ta Ambient temperature in Kelvin
 * \retval ack I2C acknowledge bit.
 */
-uint8_t MLX90620_MeasureTemperature(double *pIRtempK, double *Ta);
+uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta);
 
 
 uint8_t MLX90620_InitializeSensor(uint16_t *trim, uint16_t *conf)
@@ -61,7 +65,7 @@ uint8_t MLX90620_InitializeSensor(uint16_t *trim, uint16_t *conf)
   return ack;
 }
 
-uint8_t MLX90620_MeasureTemperature(double *pIRtempK, double *Ta)
+uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta)
 {
   uint8_t ack;
   int16_t ptat, tgc;
@@ -84,8 +88,14 @@ uint8_t MLX90620_MeasureTemperature(double *pIRtempK, double *Ta)
       
       if (ack == MLX620_ACK)
       {
-        MLX620_CompensateIR((int16_t*)MLX620_RAMbuff, MLX620_RAM_IR_BEG, 1, MLX620_IR_SENSORS, pIRtempK);
-
+        MLX620_CompensateIR((int16_t*)MLX620_RAMbuff, MLX620_RAM_IR_BEG, 1, MLX620_IR_SENSORS, pIRtempC);
+        for (int i = 0; i < MLX620_IR_SENSORS ;i++)
+        {
+            //Compensate to Celsius
+            pIRtempC[i] -= 273.15;
+        }
+        
+        *Ta -= 273.15;
       }
     }
   }
@@ -98,6 +108,28 @@ uint8_t MLX90620_MeasureTemperature(double *pIRtempK, double *Ta)
 char packetNum = 10;
 
 char commandPan[15][6] =
+<<<<<<< HEAD
+{"L0060",
+"L0050",
+"L0040",
+"L0030",
+"L0020",
+"L0010",
+"Z0000",
+"Z0000",
+"Z0000",
+"R0010",
+"R0020",
+"R0030",
+"R0040",
+"R0050",
+"R0120"};
+
+char commandTilt[3][6] =
+{"U0010",
+"Z0000",
+"D0010"};
+=======
 {"L0120",
 "L0100",
 "L0080",
@@ -118,19 +150,53 @@ char commandTilt[3][6] =
 {"U0020",
 "Z0000",
 "D0020"};
+>>>>>>> origin/master
 
 
 int main(void)
 {
   uint8_t ack;      //I2C acknowledge bit
   double Ta;        //Ambient Temperature
-  uint8_t pixIdx;   //pixel index
+  uint32_t pixIdx;   //pixel index
   uint16_t trimReg, confReg;
   
   GRID inputGrid(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+<<<<<<< HEAD
+  GRID extrapolateGrid(MLX620_IR_ROWS_EXT,MLX620_IR_COLUMNS_EXT);
+  GRID trackingGrid(MLX620_IR_ROWS_EXT - 1,MLX620_IR_COLUMNS_EXT - 1);
+  
+  double testCase_topHot [64] = 
+  { 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
+  
+  double testCase_bottomHot [64] = 
+  { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40 };
+   
+  
+  double testCase_leftHot [64] = 
+  { 40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+    40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
+       
+  double testCase_rightHot [64] = 
+  { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40,
+    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40 };
+      
+  
+  MLX620_I2C_Driver_Init (3,3,3,3);
+=======
   GRID trackingGrid(MLX620_IR_ROWS - 1,MLX620_IR_COLUMNS - 1);
   
   MLX620_I2C_Driver_Init (1,1,1,1);
+>>>>>>> origin/master
 
   pc.baud(115200);
   uart.baud(19200);
@@ -140,22 +206,35 @@ int main(void)
   if (ack == MLX620_ACK)
   {
     pc.printf("Sensor initialized successfully\n");
-    //pc.printf("Triming Register = %X\n, trimReg");
-    //pc.printf("Configuration Register = %X\n, confReg");
+    pc.printf("Triming Register = %X\n, trimReg");
+    pc.printf("Configuration Register = %X\n, confReg");
   }
   else
   {
     pc.printf("ERROR: Sensor initiazation failed!\n");
   }
 
+            
     for (;;)
     {
+        
       if(ack == MLX620_ACK)
       {
-        ack = MLX90620_MeasureTemperature(IRtempK, &Ta);
+        ack = MLX90620_MeasureTemperature(IRtempC, &Ta);
 
         if(ack == MLX620_ACK)
         {
+<<<<<<< HEAD
+            pc.printf("\nAmbient T= %2.1f\n", Ta);
+            inputGrid.importGrid(IRtempC);
+            extrapolateGrid.interpolateFrom(&inputGrid, INTERPOLATION_SCALE);
+
+            //trackingGrid.calculateSumGrid(&extrapolateGrid,3);            
+            //trackingGrid.updateMaxInformation();        
+            
+            pc.printf("IR: ");
+            for(int column = 0; column < (MLX620_IR_COLUMNS_EXT); column++)
+=======
             pc.printf("Ambient T= %4.1f\n", Ta);
             inputGrid.cloneGrid(IRtempK);
             trackingGrid.calculateSumGrid(&inputGrid,2);            
@@ -163,12 +242,26 @@ int main(void)
             
             pc.printf("IR:");
             for(pixIdx = 0; pixIdx < MLX620_IR_SENSORS; pixIdx++)
+>>>>>>> origin/master
             {
-                pc.printf("%4.1f ",IRtempK[pixIdx]);
+                for(int row = 0; row < (MLX620_IR_ROWS_EXT) ; row++)
+                { 
+               
+                    //pc.printf("%2.1f ",IRtempC[pixIdx]);
+                    //pc.printf("%2.1f ",inputGrid.getValue(pixIdx / MLX620_IR_COLUMNS, pixIdx % MLX620_IR_COLUMNS ));
+                    //pc.printf("%2.1f ",extrapolateGrid.getValue(pixIdx / MLX620_IR_COLUMNS_EXT, pixIdx % MLX620_IR_COLUMNS_EXT));
+                    pc.printf("%2.1f ",extrapolateGrid.getValue(row, column));
+                }
+                //pc.printf("\n");                        
             }
+<<<<<<< HEAD
+            //uart.printf("STD%c%s%sA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
+            wait_ms(50);
+=======
             pc.printf("\n");            
             uart.printf("STC%c%s%sA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
         
+>>>>>>> origin/master
         }
         else
         {
@@ -180,6 +273,6 @@ int main(void)
         return 0;
       }
       
-        wait_ms(100);
+        
       }
 }
