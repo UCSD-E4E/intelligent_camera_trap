@@ -256,13 +256,13 @@ uint32_t MLX620_Initialize(void)
       //MLX620_CONFIG_FPS_IR_MASK(0xD) = 2   Hz
       //MLX620_CONFIG_FPS_IR_MASK(0xE) = 1   Hz
       //MLX620_CONFIG_FPS_IR_MASK(0xF) = 0.5 Hz
-      if(confReg == 0 || confReg == 0xFFFF)
+      //if(confReg == 0 || confReg == 0xFFFF)
         err = MLX620_WriteConfig(MLX620_CONFIG_ADC_REFERENCE_MASK|
                                  MLX620_CONFIG_FPS_PTAT_MASK(3)|
                                  MLX620_CONFIG_POR_BROUT_BIT_MASK|
                                  MLX620_CONFIG_FPS_IR_MASK(0xB));
-      else
-        err = MLX620_WriteConfig(confReg);
+      //else
+      //  err = MLX620_WriteConfig(confReg);
 
       if(err == 0)
       {
