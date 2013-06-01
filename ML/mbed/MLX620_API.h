@@ -72,7 +72,7 @@ To see the code documentation please click on the "Files" tab above.
   \def MLX620_IR_ROWS
   Number of rows in IR array.
 */
-#define INTERPOLATION_SCALE (3)
+#define INTERPOLATION_SCALE (1)
 #define MLX620_IR_ROWS (4U)
 #define MLX620_IR_ROWS_EXT ((MLX620_IR_ROWS - 1) * INTERPOLATION_SCALE + 1)
 /**

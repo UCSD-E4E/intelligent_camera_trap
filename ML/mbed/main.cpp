@@ -11,11 +11,8 @@
 #include "MLX620_API.h"
 
 Serial pc(USBTX, USBRX); // tx, rx
-<<<<<<< HEAD
 Serial uart(p28, p27);     // TX, RX
-=======
-Serial uart(p9, p10); // tx, rx
->>>>>>> origin/master
+Ticker period125ms;
 
 double IRtempC[MLX620_IR_SENSORS];
 
@@ -108,95 +105,104 @@ uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta)
 char packetNum = 10;
 
 char commandPan[15][6] =
-<<<<<<< HEAD
-{"L0060",
-"L0050",
-"L0040",
-"L0030",
-"L0020",
-"L0010",
-"Z0000",
-"Z0000",
-"Z0000",
-"R0010",
-"R0020",
-"R0030",
-"R0040",
+{"R0060",
 "R0050",
-"R0120"};
+"R0040",
+"R0030",
+"R0020",
+"R0010",
+"Z0000",
+"Z0000",
+"Z0000",
+"L0010",
+"L0020",
+"L0030",
+"L0040",
+"L0050",
+"L0060"};
 
 char commandTilt[3][6] =
 {"U0010",
 "Z0000",
 "D0010"};
-=======
-{"L0120",
-"L0100",
-"L0080",
-"L0060",
-"L0040",
-"L0020",
-"Z0000",
-"Z0000",
-"Z0000",
-"R0020",
-"R0040",
-"R0060",
-"R0080",
-"R0100",
-"R0120"};
 
-char commandTilt[3][6] =
-{"U0020",
-"Z0000",
-"D0020"};
->>>>>>> origin/master
+#define NUMBER_MOVING_SAMPLE 8 
+#define SLIDING_WINDOW_SIZE 2 
+
+uint8_t ack;      //I2C acknowledge bit
+double Ta;        //Ambient Temperature
+
+GRID inputGrid0(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+GRID inputGrid1(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+GRID inputGrid2(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+GRID inputGrid3(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+GRID inputGrid4(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+GRID inputGrid5(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+GRID inputGrid6(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+GRID inputGrid7(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+
+int movingAverageCounter = 0;
+GRID* movingAverage[NUMBER_MOVING_SAMPLE] = {&inputGrid0, &inputGrid1, &inputGrid2, &inputGrid3, &inputGrid4, &inputGrid5, &inputGrid6, &inputGrid7} ;
+
+GRID filterOutput(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+
+GRID extrapolateGrid(MLX620_IR_ROWS_EXT,MLX620_IR_COLUMNS_EXT);
+GRID trackingGrid(MLX620_IR_ROWS_EXT - (SLIDING_WINDOW_SIZE - 1),MLX620_IR_COLUMNS_EXT - (SLIDING_WINDOW_SIZE - 1));
+    
+void periodicOutput ()
+{
+        static int periodicCounter = 0;
+        
+        periodicCounter++ ;
+        
+       
+        ack = MLX90620_MeasureTemperature(IRtempC, &Ta);
+
+        if(ack == MLX620_ACK)
+        {
+           
+            movingAverage[movingAverageCounter++]->importGrid(IRtempC);
+            if (movingAverageCounter >= NUMBER_MOVING_SAMPLE)
+            {
+                movingAverageCounter = 0;
+            }
+            
+            filterOutput.gridAverage(movingAverage,NUMBER_MOVING_SAMPLE);
+            
+            extrapolateGrid.interpolateFrom(&filterOutput, INTERPOLATION_SCALE);
+
+            trackingGrid.calculateSumGrid(&extrapolateGrid,SLIDING_WINDOW_SIZE);            
+            
+            //Brigthen the hotest window
+            extrapolateGrid.setValue(trackingGrid.getMaxRowIndex(), trackingGrid.getMaxColumnIndex(),100.0);            
+            
+            //  if ( periodicCounter % 4 == 0)
+            //  {
+                pc.printf("\nAmbient T= %2.1f\n", Ta);            
+                pc.printf("IR: ");
+                for(int column = 0; column < (MLX620_IR_COLUMNS_EXT); column++)
+                {
+                    for(int row = 0; row < (MLX620_IR_ROWS_EXT) ; row++)
+                    { 
+               
+                        //pc.printf("%2.1f ",IRtempC[pixIdx]);
+                        //pc.printf("%2.1f ",inputGrid.getValue(pixIdx / MLX620_IR_COLUMNS, pixIdx % MLX620_IR_COLUMNS ));
+                        //pc.printf("%2.1f ",extrapolateGrid.getValue(pixIdx / MLX620_IR_COLUMNS_EXT, pixIdx % MLX620_IR_COLUMNS_EXT));
+                        pc.printf("%2.1f ",extrapolateGrid.getValue(row, column));
+                    }
+                //pc.printf("\n");                        
+                }
+                uart.printf("STD%c%s%sA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
+            }
+        //}
+}
 
 
 int main(void)
 {
-  uint8_t ack;      //I2C acknowledge bit
-  double Ta;        //Ambient Temperature
-  uint32_t pixIdx;   //pixel index
   uint16_t trimReg, confReg;
   
-  GRID inputGrid(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-<<<<<<< HEAD
-  GRID extrapolateGrid(MLX620_IR_ROWS_EXT,MLX620_IR_COLUMNS_EXT);
-  GRID trackingGrid(MLX620_IR_ROWS_EXT - 1,MLX620_IR_COLUMNS_EXT - 1);
-  
-  double testCase_topHot [64] = 
-  { 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
-  
-  double testCase_bottomHot [64] = 
-  { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40 };
-   
-  
-  double testCase_leftHot [64] = 
-  { 40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-    40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
-       
-  double testCase_rightHot [64] = 
-  { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40,
-    20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40 };
-      
-  
   MLX620_I2C_Driver_Init (3,3,3,3);
-=======
-  GRID trackingGrid(MLX620_IR_ROWS - 1,MLX620_IR_COLUMNS - 1);
-  
-  MLX620_I2C_Driver_Init (1,1,1,1);
->>>>>>> origin/master
 
   pc.baud(115200);
   uart.baud(19200);
@@ -213,66 +219,12 @@ int main(void)
   {
     pc.printf("ERROR: Sensor initiazation failed!\n");
   }
-
+  
+  period125ms.attach(&periodicOutput, (0.125));
             
-    for (;;)
-    {
+  for (;;)
+  {        
+          
         
-      if(ack == MLX620_ACK)
-      {
-        ack = MLX90620_MeasureTemperature(IRtempC, &Ta);
-
-        if(ack == MLX620_ACK)
-        {
-<<<<<<< HEAD
-            pc.printf("\nAmbient T= %2.1f\n", Ta);
-            inputGrid.importGrid(IRtempC);
-            extrapolateGrid.interpolateFrom(&inputGrid, INTERPOLATION_SCALE);
-
-            //trackingGrid.calculateSumGrid(&extrapolateGrid,3);            
-            //trackingGrid.updateMaxInformation();        
-            
-            pc.printf("IR: ");
-            for(int column = 0; column < (MLX620_IR_COLUMNS_EXT); column++)
-=======
-            pc.printf("Ambient T= %4.1f\n", Ta);
-            inputGrid.cloneGrid(IRtempK);
-            trackingGrid.calculateSumGrid(&inputGrid,2);            
-            trackingGrid.updateMaxInformation();        
-            
-            pc.printf("IR:");
-            for(pixIdx = 0; pixIdx < MLX620_IR_SENSORS; pixIdx++)
->>>>>>> origin/master
-            {
-                for(int row = 0; row < (MLX620_IR_ROWS_EXT) ; row++)
-                { 
-               
-                    //pc.printf("%2.1f ",IRtempC[pixIdx]);
-                    //pc.printf("%2.1f ",inputGrid.getValue(pixIdx / MLX620_IR_COLUMNS, pixIdx % MLX620_IR_COLUMNS ));
-                    //pc.printf("%2.1f ",extrapolateGrid.getValue(pixIdx / MLX620_IR_COLUMNS_EXT, pixIdx % MLX620_IR_COLUMNS_EXT));
-                    pc.printf("%2.1f ",extrapolateGrid.getValue(row, column));
-                }
-                //pc.printf("\n");                        
-            }
-<<<<<<< HEAD
-            //uart.printf("STD%c%s%sA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
-            wait_ms(50);
-=======
-            pc.printf("\n");            
-            uart.printf("STC%c%s%sA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
-        
->>>>>>> origin/master
-        }
-        else
-        {
-            pc.printf("ERROR: Reading data from the sensor failed!\n");
-        }
-      }
-      else
-      {
-        return 0;
-      }
-      
-        
-      }
+  }
 }

@@ -1,7 +1,6 @@
 #ifndef _GRID_H_
 #define _GRID_H_
 
-<<<<<<< HEAD
 #include "MLX620_API.h"
 
 class GRID {
@@ -20,24 +19,15 @@ public:
 
     void calculateSumGrid(GRID *inputGrid, unsigned int size);
     bool interpolateFrom(GRID *inputGrid, unsigned int scale);
+    
+    bool gridAddition(GRID * inputGrid);
+    void gridScalarAddition(double scalar);
+    bool gridAverage(GRID ** inputArrayList, int number);
+    void gridScalarMultiplication(double scalar);
 
     void importGrid(double *inputArray);
     void exportGrid(double *outputArray);
     
-=======
-class GRID {
-public:
-    GRID(unsigned int r, unsigned int c);
-    double getValue(unsigned int r, unsigned int c);
-    void setValue(unsigned int r, unsigned int c, double value);
-    double getMax();
-    unsigned int getMaxRowIndex();
-    unsigned int getMaxColumnIndex();
-    void updateMaxInformation();
-    void calculateSumGrid(GRID *inputGrid, unsigned int size);
-    void cloneGrid(double *inputArray);
-
->>>>>>> origin/master
 private:
     double *buffer;
     unsigned int length;
@@ -46,10 +36,7 @@ private:
     int column;
     int maxRowIndex;
     int maxColumnIndex;
-<<<<<<< HEAD
     void updateMaxInformation();
-=======
->>>>>>> origin/master
 };
 
 GRID::GRID(unsigned int r, unsigned int c) {
@@ -88,36 +75,95 @@ void GRID::updateMaxInformation() {
 }
 
 double GRID::getMax() {
-<<<<<<< HEAD
     if (maxSet == false) {
         updateMaxInformation();
     }
 
-=======
->>>>>>> origin/master
     return getValue(maxRowIndex, maxColumnIndex);
 }
 
 unsigned int  GRID::getMaxRowIndex() {
-<<<<<<< HEAD
     if (maxSet == false) {
         updateMaxInformation();
     }
 
-=======
->>>>>>> origin/master
     return maxRowIndex;
 }
 
 unsigned int GRID::getMaxColumnIndex() {
-<<<<<<< HEAD
     if (maxSet == false) {
         updateMaxInformation();
     }
 
-=======
->>>>>>> origin/master
     return maxColumnIndex;
+}
+
+bool GRID::gridAddition(GRID * inputGrid)
+{
+    if (row                    !=  inputGrid->getRow() ||
+        column                 !=  inputGrid->getColumn() )
+    {
+        return false;
+    }
+    else
+    {
+      for (int i = 0; i < row ; i++) {
+        for (int j = 0; j < column ; j++) {
+        
+            setValue(i,j, inputGrid->getValue(i,j) + getValue(i,j)) ;
+        
+        }
+      }
+    }
+}
+
+bool GRID::gridAverage(GRID ** inputArrayList, int number)
+{
+        if (row                    !=  inputArrayList[0]->getRow() ||
+            column                 !=  inputArrayList[0]->getColumn() )
+        {
+            return false;
+        }
+        else
+        {
+            inputArrayList[0]->exportGrid(buffer);
+                        
+        }
+        
+    for (int i = 1; i < number; i++)
+    {
+       if( gridAddition(inputArrayList[i]) == false) 
+       {
+          return false;
+       }                      
+    }
+    
+    gridScalarMultiplication ( 1.0 / (double) number );
+    
+    return true;
+
+}
+
+void GRID::gridScalarAddition(double scalar)
+{
+      for (int i = 0; i < row ; i++) {
+        for (int j = 0; j < column ; j++) {
+        
+            setValue(i,j, getValue(i,j) + scalar) ;
+        
+        }
+      }
+}
+
+void GRID::gridScalarMultiplication(double scalar)
+{
+      for (int i = 0; i < row ; i++) {
+        for (int j = 0; j < column ; j++) {
+        
+            setValue(i,j, getValue(i,j) * scalar) ;
+        
+        }
+      }
 }
 
 void GRID::calculateSumGrid(GRID *inputGrid, unsigned int size) {
@@ -138,27 +184,18 @@ void GRID::calculateSumGrid(GRID *inputGrid, unsigned int size) {
     }
 }
 
-<<<<<<< HEAD
 void GRID::importGrid(double *inputArray) {
-=======
-void GRID::cloneGrid(double *inputArray) {
->>>>>>> origin/master
     double temp;
 
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {
 
-<<<<<<< HEAD
             //setValue(i, j, inputArray[j * row + i]);
             setValue(i, j, inputArray[MLX620_IR_SENSOR_IDX(i, j)]);
-=======
-            setValue(i, j, inputArray[i * column + j]);
->>>>>>> origin/master
         }
     }
 }
 
-<<<<<<< HEAD
 void GRID::exportGrid(double *outputArray) {
     double temp;
 
@@ -259,7 +296,5 @@ bool GRID::interpolateFrom(GRID *inputGrid, unsigned int scale)
 
 }
 
-=======
->>>>>>> origin/master
 
 #endif
