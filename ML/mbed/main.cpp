@@ -103,7 +103,10 @@ uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta)
 * \brief main
 */
 char packetNum = 11;
+<<<<<<< HEAD
 char commandCharNum = 1;
+=======
+>>>>>>> 4a3138645f2b695e7e9c256083f7bbe605d8a38c
 
 char commandPan[15][6] =
 {"R0120",
@@ -233,11 +236,15 @@ void periodicOutput ()
                         pc.printf("%2.1f ",extrapolateGrid.getValue(row, column));
                     }
                 }
+<<<<<<< HEAD
                 
                 if(tracking == true && ((state == STATE_TRACKING) || (state == STATE_TURN_CAMERA_ON)))
                 {
                     motorControlUart.printf("STD%c%s%sAA",packetNum,commandPan[trackColumnPos], commandTilt[trackRowPos]);
                 }
+=======
+                uart.printf("STD%c%s%sAA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
+>>>>>>> 4a3138645f2b695e7e9c256083f7bbe605d8a38c
             }
                 
         counter++;        

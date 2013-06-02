@@ -48,8 +48,12 @@ int main()
 	TIMER_Init();
 	hijack_EN(ON);
 	tiltSensor_EN(ON);
-    sei();
-		
+	sei();
+	
+	//400mS Delay
+	setTimerIn4ms(100);
+	while (!timerExpired());
+			
 	initPanPositionToCenter();
 	initTiltPositionToCenter();
 

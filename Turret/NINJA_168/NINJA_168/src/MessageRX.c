@@ -94,8 +94,8 @@ void parseMessageTemp(void)
 	char message [32];
 	unsigned int xPosition ;
 	unsigned int yPosition ;	
-	unsigned int targetXPosition;
-	unsigned int targetYPosition;
+	unsigned int target1Position;
+	unsigned int target2Position;
 	
 	cli();
 	xPosition = getCurrentPanPosition();
@@ -175,38 +175,81 @@ void parseMessageTemp(void)
     
 	}else if (messageType == DATA_MESSAGE)
     {
-		targetXPosition = atoi(&receivedMessage[1]);
-		targetYPosition = atoi(&receivedMessage[6]);
+		if (receivedMessage[0] == 'X'|| 
+		    receivedMessage[0] == 'Y'||
+		    receivedMessage[0] == 'R'||
+		    receivedMessage[0] == 'L'||
+		    receivedMessage[0] == 'U'||
+		    receivedMessage[0] == 'D')
+			{
+				target1Position = atoi(&receivedMessage[1]);						
+			}
+			
+		if (receivedMessage[5] == 'X'||
+			receivedMessage[5] == 'Y'||
+			receivedMessage[5] == 'R'||
+			receivedMessage[5] == 'L'||
+			receivedMessage[5] == 'U'||
+			receivedMessage[5] == 'D')
+			{
+				target2Position = atoi(&receivedMessage[6]);				
+			} 
+			
 		cli();
 		if (receivedMessage[0] == 'X') 
 		{
-			setTargePanPosition(targetXPosition);
+			setTargePanPosition(target1Position);
 		}else if (receivedMessage[0] == 'R')
 		{
-			targetXPosition = xPosition + targetXPosition;
-			setTargePanPosition(targetXPosition);
+			target1Position = xPosition + target1Position;
+			setTargePanPosition(target1Position);
 		}else if (receivedMessage[0] == 'L')
 		{
-			targetXPosition = xPosition - targetXPosition;
-			setTargePanPosition(targetXPosition);
+			target1Position = xPosition - target1Position;
+			setTargePanPosition(target1Position);
+			
+		}else if (receivedMessage[0] == 'Y')
+		{
+			setTargeTiltPosition(target1Position);
+		}else if (receivedMessage[0] == 'U')
+		{
+			target1Position = yPosition + target1Position;
+			setTargeTiltPosition(target1Position);
+		}else if (receivedMessage[0] == 'D')
+		{
+			target1Position = yPosition - target1Position;
+			setTargeTiltPosition(target1Position);
 		}
 		
-		if (receivedMessage[5] == 'Y')
+		if (receivedMessage[5] == 'X')
 		{
-			setTargeTiltPosition(targetYPosition);
+			setTargePanPosition(target2Position);
+		}else if (receivedMessage[5] == 'R')
+		{
+			target2Position = xPosition + target2Position;
+			setTargePanPosition(target1Position);
+		}else if (receivedMessage[5] == 'L')
+		{
+			target2Position = xPosition - target2Position;
+			setTargePanPosition(target2Position);
+			
+		}else if (receivedMessage[5] == 'Y')
+		{
+			setTargeTiltPosition(target2Position);
 		}else if (receivedMessage[5] == 'U')
 		{
-			targetYPosition = yPosition + targetYPosition;
-			setTargeTiltPosition(targetYPosition);
+			target2Position = yPosition + target2Position;
+			setTargeTiltPosition(target2Position);
 		}else if (receivedMessage[5] == 'D')
 		{
-			targetYPosition = yPosition - targetYPosition;
-			setTargeTiltPosition(targetYPosition);
-		}
+			target2Position = yPosition - target2Position;
+			setTargeTiltPosition(target2Position);
+		}		
+		
 		sei();
 		
-		//sprintf(message,"Target X:%i Y:%i\r\nLR:%i DU:%i\r\n",targetXPosition,targetYPosition,getPanSensor(),getTiltSensor());
-		sprintf(message,"Target X:%i Y:%i\r\n",targetXPosition,targetYPosition);
+		//sprintf(message,"Target X:%i Y:%i\r\nLR:%i DU:%i\r\n",target1Position,target2Position,getPanSensor(),getTiltSensor());
+		sprintf(message,"Target T1:%i T2:%i\r\n",target1Position,target2Position);
 		setMessage(message,strlen((const char*)message));
 		     					
 	}	
