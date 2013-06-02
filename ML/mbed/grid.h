@@ -16,15 +16,18 @@ public:
     double getMax();
     unsigned int getMaxRowIndex();
     unsigned int getMaxColumnIndex();
+    
+    double getAvg();
+    
 
     void calculateSumGrid(GRID *inputGrid, unsigned int size);
     bool interpolateFrom(GRID *inputGrid, unsigned int scale);
     
     bool gridAddition(GRID * inputGrid);
     void gridScalarAddition(double scalar);
-    bool gridAverage(GRID ** inputArrayList, int number);
     void gridScalarMultiplication(double scalar);
 
+    bool importGridArray(GRID ** inputArrayList, int number);
     void importGrid(double *inputArray);
     void exportGrid(double *outputArray);
     
@@ -32,10 +35,14 @@ private:
     double *buffer;
     unsigned int length;
     bool maxSet;
+    bool avgSet;
+    
+    double gridAvg;    
     int row;
     int column;
     int maxRowIndex;
     int maxColumnIndex;
+    void updateAvgInformation();
     void updateMaxInformation();
 };
 
@@ -45,6 +52,7 @@ GRID::GRID(unsigned int r, unsigned int c) {
     length = row * column;
     buffer = new double[length];
     maxSet = false;
+    avgSet = false;
 }
 
 double GRID::getValue(unsigned int r, unsigned int c) {
@@ -54,6 +62,7 @@ double GRID::getValue(unsigned int r, unsigned int c) {
 void GRID::setValue(unsigned int r, unsigned int c, double value) {
     buffer[r * column + c] = value;
     maxSet = false;
+    avgSet = false;
 }
 
 void GRID::updateMaxInformation() {
@@ -74,12 +83,34 @@ void GRID::updateMaxInformation() {
     maxSet = true;
 }
 
+void GRID::updateAvgInformation() {
+    
+    double sum = 0 ;
+    
+    for (int i = 0; i < row * column ; i++) {
+        
+        sum += buffer[i];    
+        
+    }
+
+    gridAvg = sum / (row * column) ;    
+    avgSet = true;
+}
+
 double GRID::getMax() {
     if (maxSet == false) {
         updateMaxInformation();
     }
 
     return getValue(maxRowIndex, maxColumnIndex);
+}
+
+double GRID::getAvg() {
+    if (avgSet == false) {
+        updateAvgInformation();
+    }
+
+    return gridAvg;
 }
 
 unsigned int  GRID::getMaxRowIndex() {
@@ -117,7 +148,7 @@ bool GRID::gridAddition(GRID * inputGrid)
     }
 }
 
-bool GRID::gridAverage(GRID ** inputArrayList, int number)
+bool GRID::importGridArray(GRID ** inputArrayList, int number)
 {
         if (row                    !=  inputArrayList[0]->getRow() ||
             column                 !=  inputArrayList[0]->getColumn() )
