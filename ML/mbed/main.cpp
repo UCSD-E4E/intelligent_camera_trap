@@ -102,7 +102,7 @@ uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta)
 /** \fn int main(void)
 * \brief main
 */
-char packetNum = 10;
+char packetNum = 11;
 
 char commandPan[15][6] =
 {"R0060",
@@ -192,7 +192,7 @@ void periodicOutput ()
                     }
                 //pc.printf("\n");                        
                 }
-                uart.printf("STD%c%s%sA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
+                uart.printf("STD%c%s%sAA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
             }
         //}
 }
