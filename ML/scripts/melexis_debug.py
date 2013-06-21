@@ -45,7 +45,7 @@ ser.timeout = 2
 ser.writeTimeout = 2
 
 interpolationScaling = 1
-row_Original = 4
+row_Original = 4*4
 column_Original = 16
 row_Effective = (row_Original - 1) * interpolationScaling + 1
 column_Effective = (column_Original - 1) * interpolationScaling + 1
