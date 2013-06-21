@@ -9,187 +9,85 @@
 #include "grid.h"
 #include <stdlib.h>
 #include "MLX620_API.h"
+#include "MLX620_Sensor.h"
+#include "motor.h"
+#include "state.h"
+#include "tracking.h"
 
 Serial pc(USBTX, USBRX); // tx, rx
 Serial motorControlUart(p28, p27);     // TX, RX
+
 Ticker period125ms;
 
-double IRtempC[MLX620_IR_SENSORS];
+MLX620_SENSOR* mlx620_0;
+DigitalInOut pin_sda_0(p18);
+DigitalInOut pin_scl_0(p17);
 
-/**
- * \file MLX620_Demo.C
- * \brief MLX90620 API functions demonstration usage.
- * \details This demonstration usage of the API functions performing the most necessary operations in order to get full frame of the sensor printed out using standard 'printf' function.\n
- * The users of this demo should implement the 'printf' function for the particular MCU and compiler that is used. If the printing functionality is not needed, it should be disabled.
- * This demo is performing the following operations:
- * - initializing the sensor and reporting (printing) the error
- * - printing the values of the "Configuration" and "Trimming" Registers, after the initialization is done
- * - reading raw IR temperature data for each pixel, as well as reading Ambient Temperature sensor
- * - compensating the printing the Ambient Temperature [Kelvin]
- * - compensating the printing the Object's Temperature for each pixel from 1 to 64
- */
+MLX620_SENSOR* mlx620_1;
+DigitalInOut pin_sda_1(p16);
+DigitalInOut pin_scl_1(p15);
 
-/** \fn uint8_t MLX90620_InitializeSensor(uint16_t *trim, uint16_t *conf)
-* \brief Initialize the sensor.
-* \details It should be used only when the sensor is supplied.
-* \param[out] *trim Trimming register value after the configuration is done.
-* \param[out] *conf Configuration register value after the configuration is done.
-* \retval ack I2C acknowledge bit.
-*/
-uint8_t MLX90620_InitializeSensor(uint16_t *trim, uint16_t *conf);
+MLX620_SENSOR* mlx620_2;
+DigitalInOut pin_sda_2(p14);
+DigitalInOut pin_scl_2(p13);
 
-/** \fn uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta)
-* \brief Read measurement data from the sensor and calculate ambient and Infra Red (object's) temperature in Kelvin.
-* \details The temperature results for each pixel is saved in .\n
-* \param[in] *pIRtempC Pointer to buffer where the temperature results for each pixel would be stored
-* \param[out] *Ta Ambient temperature in Kelvin
-* \retval ack I2C acknowledge bit.
-*/
-uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta);
+MLX620_SENSOR* mlx620_3;
+DigitalInOut pin_sda_3(p21);
+DigitalInOut pin_scl_3(p22);
 
+MOTOR* ninjaTurtle;
 
-uint8_t MLX90620_InitializeSensor(uint16_t *trim, uint16_t *conf)
-{
-  uint8_t ack;
+uint8_t ack_0;      //I2C acknowledge bit
+double Ta_0;        //Ambient Temperature
+double IRtempC_0[MLX620_IR_SENSORS];
 
-  ack = MLX620_Initialize();      //initialize the sensor
-  if (ack == MLX620_ACK)
-  {
-    ack = MLX620_ReadTrim(trim);    //read the Trimming register and return it
-    ack |= MLX620_ReadConfig(conf); //read the Configuration register and return it
-  }
+uint8_t ack_1;      //I2C acknowledge bit
+double Ta_1;        //Ambient Temperature
+double IRtempC_1[MLX620_IR_SENSORS];
 
-  return ack;
-}
+uint8_t ack_2;      //I2C acknowledge bit
+double Ta_2;        //Ambient Temperature
+double IRtempC_2[MLX620_IR_SENSORS];
 
-uint8_t MLX90620_MeasureTemperature(double *pIRtempC, double *Ta)
-{
-  uint8_t ack;
-  int16_t ptat, tgc;
+uint8_t ack_3;      //I2C acknowledge bit
+double Ta_3;        //Ambient Temperature
+double IRtempC_3[MLX620_IR_SENSORS];
 
-  //get RAW (not compensated) ambient temperature sample (PTAT sensor)
-  ack = MLX620_ReadRAM(MLX620_RAM_PTAT, 0, 1, (uint8_t*)&ptat);
-
-  if (ack == MLX620_ACK)
-  {
-    //compensate ambient temperature; get absolute temperature in Kelvin
-    *Ta = MLX620_GetTaKelvin (ptat);
-
-    ack = MLX620_ReadRAM(MLX620_RAM_TGC, 0, 1, (uint8_t*)&tgc);
-
-    if (ack == MLX620_ACK)
-    {
-      MLX620_CalcTGC(tgc);
-
-      ack = MLX620_ReadRAM(MLX620_RAM_IR_BEG, 1, MLX620_IR_SENSORS, (uint8_t*)MLX620_RAMbuff);
-      
-      if (ack == MLX620_ACK)
-      {
-        MLX620_CompensateIR((int16_t*)MLX620_RAMbuff, MLX620_RAM_IR_BEG, 1, MLX620_IR_SENSORS, pIRtempC);
-        for (int i = 0; i < MLX620_IR_SENSORS ;i++)
-        {
-            //Compensate to Celsius
-            pIRtempC[i] -= 273.15;
-        }
-        
-        *Ta -= 273.15;
-      }
-    }
-  }
-
-  return ack;
-}
-/** \fn int main(void)
-* \brief main
-*/
-char packetNum = 11;
-<<<<<<< HEAD
-char commandCharNum = 1;
-=======
->>>>>>> 4a3138645f2b695e7e9c256083f7bbe605d8a38c
-
-char commandPan[15][6] =
-{"R0120",
- "R0100",
- "R0060",
- "R0040",
- "R0020",
- "R0010",
- "R0005",
- "R0000",
- "L0005",
- "L0010",
- "L0020",
- "L0040",
- "L0060",
- "L0100",
- "L0120"};
-
-char commandTilt[3][6] =
-{"U0020",
- "Z0000",
- "D0020"};
-
-char commandCenter[11] = { "X0500Y0200" };
-
-#define NUMBER_MOVING_SAMPLE 8 
-#define SLIDING_WINDOW_SIZE 2 
-#define ADAPTIVE_THRESHOLD  1.055
-
-uint8_t ack;      //I2C acknowledge bit
-double Ta;        //Ambient Temperature
-
-GRID inputGrid0(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-GRID inputGrid1(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-GRID inputGrid2(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-GRID inputGrid3(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-GRID inputGrid4(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-GRID inputGrid5(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-GRID inputGrid6(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-GRID inputGrid7(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-
-int movingAverageCounter = 0;
-GRID* movingAverage[NUMBER_MOVING_SAMPLE] = {&inputGrid0, &inputGrid1, &inputGrid2, &inputGrid3, &inputGrid4, &inputGrid5, &inputGrid6, &inputGrid7} ;
-
-GRID filterOutput(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-
-GRID extrapolateGrid(MLX620_IR_ROWS_EXT,MLX620_IR_COLUMNS_EXT);
-GRID trackingGrid(MLX620_IR_ROWS_EXT - (SLIDING_WINDOW_SIZE - 1),MLX620_IR_COLUMNS_EXT - (SLIDING_WINDOW_SIZE - 1));
-
-#define STATE_INIT                 0
-#define STATE_TURN_CAMERA_ON       1
-#define STATE_TRACKING             2
-#define STATE_TURN_CAMERA_OFF      3
-#define STATE_SHUTTING_DOWN        4
-
-#define TIME_FOR_STATE_TURN_CAMERA_ON_S      (3 * 8)
-#define TIME_OUT_FOR_NOT_TRACKING            (5 * 8)
-#define TIME_FOR_STATE_TURN_CAMERA_OFF_S     (3 * 8)
-    
 void periodicOutput ()
 {
-        static int trackRowPos = extrapolateGrid.getRow() / 2;
-        static int trackColumnPos = extrapolateGrid.getColumn() / 2; 
-        static  int state = STATE_INIT;
+        static GRID filterOutput_0(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+        static GRID filterOutput_1(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+        static GRID filterOutput_2(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+        static GRID filterOutput_3(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+        static GRID stackedGrid   (MLX620_IR_ROWS*4,MLX620_IR_COLUMNS);
+        static GRID* stackedHelper [4] = { &filterOutput_0, &filterOutput_1, &filterOutput_2, &filterOutput_3 };
+        
+        //static GRID extrapolateGrid(MLX620_IR_ROWS_EXT,MLX620_IR_COLUMNS_EXT);
+        static GRID trackingGrid(MLX620_IR_ROWS_EXT - (SLIDING_WINDOW_SIZE - 1),MLX620_IR_COLUMNS_EXT - (SLIDING_WINDOW_SIZE - 1));
+        //static int trackRowPos = extrapolateGrid.getRow() / 2;
+        //static int trackColumnPos = extrapolateGrid.getColumn() / 2; 
+        static int state = STATE_INIT;
         static int counter = 0;
         
         bool tracking = false;        
         
-        ack = MLX90620_MeasureTemperature(IRtempC, &Ta);
-
-        if(ack == MLX620_ACK)
+        ack_0 = mlx620_0->MLX90620_MeasureTemperature(IRtempC_0, &Ta_0);
+        ack_1 = mlx620_1->MLX90620_MeasureTemperature(IRtempC_1, &Ta_1);
+        ack_2 = mlx620_2->MLX90620_MeasureTemperature(IRtempC_2, &Ta_2);
+        ack_3 = mlx620_3->MLX90620_MeasureTemperature(IRtempC_3, &Ta_3);
+       
+        if(ack_0 == MLX620_ACK && ack_1 == MLX620_ACK && ack_2 == MLX620_ACK && ack_3 == MLX620_ACK)
         {
            
-            movingAverage[movingAverageCounter++]->importGrid(IRtempC);
-            if (movingAverageCounter >= NUMBER_MOVING_SAMPLE)
-            {
-                movingAverageCounter = 0;
-            }
+            filterOutput_0.importGrid(IRtempC_0);
+            filterOutput_1.importGrid(IRtempC_1);
+            filterOutput_2.importGrid(IRtempC_2);
+            filterOutput_3.importGrid(IRtempC_3);
             
-            filterOutput.importGridArray(movingAverage,NUMBER_MOVING_SAMPLE);
-            
-            extrapolateGrid.interpolateFrom(&filterOutput, INTERPOLATION_SCALE);
-
+            stackedGrid.importGridArray(stackedHelper,4);
+     
+            //extrapolateGrid.interpolateFrom(&filterOutput, INTERPOLATION_SCALE);
+            /*
             //tracking decision ?
             if (extrapolateGrid.getMax() > extrapolateGrid.getAvg() * ADAPTIVE_THRESHOLD)
             {            
@@ -223,28 +121,24 @@ void periodicOutput ()
             
                 //Brigthen the hotest window
                 extrapolateGrid.setValue(trackRowPos, trackColumnPos,100.0);            
-            } else
-            {
-                motorControlUart.printf("STC%ccAASTC%cdAA",commandCharNum,commandCharNum);
             }
-                pc.printf("\nAmbient T= %2.1f\n", Ta);            
+            */ 
+                pc.printf("\nAmbient T= %2.1f\n", Ta_0);            
                 pc.printf("IR: ");
-                for(int column = 0; column < (MLX620_IR_COLUMNS_EXT); column++)
+                for(int column = 0; column < stackedGrid.getColumn(); column++)
                 {
-                    for(int row = 0; row < (MLX620_IR_ROWS_EXT) ; row++)
+                    for(int row = 0; row < stackedGrid.getRow() ; row++)
                     { 
-                        pc.printf("%2.1f ",extrapolateGrid.getValue(row, column));
+                        pc.printf(" %2.1f",stackedGrid.getValue(row, column));
                     }
                 }
-<<<<<<< HEAD
+                pc.printf("\n");
                 
-                if(tracking == true && ((state == STATE_TRACKING) || (state == STATE_TURN_CAMERA_ON)))
-                {
-                    motorControlUart.printf("STD%c%s%sAA",packetNum,commandPan[trackColumnPos], commandTilt[trackRowPos]);
-                }
-=======
-                uart.printf("STD%c%s%sAA",packetNum,commandPan[trackingGrid.getMaxColumnIndex()], commandTilt[trackingGrid.getMaxRowIndex()]);
->>>>>>> 4a3138645f2b695e7e9c256083f7bbe605d8a38c
+                
+                //if(tracking == true && ((state == STATE_TRACKING) || (state == STATE_TURN_CAMERA_ON)))
+                //{
+                //    ninjaTurtle->sendCommand(trackRowPos,3,trackColumnPos,15);                    
+                //}
             }
                 
         counter++;        
@@ -275,7 +169,7 @@ void periodicOutput ()
                 counter = 0 ;
                 state = STATE_TURN_CAMERA_OFF;
                 //Pan / Tilt Center
-                motorControlUart.printf("STC%ccAASTC%cdAA",commandCharNum,commandCharNum);
+                ninjaTurtle->center();
  
                 //Riley: TURN Camera OFF           
             
@@ -294,45 +188,90 @@ void periodicOutput ()
         } 
         else
         {
-            wait(3.0); // Wait for position to center
-            
-            //Sam : Signal Hipervisor Ready to shutdown
-            
+            wait(3.0); // Wait for position to center            
+            //Sam : Signal Hipervisor Ready to shutdown            
         
-        }
-        
+        }        
         
 }
 
-
 int main(void)
 {
-  uint16_t trimReg, confReg;
   
-  MLX620_I2C_Driver_Init (3,3,3,3);
-
-  pc.baud(115200);
-  motorControlUart.baud(19200);
-      
-  ack = MLX90620_InitializeSensor(&trimReg, &confReg);
-
-  if (ack == MLX620_ACK)
+  uint16_t trimReg, confReg;
+  ninjaTurtle = new MOTOR(&motorControlUart);
+  
+  pc.baud(57600); 
+  pc.printf("Welcome!\n");
+  
+  mlx620_0 = new MLX620_SENSOR(&pin_sda_0, &pin_scl_0); 
+  mlx620_0->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
+  ack_0 = mlx620_0->MLX90620_InitializeSensor(&trimReg, &confReg);
+    
+  if (ack_0 == MLX620_ACK)
   {
     pc.printf("Sensor initialized successfully\n");
-    pc.printf("Triming Register = %X\n, trimReg");
-    pc.printf("Configuration Register = %X\n, confReg");
+    //pc.printf("Triming Register = %X\n, trimReg");
+    //pc.printf("Configuration Register = %X\n, confReg");
   }
   else
   {
     pc.printf("ERROR: Sensor initiazation failed!\n");
   }
   
-  wait(3.0);
-  period125ms.attach(&periodicOutput, (0.125));
+  mlx620_1 = new MLX620_SENSOR(&pin_sda_1, &pin_scl_1); 
+  mlx620_1->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
+  ack_1 = mlx620_1->MLX90620_InitializeSensor(&trimReg, &confReg);
+    
+  if (ack_1 == MLX620_ACK)
+  {
+    pc.printf("Sensor initialized successfully\n");
+    //pc.printf("Triming Register = %X\n, trimReg");
+    //pc.printf("Configuration Register = %X\n, confReg");
+  }
+  else
+  {
+    pc.printf("ERROR: Sensor initiazation failed!\n");
+  }
+  
+  mlx620_2 = new MLX620_SENSOR(&pin_sda_2, &pin_scl_2); 
+  mlx620_2->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
+  ack_2 = mlx620_2->MLX90620_InitializeSensor(&trimReg, &confReg);
+    
+  if (ack_2 == MLX620_ACK)
+  {
+    pc.printf("Sensor initialized successfully\n");
+    //pc.printf("Triming Register = %X\n, trimReg");
+    //pc.printf("Configuration Register = %X\n, confReg");
+  }
+  else
+  {
+    pc.printf("ERROR: Sensor initiazation failed!\n");
+  }
+  
+  mlx620_3 = new MLX620_SENSOR(&pin_sda_3, &pin_scl_3); 
+  mlx620_3->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
+  ack_3 = mlx620_3->MLX90620_InitializeSensor(&trimReg, &confReg);
+    
+  if (ack_3 == MLX620_ACK)
+  {
+    pc.printf("Sensor initialized successfully\n");
+    //pc.printf("Triming Register = %X\n, trimReg");
+    //pc.printf("Configuration Register = %X\n, confReg");
+  }
+  else
+  {
+    pc.printf("ERROR: Sensor initiazation failed!\n");
+  }
+  
+  //wait(3.0);
+  //period125ms.attach(&periodicOutput, (0.125*2));
             
   for (;;)
   {        
-          
+      periodicOutput();
+      wait(0.125);   
         
   }
 }
+

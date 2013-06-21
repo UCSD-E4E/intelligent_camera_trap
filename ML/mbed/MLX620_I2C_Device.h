@@ -98,3 +98,4 @@
 
 #endif  /* _MLX620_I2C_Device_H_ */
 
+
