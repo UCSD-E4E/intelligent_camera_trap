@@ -1,6 +1,0 @@
-int32 localization_request
----
-int32 x_offset
-int32 y_offset
-float32 x_degree
-float32 y_degree
