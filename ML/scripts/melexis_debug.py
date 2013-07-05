@@ -1,15 +1,15 @@
 import numpy as np
-#import scipy
 import fnmatch
 import sys
 import serial
 import Image
 import pygame
+import os
 
 class Cell:
 	x = 0
 	y = 0
-	size = 15
+	size = 30
 	intensity = 0;
 	def __init__(self, pos_x, pos_y, size):
 		self.x = pos_x
@@ -60,7 +60,9 @@ except Exception, e:
 
 if ser.isOpen():
 	
-	cell_size = 15
+	cell_size = 30
+	imgcnt = 0
+	movcnt = 0
 	
 	#initialize pygame display 
 	#grid[i].render(data_vector[(i % row_Effective) * column_Effective + (i / row_Effective)])				
@@ -116,6 +118,14 @@ if ser.isOpen():
 				    
 					
 				pygame.display.flip()
+				imgcnt += 1
+				pygame.image.save(pygame.display.get_surface(), '/home/viki/Videos/pyvideos/imgtemp/'+str(imgcnt)+'.jpeg')
+				if imgcnt > 59:
+					movcnt += 1
+					outstr = 'ffmpeg -f image2 -r 5 -i /home/viki/Videos/pyvideos/imgtemp/%d.jpeg -vcodec mpeg4 -y /home/viki/Videos/pyvideos/movie'+str(movcnt)+'.mp4'
+					os.system(outstr)
+					imgcnt = 0
+
 				read_amb = False
 				read_dat = False 
 			
@@ -124,4 +134,3 @@ if ser.isOpen():
 
 else:
 	print "Cannot open serial port"	
-
