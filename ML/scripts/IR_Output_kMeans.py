@@ -13,7 +13,6 @@ import traceback
 import scipy.stats
 
 
-NO_VALUES = -1 #no values in our cell are above the threshold
 
 
 class Cell:
@@ -90,10 +89,10 @@ def getGridIndexOfCenter(center):
 
 
 #only look at points w/ a positive z-score
-def filterGrid(zscores,ourGrid):
+def filterGrid(zscores, standardDeviation, ourGrid):
 	positive_ZScore_Count = 0
 	for i in range(0,len(zscores)):
-		if zscores[i] > 2:		
+		if zscores[i] > (.2*standardDeviation):		
 			if positive_ZScore_Count == 0:
 				newGrid = ([ourGrid[i]])
 			else:
@@ -103,6 +102,7 @@ def filterGrid(zscores,ourGrid):
 	
 	if positive_ZScore_Count == 0:  #no points were past our threshold
 		raise NameError("No-Values-Above-Threshold")
+		print "No Values Above Threshold"
 	return newGrid
 
 
@@ -110,6 +110,7 @@ def filterGrid(zscores,ourGrid):
 def colorWindowBlack():
 	for i in range(len(data_vector)):
 		grid[i].render(0)
+	pygame.display.flip()
 
 
 #check for command line arguments
@@ -184,8 +185,8 @@ if ser.isOpen():
 		read_amb = False
 		read_dat = False
 		
-		while True:
-			
+		print "Started loop"
+		while True:	
 			response = ser.readline()
 			#add len(response) <= 16 to address bug where sometimes we read lines like this:
 			# Ambient.6 24.5 23.7 23.8 25.4 24.4 24.7 24.6 24.5 24.9 25.1 23.2
@@ -203,6 +204,7 @@ if ser.isOpen():
 					data_list = data.split()
 					data_vector = map(float, data_list) 
 				except:
+					print "Could not convert IR sensor data to float values"
 					continue
 				#be sure we got all 64 values
 				if len(data_vector) == 64:
@@ -210,10 +212,11 @@ if ser.isOpen():
 					ourGrid = makeGrid(4,16)
 
 					zscores = scipy.stats.zscore(data_vector)
+					standardDeviation = np.std(data_vector)
 
 					#filter out points by z-score...
 					try:					
-						filteredGrid = filterGrid(zscores,ourGrid)			
+						filteredGrid = filterGrid(zscores, standardDeviation,ourGrid)			
 					except:					
 						colorWindowBlack()
 						continue						
