@@ -13,6 +13,8 @@ import traceback
 import scipy.stats
 
 
+NO_VALUES = -1 #no values in our cell are above the threshold
+
 
 class Cell:
 	x = 0
@@ -91,16 +93,23 @@ def getGridIndexOfCenter(center):
 def filterGrid(zscores,ourGrid):
 	positive_ZScore_Count = 0
 	for i in range(0,len(zscores)):
-		if zscores[i] > 3:		
+		if zscores[i] > 2:		
 			if positive_ZScore_Count == 0:
 				newGrid = ([ourGrid[i]])
 			else:
 				point = ([ourGrid[i]])
 				newGrid = np.vstack((newGrid,point))
 			positive_ZScore_Count += 1
+	
+	if positive_ZScore_Count == 0:  #no points were past our threshold
+		raise NameError("No-Values-Above-Threshold")
 	return newGrid
 
 
+#color the pygame window black
+def colorWindowBlack():
+	for i in range(len(data_vector)):
+		grid[i].render(0)
 
 
 #check for command line arguments
@@ -126,13 +135,11 @@ ser.parity = serial.PARITY_NONE
 ser.stopbits = serial.STOPBITS_ONE
 ser.timeout = 2 
 ser.writeTimeout = 2
-
-interpolationScaling = 1
+interpolationScaling = 1						
 row_Original = 4
 column_Original = 16
 row_Effective = (row_Original - 1) * interpolationScaling + 1
 column_Effective = (column_Original - 1) * interpolationScaling + 1
-
 
 
 
@@ -155,7 +162,7 @@ if ser.isOpen():
 	screen = pygame.display.set_mode(size)
 	screen.fill(white);
 	grid = [];
-	
+	filterGrid
 	for i in range(column_Effective):
 		for j in range(row_Effective):
 			newCell = Cell(i*cell_size, (j)*cell_size, cell_size)
@@ -192,7 +199,7 @@ if ser.isOpen():
 			if read_amb and read_dat:
 	
 				#transform input string into float array
-                		try:
+				try:
 					data_list = data.split()
 					data_vector = map(float, data_list) 
 				except:
@@ -205,7 +212,12 @@ if ser.isOpen():
 					zscores = scipy.stats.zscore(data_vector)
 
 					#filter out points by z-score...
-					filteredGrid = filterGrid(zscores,ourGrid)					
+					try:					
+						filteredGrid = filterGrid(zscores,ourGrid)			
+					except:					
+						colorWindowBlack()
+						continue						
+
 
 					#weight our grid by the heat values we just received
 					filteredGrid = addWeighting(filteredGrid,data_vector)
