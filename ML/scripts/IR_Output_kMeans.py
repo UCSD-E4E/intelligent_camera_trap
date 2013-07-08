@@ -91,7 +91,7 @@ def getGridIndexOfCenter(center):
 def filterGrid(zscores,ourGrid):
 	positive_ZScore_Count = 0
 	for i in range(0,len(zscores)):
-		if zscores[i] > 0:		
+		if zscores[i] > 3:		
 			if positive_ZScore_Count == 0:
 				newGrid = ([ourGrid[i]])
 			else:
@@ -192,9 +192,11 @@ if ser.isOpen():
 			if read_amb and read_dat:
 	
 				#transform input string into float array
-				data_list = data.split()
-				data_vector = map(float, data_list) 
-				
+                		try:
+					data_list = data.split()
+					data_vector = map(float, data_list) 
+				except:
+					continue
 				#be sure we got all 64 values
 				if len(data_vector) == 64:
 					#create our 4X16 grid
