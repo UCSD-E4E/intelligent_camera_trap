@@ -36,6 +36,67 @@ class Cell:
 		pygame.draw.rect(screen, [255,255,0], (self.x, self.y, self.size, self.size), 0)
 
 
+def runKMeans(k, data, weights, initialCenters, repeat):
+	#assign intial centers		
+	centerAssignments, linedUpWeights = assignToCenters(data, initialCenters, weights)
+
+	#adjust centers to be the weighted mean of the points that constitute them
+	newCenters = adjustCenters(initialCenters, centerAssignments, linedUpWeights)				
+
+	for i in range(0,repeat):
+		centerAssignments, linedUpWeights = assignToCenters(data, newCenters, weights)
+		newCenters = adjustCenters(newCenters, centerAssignments, linedUpWeights)		
+		
+	return newCenters	
+
+
+
+def assignToCenters(data, centers, weights):
+	#list of lists to hold which points go with which centers		
+	centerAssignments = [[] for x in xrange(len(centers))]
+
+	#list of lists to hold the weights of points with each center		
+	linedUpWeights = [[] for x in xrange(len(centers))]
+
+	for i in range(0,len(data)):
+		smallestDist = -1
+		closestCenter = 0
+		for j in range(0,len(centers)):
+			distance = weightedDistance(data[i], centers[j], weights,i)
+			if ((distance < smallestDist) or smallestDist == -1):
+				smallestDist = distance 
+				closestCenter = j
+		centerAssignments[j].append(data[i])
+		linedUpWeights[j].append(weights[i])
+	return centerAssignments, linedUpWeights
+
+
+def adjustCenters(centers, centerAssignments, linedUpWeights):
+	adjustedCenters = np.empty((len(centers),2)) #we have len(centers) # of centers each with an x,y coord
+	for i in range(0,len(centerAssignments)):
+		sumOfWeights = 0	
+		sumOfWeightedX = 0
+		sumOfWeightedY = 0		
+		for j in range(0,len(centerAssignments[i])):
+			pointsWeight = linedUpWeights[i][j] + 0.			
+			sumOfWeights += pointsWeight
+			sumOfWeightedX += ((centerAssignments[i][j][0] + 0.) * pointsWeight)
+			sumOfWeightedY += ((centerAssignments[i][j][1] + 0.) * pointsWeight)
+		newX = float(sumOfWeightedX / sumOfWeights)
+		newY = float(sumOfWeightedY / sumOfWeights)
+		adjustedCenters[i][0] = newX
+		adjustedCenters[i][1] = newY
+	return adjustedCenters
+			
+				
+
+
+def weightedDistance(point, center, weights, index): 
+	distance = np.linalg.norm(point - center)
+	distance *= weights[index]
+	return distance
+
+
 
 
 #returns the coordinates of our grid:
@@ -58,21 +119,6 @@ def makeGrid(rows, columns):
 	return data	
 
 
-#we'll weight each point by adding "heat value" number of points
-#so, if (1,1) has heat value 10, we'll have 10 (1,1)s in our data set
-# A B C
-# D E F
-# G H I
-#IR returns heat readings in this order: A, D, G, B, E, H...
-#we'll just multiply the weights by 10 for now to be sure they're whole numbers.... :(
-def addWeighting(data, heat):
-	for i in range(0, len(data)):
-		gridIndex = getGridIndexOfCenter(data[i])		
-		numAdditionalPoints = int((heat[gridIndex])*10)		
-		for j in range(0, numAdditionalPoints):  #add that points heat*10 additional points
-			additionalDataPoint = ([data[i]])
-			data = np.vstack((data,additionalDataPoint))
-	return data
 
 
 #k-means will return floating point centers--eg (1.3,2.123)
@@ -88,22 +134,28 @@ def getGridIndexOfCenter(center):
 	return index
 
 
-#only look at points w/ a positive z-score
-def filterGrid(zscores, standardDeviation, ourGrid):
-	positive_ZScore_Count = 0
+#threshold out some values
+def filterGrid(zscores, weights, ourGrid):	
+	#determine average of positive zscores	
+	count = 0.
+	positiveSum = 0.
 	for i in range(0,len(zscores)):
-		if zscores[i] > (.2*standardDeviation):		
-			if positive_ZScore_Count == 0:
-				newGrid = ([ourGrid[i]])
-			else:
-				point = ([ourGrid[i]])
-				newGrid = np.vstack((newGrid,point))
-			positive_ZScore_Count += 1
-	
+		if zscores[i] > 0:
+			positiveSum += zscores[i]
+			count += 1.
+	positive_zscore_avg = positiveSum / count
+
+	positive_ZScore_Count = 0	
+	for i in range(0,len(zscores)):
+		if zscores[i] < .5:		
+			weights[i] = 0. #any point not meeting our threshold will have 0 weight
+		else:
+			positive_ZScore_Count += 1	
+
 	if positive_ZScore_Count == 0:  #no points were past our threshold
+		print "No Values Above Threshold"		
 		raise NameError("No-Values-Above-Threshold")
-		print "No Values Above Threshold"
-	return newGrid
+	return weights
 
 
 #color the pygame window black
@@ -150,7 +202,7 @@ try:
 	ser.open()        
 
 except Exception, e:
-	print "Error opening port :( " + str(e)
+	print "Error opening port :( " + s
 	exit()
 
 if ser.isOpen():
@@ -185,10 +237,13 @@ if ser.isOpen():
 		read_amb = False
 		read_dat = False
 		
+		#on our first run, we'll seed kmeans with a center in about the middle of the grid 
+		#(subsequently, we'll seed with the most recently calculated center)
+		center = array([(7,2)])
 		print "Started loop"
 		while True:	
 			response = ser.readline()
-			#add len(response) <= 16 to address bug where sometimes we read lines like this:
+			#add len(responinitalCentersse) <= 16 to address bug where sometimes we read lines like this:
 			# Ambient.6 24.5 23.7 23.8 25.4 24.4 24.7 24.6 24.5 24.9 25.1 23.2
 			if response.startswith("Ambient") and len(response) <=16: 
 				ambient = float(response.strip('Ambient T='))
@@ -206,39 +261,31 @@ if ser.isOpen():
 				except:
 					print "Could not convert IR sensor data to float values"
 					continue
+				
 				#be sure we got all 64 values
 				if len(data_vector) == 64:
 					#create our 4X16 grid
 					ourGrid = makeGrid(4,16)
 
-					zscores = scipy.stats.zscore(data_vector)
-					standardDeviation = np.std(data_vector)
-
-					#filter out points by z-score...
-					try:					
-						filteredGrid = filterGrid(zscores, standardDeviation,ourGrid)			
-					except:					
-						colorWindowBlack()
-						continue						
-
-
-					#weight our grid by the heat values we just received
-					filteredGrid = addWeighting(filteredGrid,data_vector)
-
-					#run kmeans
-					k = 1
-					clusterid, error, nfound = pc.kcluster(filteredGrid, nclusters=k, mask=None, weight=None, transpose=0, npass=1, method = 'a', dist = 'e', initialid=None)
-
-					centers, _ = pc.clustercentroids(filteredGrid, clusterid=clusterid)
-	
+					#get some info about our heat values
+					zscores = scipy.stats.zscore(data_vector)	
 					maxTemp = max(data_vector)					
 					minTemp = min(data_vector)
 					tempRange = maxTemp - minTemp
 
+
+					#filter out points by z-score...
+					try:					
+						#anything not meeting threshold will be assinged 0 heat/"weight"					
+						data_vector = filterGrid(zscores, data_vector, ourGrid)			
+					except:
+						colorWindowBlack()
+						continue						
+					
 					#color all cells
 					for i in range(len(data_vector)):
-						#we are ignoring anything with a negative z-score						
-						if zscores[i] < 0:
+						#anything that was assigned 0 weight/heat, we've filtered out					
+						if data_vector[i] <= 0:
 							grid[i].render(0)
 						else:
 							intensity = data_vector[i] - minTemp						
@@ -249,10 +296,19 @@ if ser.isOpen():
 							else:
 								grid[i].render(color) 
 					
+					#square all heat/"weight" values to try and amplify effects of hot spots
+					for i in range(0,len(data_vector)):
+						data_vector[i] = data_vector[i]**2
+
+					#run kmeans
+					k = 1
+					center = runKMeans(k, ourGrid, data_vector, center, 3)
+
+
 				 
 					#color the centers red
-					for i in range(len(centers)):
-						centerIndex = getGridIndexOfCenter(centers[i])
+					for i in range(len(center)):
+						centerIndex = getGridIndexOfCenter(center[i])
 						grid[centerIndex].centerRender() 
 
 					
