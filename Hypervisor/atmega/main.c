@@ -1,7 +1,7 @@
 /*
  * main.c
  *
- *  Created on: Jul 9, 2013
+ *  Created on: July 9, 2013
  *      Author: Gabrielle Trotter
  */
 
@@ -10,31 +10,15 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-ISR(INT0_vect)
-{
-	PORTB = 0x00;
-	_delay_ms(1000);
 
 
-}
+void set_interrupt_pins();
 
 
 int main (void)
 {
-	DDRD &= 0xFC;     // Clear the PD2 pin
-		// PD2 (PCINT0 pin) is now an input
-
-	PORTD &= 0xFC;    // turn On the Pull-down
-		// PD2 is now an input with pull-down enabled
-
-	EICRA &= 0xF3;
-	EICRA |= 0x03;
-	//EICRA |= (1 << ISC01);
-	//EICRA |= (1 << ISC00);    // set INT0 to trigger on a rising edge
-	EIMSK |= (1 << INT0);     // Turns on INT0
-
-		sei();                    // turn on interrupts
-
+	set_interrupt_pins();
+	//set all pins in port B as output (1)
 	DDRB |= 0xFF;
 	while(1)
 	{
@@ -45,4 +29,34 @@ int main (void)
 
 
 	}
+}
+
+void set_interrupt_pins()
+{
+	DDRD &= 0xFC;     // Clear the PD2 pin
+			// PD2 (PCINT0 pin) is now an input
+
+		PORTD |= 0x02;    // turn on the Pull-up
+			// PD2 is now an input with pull-up enabled (supposedly)
+
+		// set INT0 edge trigger
+			// 0 = low level, 1 = any, 2 = rising, 3 = falling
+		EICRA &= 0xF2;
+		EICRA |= 0x02;
+
+	    // Turn on INT0
+		EIMSK |= (1 << INT0);
+
+		// turn on global interrupts
+		sei();
+}
+
+
+//Interrupt service routine for pin INT0
+ISR(INT0_vect)
+{
+	PORTB = 0x00;
+	_delay_ms(1000);
+
+
 }
