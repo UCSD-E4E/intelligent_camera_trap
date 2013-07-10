@@ -20,6 +20,7 @@ int main (void)
 {
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	set_interrupt_pins();
+	//MCUCR &= ~(_BV(PUD));
 
 	//set all pins in port B as output (1)
 	DDRB |= 0xFF;
@@ -57,21 +58,22 @@ void set_interrupt_pins()
 ISR(INT0_vect)
 {
 	sleep_disable();
+	PORTB = 0x00;
+	_delay_ms(2000);
 
 
 }
 
 void blink_5_times()
 {
-	int x = 5;
+	int x = 10;
 	while(x)
 	{
-		PORTB = 0x01;
-		_delay_ms(500);
-		PORTB = 0x00;
+		PINB = _BV(PINB0);
 		_delay_ms(500);
 		x--;
 
 	}
-}
 
+	PORTB = 0x01;
+}
