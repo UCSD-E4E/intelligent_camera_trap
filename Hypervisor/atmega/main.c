@@ -10,28 +10,29 @@
 #include <util/delay.h>
 #include <avr/sleep.h>
 
+/*****FUNCTIONS*****/
 void set_interrupt_pins();
 void blink_5_times();
 void low_pwr_sleep();
+void init();
+void output_on_5s();
 
+/*****MAIN*****/
 int main(void) {
-	set_interrupt_pins();
-
-	//set only pin 0 of port B as output (1)
-
-
+init();
 	while (1) {
-
-		blink_5_times();
+		output_on_5s();
 		low_pwr_sleep();
 
 	}
 }
 
+/*set up pins for INT0*/
 void set_interrupt_pins() {
-	DDRD &= 0xFD; // Clear the PD2 pin
+	DDRD &= ~(_BV(DDD2)); // Clear the PD2 pin
 	// PD2 (PCINT0 pin) is now an input
 
+	PORTD &= ~(_BV(PORTD2)); //turn off pull-up resistor
 	/*
 	 * PORTD |= _BV(PORTD2);    // turn on the Pull-up
 	 *PD2 is now an input with pull-up enabled
@@ -47,35 +48,61 @@ void set_interrupt_pins() {
 	// Turn on INT0
 	EIMSK |= (1 << INT0);
 
-	// turn on global interrupts
 }
 
-//Interrupt service routine for pin INT0
+/*Interrupt service routine for pin INT0*/
 ISR(INT0_vect) {
 	sleep_disable();
-	PORTB = 0x00;
+	DDRB |= _BV(DDB0);
+	PORTB &= ~(_BV(PORTB0));
 	_delay_ms(2000);
+	PORTB |= _BV(PORTB0);
+	DDRB &= ~(_BV(PORTB0));
 
 }
 
+/*blinking light function*/
 void blink_5_times() {
-	DDRB = 0xFF;
+	PORTB &= ~(_BV(PORTB0));
+	DDRB |= _BV(DDB0);
 	int x = 10;
 	while (x) {
-		PINB = _BV(PINB0);
+		PINB |= _BV(PINB0);
 		_delay_ms(500);
 		x--;
 
 	}
 
-	PORTB = 0x01;
+	PORTB |= _BV(PORTB0);
 }
 
+//sleep function
 void low_pwr_sleep() {
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_enable();
-	sleep_bod_disable();
 	sei();
+	MCUCR = _BV (BODS) | _BV (BODSE);  // turn on brown-out enable select
+	MCUCR = _BV (BODS);        // this must be done within 4 clock cycles of above
 	sleep_mode();
 }
 
+/*initialize pins for low power*/
+void init() {
+	DDRB = 0x00;
+		DDRC = 0x00;
+		DDRD = 0x00;
+		PORTB = 0x00;
+		PORTC = 0x00;
+		PORTD = 0x00;
+		ADCSRA = 0x00;
+		PRR = 0xFF;
+		set_interrupt_pins();
+}
+
+void output_on_5s(){
+	DDRC |= _BV(DDC0);
+	PORTC |= _BV(PORTC0);
+	_delay_ms(5000);
+	DDRC &= ~(_BV(DDC0));
+	PORTC &= ~(_BV(PORTC0));
+}
