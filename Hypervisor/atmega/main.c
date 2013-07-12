@@ -16,12 +16,14 @@ void blink_5_times();
 void low_pwr_sleep();
 void init();
 void output_on_5s();
+void wait_for_input();
 
 /*****MAIN*****/
 int main(void) {
-init();
+	init();
 	while (1) {
-		output_on_5s();
+		blink_5_times();
+		wait_for_input();
 		low_pwr_sleep();
 
 	}
@@ -81,28 +83,44 @@ void low_pwr_sleep() {
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_enable();
 	sei();
-	MCUCR = _BV (BODS) | _BV (BODSE);  // turn on brown-out enable select
-	MCUCR = _BV (BODS);        // this must be done within 4 clock cycles of above
+	MCUCR = _BV (BODS) | _BV (BODSE); // turn on brown-out enable select
+	MCUCR = _BV (BODS); // this must be done within 4 clock cycles of above
 	sleep_mode();
 }
 
 /*initialize pins for low power*/
 void init() {
 	DDRB = 0x00;
-		DDRC = 0x00;
-		DDRD = 0x00;
-		PORTB = 0x00;
-		PORTC = 0x00;
-		PORTD = 0x00;
-		ADCSRA = 0x00;
-		PRR = 0xFF;
-		set_interrupt_pins();
+	DDRC = 0x00;
+	DDRD = 0x00;
+	PORTB = 0x00;
+	PORTC = 0x00;
+	PORTD = 0x00;
+	ADCSRA = 0x00;
+	PRR = 0xFF;
+	set_interrupt_pins();
 }
 
-void output_on_5s(){
+void output_on_5s() {
 	DDRC |= _BV(DDC0);
 	PORTC |= _BV(PORTC0);
 	_delay_ms(5000);
 	DDRC &= ~(_BV(DDC0));
 	PORTC &= ~(_BV(PORTC0));
 }
+
+void wait_for_input() {
+	cli();	//disable interrupts
+	DDRC &= ~(_BV(DDC1)); //pin C1 is input
+	PORTC &= ~(_BV(PORTC1)); //deactivate pullup resistor
+	char value = PINC & (1 << PINC1);
+	DDRC |= _BV(DDC0); //pin C0 is an output
+	PORTC |= _BV(PORTC0); //ouput pin C0 is on
+	while (!value) {
+		value = PINC & (1 << PINC1); //wait for signal
+	}
+	DDRC &= ~(_BV(DDC0));	//pin C0 is an input
+	PORTC &= ~(_BV(PORTC0));	//input pin C0 has pull-up resistor disabled
+	sei();	//enable interrupts
+}
+
