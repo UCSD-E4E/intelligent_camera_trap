@@ -9,6 +9,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <avr/sleep.h>
+#include <avr/wdt.h>
 
 /*****FUNCTIONS*****/
 void set_interrupt_pins();
@@ -88,39 +89,75 @@ void low_pwr_sleep() {
 	sleep_mode();
 }
 
-/*initialize pins for low power*/
+/*
+ * Initializes CPU for low power:
+ * 	All ports set to input
+ * 	Internal Pull-up resistors deactivated
+ * 	ADC turned off
+ * 	Analog comparator disabled
+ * 	Power saving features turned on
+ * 	Disable digital input buffer on analog input pins
+ * Additionally, interrupt pins set via set_interrupt_pins() function
+ */
 void init() {
+	// set ports to input
 	DDRB = 0x00;
 	DDRC = 0x00;
 	DDRD = 0x00;
+
+	// disable internal pull-up resistors
 	PORTB = 0x00;
 	PORTC = 0x00;
 	PORTD = 0x00;
+
+	//disable ADC and analog comparator and watchdog timer
+	ACSR |= _BV(ACD);
 	ADCSRA = 0x00;
+	wdt_disable();
+
+	//Disable digital input buffer on analog input pins
+	DIDR1 |= _BV(AIN1D);
+	DIDR1 |= _BV(AIN0D);
+	DIDR0 |= 0x3F;
+
+	//activate all power saving features
 	PRR = 0xFF;
+
+	//initialize interrupt pins
 	set_interrupt_pins();
 }
 
+/*
+ * Drive an output from pin C0 for 5s, then turn it off
+ */
 void output_on_5s() {
-	DDRC |= _BV(DDC0);
-	PORTC |= _BV(PORTC0);
+	DDRC |= _BV(DDC0);	//C0 is an output pin
+	PORTC |= _BV(PORTC0);	//C0 is driven high
 	_delay_ms(5000);
-	DDRC &= ~(_BV(DDC0));
-	PORTC &= ~(_BV(PORTC0));
+	DDRC &= ~(_BV(DDC0));	//C0 is no longer an output pin
+	PORTC &= ~(_BV(PORTC0));	//C0 is disconnected from pullup resistor
 }
 
+/*
+ * Halt everything and wait for
+ * an external input from pin C1.
+ * This function uses polling,
+ * not positive this is the most
+ * ideal solution for conserving power.
+ */
 void wait_for_input() {
 	cli();	//disable interrupts
 	DDRC &= ~(_BV(DDC1)); //pin C1 is input
-	PORTC &= ~(_BV(PORTC1)); //deactivate pullup resistor
-	char value = PINC & (1 << PINC1);
+	PORTC &= ~(_BV(PORTC1)); //disable pull-up resistor
+	char value = PINC & (1 << PINC1); //read value from pin C1
 	DDRC |= _BV(DDC0); //pin C0 is an output
-	PORTC |= _BV(PORTC0); //ouput pin C0 is on
+	PORTC |= _BV(PORTC0); //output pin C0 is on
 	while (!value) {
-		value = PINC & (1 << PINC1); //wait for signal
+		value = PINC & (1 << PINC1); //update read value from pin C1
 	}
 	DDRC &= ~(_BV(DDC0));	//pin C0 is an input
 	PORTC &= ~(_BV(PORTC0));	//input pin C0 has pull-up resistor disabled
 	sei();	//enable interrupts
 }
+
 
