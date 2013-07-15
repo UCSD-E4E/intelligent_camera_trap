@@ -99,7 +99,7 @@ if ser.isOpen():
 		fileName = strftime("%m-%d-%H:%M:%S",gmtime())
 	
 		#open the .csv file
-		csvFile = open("/home/riley/Desktop/David July 15/"+fileName+".csv", 'a+')
+		csvFile = open("/home/sealab/Desktop/July 15 Training Data/"+fileName+".csv", 'a+')
 		
 		while True:
 			response = ser.readline()
@@ -125,19 +125,7 @@ if ser.isOpen():
 	
 				if len(data_vector) == 64: #make sure we got 64 pixels
 				
-					#assign colors for cells
-					for i in range(len(data_vector)):
-						data_vector[i] -= 10
-						data_vector[i] *=  (150/(40-5))
-						if data_vector[i] > 255:
-							data_vector[i] = 255
-						if data_vector[i] < 0:
-							data_vector[i] = 0
-				
-					#display those colors
-					for i in range(len(grid)):
-						grid[i].render(data_vector[i], screen) 
-	
+
 					#write in this row of the .csv file
 					#on each line we'll have: amibent_temp,pixel_1,pixel_2,pixel_3,...,pixel_64,
 					ambientTemp = str(ambient)				
@@ -150,6 +138,19 @@ if ser.isOpen():
 			
 					#we're done with this row
 					csvFile.write('\n')
+					
+					#assign colors for cells
+					for i in range(len(data_vector)):
+						data_vector[i] -= 10
+						data_vector[i] *=  (150/(40-5))
+						if data_vector[i] > 255:
+							data_vector[i] = 255
+						if data_vector[i] < 0:
+							data_vector[i] = 0
+				
+					#display those colors
+					for i in range(len(grid)):
+						grid[i].render(data_vector[i], screen) 
 				
 					pygame.display.flip()
 					read_amb = False
