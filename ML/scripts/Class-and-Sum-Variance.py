@@ -1,5 +1,3 @@
-#visualize thresholding technique described in "A novel statistical image thresholding method"
-# by Zuoyong Li,  Chuancai Liu...
 import numpy as np
 from numpy import array
 #import scipy
@@ -66,8 +64,6 @@ def makeGrid(rows, columns):
 	data = np.array([(0,(rows-1))]) #having issues with compilation, hardcode the first point		
 	columnCount = 0	
 	while columnCount < columns:
-Class Sum Variance Error =  0.174174174174
-Class Sum Varian
 		rowCount = rows - 1		
 		while rowCount >= 0:	
 			if (columnCount != 0 or rowCount != (rows -1)): #ignore the very first pass, we hardcoded it			
@@ -95,10 +91,12 @@ def getGridIndexOfCenter(center):
 
 #threshold out some values
 def filterGrid(weights):	
-	t = 0
+	max_temp = max(weights)	
+	min_temp = min(weights)
+	t = min_temp	
 	t_opt = 0
 	MJ = sys.float_info.max
-	for i in range(0,1000):
+	for i in range(int(min_temp), (1 + int(max_temp))):
 		J_alpha_t = J_Alpha_T(t, weights)
 		if J_alpha_t < MJ:
 			MJ = J_alpha_t
