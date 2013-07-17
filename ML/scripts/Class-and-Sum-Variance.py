@@ -90,7 +90,7 @@ def getGridIndexOfCenter(center):
 
 
 #threshold out some values
-def filterGrid(weights):	
+def determineThreshold(weights):	
 	max_temp = max(weights)	
 	min_temp = min(weights)
 	t = min_temp	
@@ -104,12 +104,10 @@ def filterGrid(weights):
 			t += 1
 		else:
 			t += 1
+	return t_opt
 
-	for i in range(0, len(weights)):
-		if weights[i] < t_opt:
-			weights[i] = 0. #any point not meeting our threshold will have 0 weight
 
-	return weights
+
 
 	
 
@@ -172,7 +170,6 @@ if ser.isOpen():
 	screen = pygame.display.set_mode(size)
 	screen.fill(white);
 	grid = [];
-	filterGrid
 	for i in range(column_Effective):
 		for j in range(row_Effective):
 			newCell = Cell(i*cell_size, (j)*cell_size, cell_size)
@@ -232,23 +229,32 @@ if ser.isOpen():
 					tempRange = maxTemp - minTemp
 
 
-					#so we have whole numbers
-					for i in range(0,len(data_vector)):
-						data_vector[i] *= 10
+					#throw out anything above "mammalian core temp" of say, 38 Celsius
+					band_pass_filtered = []					
+					for i in range(0, len(data_vector)):
+						if data_vector[i] <= 38.0:
+							band_pass_filtered.append(data_vector[i])
 
-					#filter out points std-dev thresholding
-					#anything not meeting threshold will be assinged 0 heat/"weight"					
-					data_vector = filterGrid(data_vector)			
-											
-					
+					#so we have whole numbers
+					for i in range(0,len(band_pass_filtered)):
+						band_pass_filtered[i] *= 10
+
+				
+					threshold = determineThreshold(band_pass_filtered)			
+					threshold = ((threshold + 0.) / 10.0)  #we worked with our data in a 10* space
+
+					for i in range(0, len(data_vector)):
+						if data_vector[i] < threshold:
+							data_vector[i] = 0. #any point not meeting our threshold will have 0 weight					
+
+
 					#color all cells
 					for i in range(len(data_vector)):
 						#anything that was assigned 0 weight/heat, we've filtered out					
 						if data_vector[i] <= 0:
 							grid[i].render(0)
 						else:
-							scaledBack = data_vector[i] / 10
-							intensity = scaledBack - minTemp						
+							intensity = data_vector[i] - minTemp						
 							colorIntensity = intensity / tempRange					
 							color = colorIntensity * 255
 							if color == 255:
