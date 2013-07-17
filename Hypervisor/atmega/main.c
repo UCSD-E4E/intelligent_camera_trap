@@ -23,9 +23,8 @@ void wait_for_input();
 int main(void) {
 	init();
 	while (1) {
-		blink_5_times();
-		wait_for_input();
 		low_pwr_sleep();
+		wait_for_input();
 
 	}
 }
@@ -56,27 +55,27 @@ void set_interrupt_pins() {
 /*Interrupt service routine for pin INT0*/
 ISR(INT0_vect) {
 	sleep_disable();
-	DDRB |= _BV(DDB0);
-	PORTB &= ~(_BV(PORTB0));
-	_delay_ms(2000);
-	PORTB |= _BV(PORTB0);
-	DDRB &= ~(_BV(PORTB0));
+	DDRB |= _BV(DDB5);
+	PORTB |= _BV(PORTB5);
+	_delay_ms(200);
+	PORTB &= ~(_BV(PORTB5));
+	DDRB &= ~(_BV(PORTB5));
 
 }
 
 /*blinking light function*/
 void blink_5_times() {
-	PORTB &= ~(_BV(PORTB0));
-	DDRB |= _BV(DDB0);
+	PORTB &= ~(_BV(PORTB5));
+	DDRB |= _BV(DDB5);
 	int x = 10;
 	while (x) {
-		PINB |= _BV(PINB0);
+		PINB |= _BV(PINB5);
 		_delay_ms(500);
 		x--;
 
 	}
 
-	PORTB |= _BV(PORTB0);
+	PORTB &= ~(_BV(PORTB5));
 }
 
 //sleep function
@@ -131,11 +130,11 @@ void init() {
  * Drive an output from pin C0 for 5s, then turn it off
  */
 void output_on_5s() {
-	DDRC |= _BV(DDC0);	//C0 is an output pin
-	PORTC |= _BV(PORTC0);	//C0 is driven high
+	DDRD |= _BV(DDD5);	//D5 is an output pin
+	PORTD |= _BV(PORTD5);	//D5 is driven high
 	_delay_ms(5000);
-	DDRC &= ~(_BV(DDC0));	//C0 is no longer an output pin
-	PORTC &= ~(_BV(PORTC0));	//C0 is disconnected from pullup resistor
+	DDRD &= ~(_BV(DDD5));	//D5 is no longer an output pin
+	PORTD &= ~(_BV(PORTD5));	//D5 is disconnected from pullup resistor
 }
 
 /*
@@ -147,17 +146,16 @@ void output_on_5s() {
  */
 void wait_for_input() {
 	cli();	//disable interrupts
-	DDRC &= ~(_BV(DDC1)); //pin C1 is input
-	PORTC &= ~(_BV(PORTC1)); //disable pull-up resistor
-	char value = PINC & (1 << PINC1); //read value from pin C1
-	DDRC |= _BV(DDC0); //pin C0 is an output
-	PORTC |= _BV(PORTC0); //output pin C0 is on
+	DDRD &= ~(_BV(DDD4)); //pin D4 is input
+	PORTD &= ~(_BV(PORTD4)); //disable pull-up resistor
+	char value = PIND & (1 << PIND4); //read value from pin D4
+	DDRD |= _BV(DDD5); //pin D5 is an output
+	PORTD |= _BV(PORTD5); //output pin D5 is on
 	while (!value) {
-		value = PINC & (1 << PINC1); //update read value from pin C1
+		value = PIND & (1 << PIND4); //update read value from pin D4
 	}
-	DDRC &= ~(_BV(DDC0));	//pin C0 is an input
-	PORTC &= ~(_BV(PORTC0));	//input pin C0 has pull-up resistor disabled
+	DDRD &= ~(_BV(DDD5));	//pin D5 is an input
+	PORTD &= ~(_BV(PORTD5));	//input pin D5 has pull-up resistor disabled
+	_delay_ms(200);
 	sei();	//enable interrupts
 }
-
-
