@@ -1,3 +1,5 @@
+#implement thresholding technique from "A novel statistical image thresholding method"
+#by Li. 
 import numpy as np
 from numpy import array
 #import scipy
@@ -249,6 +251,7 @@ if ser.isOpen():
 
 
 					#color all cells
+
 					for i in range(len(data_vector)):
 						#anything that was assigned 0 weight/heat, we've filtered out					
 						if data_vector[i] <= 0:
@@ -261,7 +264,7 @@ if ser.isOpen():
 								grid[i].hotSpotRender()  #color hottest spot yellow 
 							else:
 								grid[i].render(color) 
-					
+				
 					pygame.display.flip()
 
 					read_amb = False
