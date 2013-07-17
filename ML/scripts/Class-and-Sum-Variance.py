@@ -159,7 +159,7 @@ try:
 	ser.open()        
 
 except Exception, e:
-	print "Error opening port :( " + s
+	print "Error opening port :( " 
 	exit()
 
 if ser.isOpen():
@@ -232,18 +232,22 @@ if ser.isOpen():
 
 
 					#throw out anything above "mammalian core temp" of say, 38 Celsius
+					#that is, set those cells to "ambient"/background temp
 					band_pass_filtered = []					
 					for i in range(0, len(data_vector)):
-						if data_vector[i] <= 38.0:
-							band_pass_filtered.append(data_vector[i])
+						if data_vector[i] >= 38.0:
+							data_vector[i] = ambient
 
 					#so we have whole numbers
-					for i in range(0,len(band_pass_filtered)):
-						band_pass_filtered[i] *= 10
+					for i in range(0,len(data_vector)):
+						data_vector[i] *= 10
 
 				
-					threshold = determineThreshold(band_pass_filtered)			
+					threshold = determineThreshold(data_vector)			
 					threshold = ((threshold + 0.) / 10.0)  #we worked with our data in a 10* space
+
+					for i in range(0,len(data_vector)):
+						data_vector[i] = data_vector[i] / 10. #scale back the space
 
 					for i in range(0, len(data_vector)):
 						if data_vector[i] < threshold:
@@ -251,7 +255,6 @@ if ser.isOpen():
 
 
 					#color all cells
-
 					for i in range(len(data_vector)):
 						#anything that was assigned 0 weight/heat, we've filtered out					
 						if data_vector[i] <= 0:
