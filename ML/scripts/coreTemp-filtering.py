@@ -163,7 +163,7 @@ if ser.isOpen():
 	try:
 		#clean out buffers
 		ser.flushInput()       
-		ser.flushOutput()https://mail.google.com/mail/u/0/?shva=1#inbox
+		ser.flushOutput()
 
 		#make sure we read both the ambient and the data each cycle
 		read_amb = False
@@ -190,7 +190,7 @@ if ser.isOpen():
 				try:
 					data_list = data.split()
 					data_vector = map(float, data_list) 
-				except:https://mail.google.com/mail/u/0/?shva=1#inbox
+				except:
 					print "Could not convert IR sensor data to float values"
 					continue
 
