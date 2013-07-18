@@ -55,11 +55,11 @@ void set_interrupt_pins() {
 /*Interrupt service routine for pin INT0*/
 ISR(INT0_vect) {
 	sleep_disable();
-	DDRB |= _BV(DDB5);
+	/*DDRB |= _BV(DDB5);
 	PORTB |= _BV(PORTB5);
 	_delay_ms(200);
 	PORTB &= ~(_BV(PORTB5));
-	DDRB &= ~(_BV(PORTB5));
+	DDRB &= ~(_BV(PORTB5));*/
 
 }
 
@@ -146,13 +146,17 @@ void output_on_5s() {
  */
 void wait_for_input() {
 	cli();	//disable interrupts
+	DDRD |= _BV(DDD5); //pin D5 is an output
+	PORTD |= _BV(PORTD5); //output pin D5 is on
+	_delay_ms(400);
 	DDRD &= ~(_BV(DDD4)); //pin D4 is input
 	PORTD &= ~(_BV(PORTD4)); //disable pull-up resistor
 	char value = PIND & (1 << PIND4); //read value from pin D4
-	DDRD |= _BV(DDD5); //pin D5 is an output
-	PORTD |= _BV(PORTD5); //output pin D5 is on
 	while (!value) {
 		value = PIND & (1 << PIND4); //update read value from pin D4
+	}
+	while (value) {
+		value = PIND & (1 << PIND4);
 	}
 	DDRD &= ~(_BV(DDD5));	//pin D5 is an input
 	PORTD &= ~(_BV(PORTD5));	//input pin D5 has pull-up resistor disabled
