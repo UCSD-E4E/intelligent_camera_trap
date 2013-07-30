@@ -18,7 +18,7 @@ from time import localtime, strftime
 CELL_SIZE = 30
 MAX_TEMP = 40
 MIN_TEMP = 20
-VIDEO_DIRECTORY = '/home/sealab/Videos/IRVideo/'	
+VIDEO_DIRECTORY = '/home/viki/Gabrielle_working_directory/Videos/IRVideo/'	
 VIDEO_LEN = 1
 # Cell:
 # Used to render sensor readings on the pygame window
@@ -88,7 +88,7 @@ ser.timeout = 2
 ser.writeTimeout = 2
 
 
-row = 4
+row = 8
 column = 16
 
 try: 
@@ -131,23 +131,23 @@ if ser.isOpen():
 		
 
 		#create initial CSV file with a new start time
-		startTime = time.time()
-		fileName = strftime("%m-%d-%H:%M:%S", localtime())
-		csvFile = open(VIDEO_DIRECTORY + "IR_CSV_FILES/" + fileName + ".csv", 'a+')
+		#startTime = time.time()
+		#fileName = strftime("%m-%d-%H:%M:%S", localtime())
+		#csvFile = open(VIDEO_DIRECTORY + "IR_CSV_FILES/" + fileName + ".csv", 'a+')
 		
 		while True:		
-			currentTime = time.time()
+		#	currentTime = time.time()
 			#generate a new video file and CSV file every VIDEO_LEN minutes
-			if (currentTime - startTime) >= (60. * VIDEO_LEN):
-				outstr = 'ffmpeg -f image2 -r 5 -i ' + VIDEO_DIRECTORY + "imgtemp/%d.jpeg -vcodec mpeg4 -y " + VIDEO_DIRECTORY + fileName + '.mp4'
-				os.system(outstr)
-				clearImages = "rm " + VIDEO_DIRECTORY + 'imgtemp/*.jpeg'
-				os.system(clearImages)
-				imgcnt = 0
+		#	if (currentTime - startTime) >= (60. * VIDEO_LEN):
+		#		outstr = 'ffmpeg -f image2 -r 5 -i ' + VIDEO_DIRECTORY + "imgtemp/%d.jpeg -vcodec mpeg4 -y " + VIDEO_DIRECTORY + fileName + '.mp4'
+		#		os.system(outstr)
+		#		clearImages = "rm " + VIDEO_DIRECTORY + 'imgtemp/*.jpeg'
+		#		os.system(clearImages)
+		#		imgcnt = 0
 				#create new file name, new csv file, and reset start time
-				fileName = strftime("%m-%d-%H:%M:%S", localtime())
-				csvFile = open(VIDEO_DIRECTORY + "IR_CSV_FILES/" + fileName + ".csv", 'a+')
-				startTime = time.time()
+		#		fileName = strftime("%m-%d-%H:%M:%S", localtime())
+		#		csvFile = open(VIDEO_DIRECTORY + "IR_CSV_FILES/" + fileName + ".csv", 'a+')
+		#		startTime = time.time()
 			response = ser.readline()
 			if response.startswith("Ambient"):
 				ambient = float(response.strip('Ambient T='))
@@ -163,24 +163,24 @@ if ser.isOpen():
 					data_vector = map(float, data_list)
 				except:
 					print "Error in sensor value string to float conversion"
-					continue 
+					continue
 				if len(data_vector) == row * column:	
 					scaled_data = temperatureMap(data_vector, MIN_TEMP, MAX_TEMP)
 				
 					ambientTemp = str(ambient)
-					csvFile.write(ambientTemp)	#start CSV file with ambient temp
-					csvFile.write(',')
+			#		csvFile.write(ambientTemp)	#start CSV file with ambient temp
+			#		csvFile.write(',')
 					for i in range(len(scaled_data)):
 						grid[i].render(scaled_data[i], screen) 	#display a pixel
 
 						value = str(data_vector[i])
-						csvFile.write(value + ',') 	#print the rest of the values to the CSV file
+			#			csvFile.write(value + ',') 	#print the rest of the values to the CSV file
 					
-					csvFile.write('\n')	#CSV new line:
+			#		csvFile.write('\n')	#CSV new line:
 	
 					pygame.display.flip()
-					imgcnt += 1
-					pygame.image.save(pygame.display.get_surface(), VIDEO_DIRECTORY + 'imgtemp/' +str(imgcnt) + '.jpeg')
+			#		imgcnt += 1
+			#		pygame.image.save(pygame.display.get_surface(), VIDEO_DIRECTORY + 'imgtemp/' +str(imgcnt) + '.jpeg')
 
 					read_amb = False
 					read_dat = False 
