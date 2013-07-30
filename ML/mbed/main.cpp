@@ -131,9 +131,9 @@ void periodicOutput ()
                 extrapolateGrid.setValue(trackRowPos, trackColumnPos,100.0);            
             }
             */ 
-                xbee.printf("\nAmbient T=%2.1f\n", Ta_0);   
+                pc.printf("\nAmbient T=%2.1f\n", Ta_0);   
                 //pc.printf("\nSensor 1 Ambient T= %2.1f\n", Ta_1);         
-                xbee.printf("IR: ");
+                pc.printf("IR: ");
                 int countnumtemps = 0;
                 for(int column = 0; column < stackedGrid.getColumn(); column++)
                 {
@@ -239,6 +239,7 @@ int main(void)
   }
   else
   {
+
     pc.printf("ERROR: Sensor 0 initiazation failed!\n");
   }
   */
@@ -255,6 +256,7 @@ int main(void)
   else
   {
     pc.printf("ERROR: Sensor 1 initiazation failed!\n");
+
   }
   mlx620_2 = new MLX620_SENSOR(&pin_sda_2, &pin_scl_2); 
   mlx620_2->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
