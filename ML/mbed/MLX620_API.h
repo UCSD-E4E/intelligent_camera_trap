@@ -9,59 +9,6 @@
 #ifndef _MLX620_API_H_
 #define _MLX620_API_H_
 
-#include "MLX620_I2C_Device.h"
-#include "MLX620_I2C_Driver.h"
-
-
-/** \mainpage MLX90620 Firmware API
-
-\section intro_sec Contents
-
-  This is a Firmware API for MLX90620.\n
-
-  It could be used with any given MCU and integrated in a project. Only minimal modifications in MLX620_I2C_Driver.h are required as the driver is MCU defendant. The rest of the code is MCU and tool chain independent.
-  The API is compiled and tested on EVB90620, which is using Atmel's AT91SAM7S265 MCU. GCC compiler was used to build the API, but any commercial development environment could be used as well.
-
-  \subsection I2C_driver I2C Driver
-   - Software implementation of I2C driver for writing and reading data to and from the sensor.\n
-   - The software driver is almost MCU independent as it only uses the general purpose input/output controller (module) of the particular MCU.\n
-   For more detailed description please refer to the source code MLX620_I2C_Driver.c and MLX620_I2C_Driver.h
-
-  \subsection I2C_interface I2C interface and configuration bits
-  - I2C communication interface description - MLX620_I2C_Device.h
-  - Configuration register bits description - MLX620_I2C_Device.h
-
-  \subsection RAM_EEPROM RAM and EEPROM memory descriptions
-  - RAM memory map and description - MLX620_RAM.h
-  - EEPROM memory map and description - MLX620_EEPROM.h
-
-  \subsection API_functions API Functions
-  - configuring the sensor (device)
-  - starting measurement
-  - reading measurement data
-  - calculating the Object temperature (compensation).
-  For detailed description of the source code please refer to MLX620_API.c and MLX620_API.h
-
-  \subsection API_Demo API Demonstration
-  - initializing the sensor and reporting (printing) the error
-  - printing the values of the "Configuration" and "Trimming" Registers, after the initialization is done
-  - reading raw IR temperature data for each pixel, as well as reading Ambient Temperature sensor
-  - compensating the printing the Ambient Temperature [Kelvin]
-  - compensating the printing the Object's Temperature for each pixel from 1 to 64\n
-  Go to the source files description for more information MLX620_Demo.c
-
-For more information please refer to the sensor's data sheet: http://www.melexis.com/Asset/Datasheet-IR-thermometer-16X4-sensor-array-MLX90620-DownloadLink-6099.aspx
-
-To see the code documentation please click on the "Files" tab above.
-
-
-*/
-
-/**
- * \file MLX620_API.h
- * \brief MLX90620 API header file
-*/
-
 #include <stdint.h>
 #include "MLX620_I2C_Device.h"
 #include "MLX620_I2C_Driver.h"
@@ -95,18 +42,18 @@ To see the code documentation please click on the "Files" tab above.
   \var MLX620_RAMbuff
   \brief Buffer of the device RAM memory.
 */
-extern uint16_t MLX620_RAMbuff[MLX620_RAM_SIZE_WORDS];
+//extern uint16_t MLX620_RAMbuff[MLX620_RAM_SIZE_WORDS];
 /**
   \var IRtempK[MLX620_IR_SENSORS]
   \brief Compensated IR .
 */
 
-extern double IRtempK[MLX620_IR_SENSORS];
+//extern double IRtempK[MLX620_IR_SENSORS];
 /**
   \var MLX620_EEbuff
   \brief A buffer of the device EEPROM memory.
 */
-extern uint8_t MLX620_EEbuff[MLX620_EE_SIZE_BYTES];
+//extern uint8_t MLX620_EEbuff[MLX620_EE_SIZE_BYTES];
 /** \fn uint8_t MLX620_ReadRAM(uint8_t startAddr, uint8_t addrStep, uint8_t nWords, uint8_t *pData)
 * \brief Reads device RAM memory.
 * \details It should be used to read measurement data from the device.
@@ -242,4 +189,5 @@ void MLX620_CalcTGC(int16_t tgc);
 double MLX620_GetTaKelvin (int16_t ptat);
 
 #endif  /* _MLX620_API_H_ */
+
 

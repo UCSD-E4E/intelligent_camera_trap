@@ -58,3 +58,4 @@
 #define    MLX620_RAM_TRIM            (0x93U)
 
 #endif  /* _MLX620_RAM_H_ */
+

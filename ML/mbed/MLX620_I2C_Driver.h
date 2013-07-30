@@ -129,3 +129,4 @@ uint32_t MLX620_I2C_Driver_WriteRead(uint8_t slaveAddr,
                                     uint8_t *pReadData);
 
 #endif    /* _MLX620_I2C_Driver_H_ */
+
