@@ -14,26 +14,30 @@
 #include "state.h"
 #include "tracking.h"
 
-Serial pc(USBTX, USBRX); // tx, rx
+//Serial pc(USBTX, USBRX); // tx, rx
 Serial motorControlUart(p28, p27);     // TX, RX
-
 Ticker period125ms;
 
+Serial xbee(USBTX, USBRX); //tx, rx
+
+DigitalOut offSignal(p19);
+DigitalOut countdownLED(LED1);
+
 MLX620_SENSOR* mlx620_0;
-DigitalInOut pin_sda_0(p18);
-DigitalInOut pin_scl_0(p17);
+DigitalInOut pin_sda_0(p13);
+DigitalInOut pin_scl_0(p14);
 
 MLX620_SENSOR* mlx620_1;
-DigitalInOut pin_sda_1(p16);
-DigitalInOut pin_scl_1(p15);
+DigitalInOut pin_sda_1(p15);
+DigitalInOut pin_scl_1(p16);
 
 MLX620_SENSOR* mlx620_2;
-DigitalInOut pin_sda_2(p14);
-DigitalInOut pin_scl_2(p13);
+DigitalInOut pin_sda_2(p17);
+DigitalInOut pin_scl_2(p18);
 
 MLX620_SENSOR* mlx620_3;
-DigitalInOut pin_sda_3(p21);
-DigitalInOut pin_scl_3(p22);
+DigitalInOut pin_sda_3(p22);
+DigitalInOut pin_scl_3(p21);
 
 MOTOR* ninjaTurtle;
 
@@ -53,38 +57,42 @@ uint8_t ack_3;      //I2C acknowledge bit
 double Ta_3;        //Ambient Temperature
 double IRtempC_3[MLX620_IR_SENSORS];
 
+int num_sensors;
+
 void periodicOutput ()
 {
-        static GRID filterOutput_0(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+    num_sensors = 2;
+        //static GRID filterOutput_0(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
         static GRID filterOutput_1(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
         static GRID filterOutput_2(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-        static GRID filterOutput_3(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
-        static GRID stackedGrid   (MLX620_IR_ROWS*4,MLX620_IR_COLUMNS);
-        static GRID* stackedHelper [4] = { &filterOutput_0, &filterOutput_1, &filterOutput_2, &filterOutput_3 };
+      //  static GRID filterOutput_3(MLX620_IR_ROWS,MLX620_IR_COLUMNS);
+        static GRID stackedGrid   (MLX620_IR_ROWS*num_sensors,MLX620_IR_COLUMNS);
+        static GRID* stackedHelper [2] = { &filterOutput_1, &filterOutput_2}; //, &filterOutput_2 }; //,&filterOutput_2, &filterOutput_3
         
-        //static GRID extrapolateGrid(MLX620_IR_ROWS_EXT,MLX620_IR_COLUMNS_EXT);
-        static GRID trackingGrid(MLX620_IR_ROWS_EXT - (SLIDING_WINDOW_SIZE - 1),MLX620_IR_COLUMNS_EXT - (SLIDING_WINDOW_SIZE - 1));
+        static GRID extrapolateGrid(MLX620_IR_ROWS_EXT,MLX620_IR_COLUMNS_EXT);
+        //static GRID trackingGrid(MLX620_IR_ROWS_EXT - (SLIDING_WINDOW_SIZE - 1),MLX620_IR_COLUMNS_EXT - (SLIDING_WINDOW_SIZE - 1));
         //static int trackRowPos = extrapolateGrid.getRow() / 2;
         //static int trackColumnPos = extrapolateGrid.getColumn() / 2; 
         static int state = STATE_INIT;
         static int counter = 0;
-        
         bool tracking = false;        
         
-        ack_0 = mlx620_0->MLX90620_MeasureTemperature(IRtempC_0, &Ta_0);
+        //ack_0 = mlx620_0->MLX90620_MeasureTemperature(IRtempC_0, &Ta_0);
         ack_1 = mlx620_1->MLX90620_MeasureTemperature(IRtempC_1, &Ta_1);
         ack_2 = mlx620_2->MLX90620_MeasureTemperature(IRtempC_2, &Ta_2);
-        ack_3 = mlx620_3->MLX90620_MeasureTemperature(IRtempC_3, &Ta_3);
+       //ack_3 = mlx620_3->MLX90620_MeasureTemperature(IRtempC_3, &Ta_3);
+       ack_3 = MLX620_ACK;
+       ack_0 = MLX620_ACK;
        
         if(ack_0 == MLX620_ACK && ack_1 == MLX620_ACK && ack_2 == MLX620_ACK && ack_3 == MLX620_ACK)
         {
            
-            filterOutput_0.importGrid(IRtempC_0);
+            //filterOutput_0.importGrid(IRtempC_0);
             filterOutput_1.importGrid(IRtempC_1);
             filterOutput_2.importGrid(IRtempC_2);
-            filterOutput_3.importGrid(IRtempC_3);
+           // filterOutput_3.importGrid(IRtempC_3);
             
-            stackedGrid.importGridArray(stackedHelper,4);
+            stackedGrid.importGridArray(stackedHelper,2);
      
             //extrapolateGrid.interpolateFrom(&filterOutput, INTERPOLATION_SCALE);
             /*
@@ -123,16 +131,21 @@ void periodicOutput ()
                 extrapolateGrid.setValue(trackRowPos, trackColumnPos,100.0);            
             }
             */ 
-                pc.printf("\nAmbient T= %2.1f\n", Ta_0);            
-                pc.printf("IR: ");
+                xbee.printf("\nAmbient T=%2.1f\n", Ta_0);   
+                //pc.printf("\nSensor 1 Ambient T= %2.1f\n", Ta_1);         
+                xbee.printf("IR: ");
+                int countnumtemps = 0;
                 for(int column = 0; column < stackedGrid.getColumn(); column++)
                 {
+                   // pc.printf("\n");
                     for(int row = 0; row < stackedGrid.getRow() ; row++)
                     { 
-                        pc.printf(" %2.1f",stackedGrid.getValue(row, column));
+                    
+                        
+                        xbee.printf(" %2.1f",stackedGrid.getValue(row, column));
                     }
                 }
-                pc.printf("\n");
+                //pc.printf("\n");
                 
                 
                 //if(tracking == true && ((state == STATE_TRACKING) || (state == STATE_TURN_CAMERA_ON)))
@@ -143,7 +156,7 @@ void periodicOutput ()
                 
         counter++;        
         
-        if (state == STATE_INIT)
+/*        if (state == STATE_INIT)
         {
             //Riley: TURN Camera ON
             
@@ -191,65 +204,74 @@ void periodicOutput ()
             wait(3.0); // Wait for position to center            
             //Sam : Signal Hipervisor Ready to shutdown            
         
-        }        
+        }  */      
         
 }
 
+void kill_power(){
+    offSignal = 1;
+    wait(.01);
+    offSignal = 0;
+    }
+
 int main(void)
 {
+    offSignal = 0;
+    countdownLED = 0;
+
+        
   
   uint16_t trimReg, confReg;
-  ninjaTurtle = new MOTOR(&motorControlUart);
+  //ninjaTurtle = new MOTOR(&motorControlUart);
   
-  pc.baud(57600); 
-  pc.printf("Welcome!\n");
+  xbee.baud(115200); 
+  //pc.printf("Welcome!\n");
   
-  mlx620_0 = new MLX620_SENSOR(&pin_sda_0, &pin_scl_0); 
+  /*mlx620_0 = new MLX620_SENSOR(&pin_sda_0, &pin_scl_0); 
   mlx620_0->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
   ack_0 = mlx620_0->MLX90620_InitializeSensor(&trimReg, &confReg);
     
   if (ack_0 == MLX620_ACK)
   {
-    pc.printf("Sensor initialized successfully\n");
+    //pc.printf("Sensor 0 initialized successfully\n");
     //pc.printf("Triming Register = %X\n, trimReg");
     //pc.printf("Configuration Register = %X\n, confReg");
   }
   else
   {
-    pc.printf("ERROR: Sensor initiazation failed!\n");
+    xbee.printf("ERROR: Sensor 0 initiazation failed!\n");
   }
-  
+  */
   mlx620_1 = new MLX620_SENSOR(&pin_sda_1, &pin_scl_1); 
   mlx620_1->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
   ack_1 = mlx620_1->MLX90620_InitializeSensor(&trimReg, &confReg);
     
   if (ack_1 == MLX620_ACK)
   {
-    pc.printf("Sensor initialized successfully\n");
+ //   pc.printf("Sensor 1 initialized successfully\n");
     //pc.printf("Triming Register = %X\n, trimReg");
     //pc.printf("Configuration Register = %X\n, confReg");
   }
   else
   {
-    pc.printf("ERROR: Sensor initiazation failed!\n");
+    xbee.printf("ERROR: Sensor 1 initiazation failed!\n");
   }
-  
   mlx620_2 = new MLX620_SENSOR(&pin_sda_2, &pin_scl_2); 
   mlx620_2->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
   ack_2 = mlx620_2->MLX90620_InitializeSensor(&trimReg, &confReg);
     
-  if (ack_2 == MLX620_ACK)
+   if (ack_2 == MLX620_ACK)
   {
-    pc.printf("Sensor initialized successfully\n");
+   xbee.printf("Sensor 2 initialized successfully\n");
     //pc.printf("Triming Register = %X\n, trimReg");
     //pc.printf("Configuration Register = %X\n, confReg");
   }
   else
   {
-    pc.printf("ERROR: Sensor initiazation failed!\n");
+    xbee.printf("ERROR: Sensor  2 initiazation failed!\n");
   }
   
-  mlx620_3 = new MLX620_SENSOR(&pin_sda_3, &pin_scl_3); 
+  /*mlx620_3 = new MLX620_SENSOR(&pin_sda_3, &pin_scl_3); 
   mlx620_3->i2c_port->MLX620_I2C_Driver_Init (3,3,3,3);
   ack_3 = mlx620_3->MLX90620_InitializeSensor(&trimReg, &confReg);
     
@@ -262,16 +284,23 @@ int main(void)
   else
   {
     pc.printf("ERROR: Sensor initiazation failed!\n");
-  }
+  }*/
   
   //wait(3.0);
   //period125ms.attach(&periodicOutput, (0.125*2));
-            
-  for (;;)
+  
+  period125ms.attach(&periodicOutput, (0.125)); 
+   //while(1){xbee.printf("canyouhearmenow?");}
+  int c = 10;
+  /*while(c){
+    countdownLED = !countdownLED;
+    wait(.2);
+    c--;
+   }
+  kill_power(); //FIGURE OUT WHY THIS ISN"T WORKING!!
+  */for (;;)
   {        
-      periodicOutput();
-      wait(0.125);   
+      
         
   }
 }
-
