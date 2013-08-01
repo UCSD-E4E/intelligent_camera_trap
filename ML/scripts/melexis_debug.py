@@ -40,15 +40,18 @@ class Cell:
 
 
 #display some stats on screen
-def renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp, ambient_temp):
+def renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp, ambient_temp,screen):
 	#format all the floats	
 	mean_frame_temp_str = str.ljust("Mean temp of this frame",48) + " = %.2f" %mean_frame_temp
 	frame_std_dev_str = str.ljust("Std Deviation of this frame",48) + " = %.2f" % frame_std_dev
 	high_frame_temp_str = str.ljust("High temp of this frame",48) + " = %.1f" % high_frame_temp
 	low_frame_temp_str = str.ljust("Low temp of this frame",48) + " = %.1f" % low_frame_temp	
 	ambient_temp_str = str.ljust("Ambient temp of this frame",46) + " = %.1f" %  ambient_temp	
+	date_str = str.ljust("Date of this frame",52) + " = %s" % date
 
 	myfont = pygame.font.SysFont("times", 18)
+	CELL_SIZE = 50
+	row = 4
 	
 	#generate and display all labels
 	mean_frame_temp_label = myfont.render(mean_frame_temp_str, 1, (255,255,255))
@@ -65,6 +68,10 @@ def renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp,
 
 	ambient_temp_label = myfont.render(ambient_temp_str, 1, (255,255,255))
 	screen.blit(ambient_temp_label, (0,(CELL_SIZE * (row+4))))
+
+	date_label = myfont.render(date_str,1,(255,255,255))
+	screen.blit(date_label, (0,(CELL_SIZE * (row+5))))
+
 
 
 
@@ -140,6 +147,8 @@ if ser.isOpen():
 		
 		current_time = strftime("%m-%d-%H:%M:%S",localtime())	
 		csvFileName = current_time
+		last_frame_date = ''
+		counter = 1
 		while not rospy.is_shutdown():			
 			response = ser.readline()
 			current_time = strftime("%m-%d-%H:%M:%S",localtime())			
@@ -171,7 +180,15 @@ if ser.isOpen():
 					low_frame_temp = min(data_vector)
 					ambient_temp = ambient
 
-					renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp, ambient_temp)
+					if current_time == last_frame_date:
+						image_name = current_time + "(" + str(counter) + ")"
+						counter += 1
+					else:
+						image_name = current_time
+						counter = 1
+
+
+					renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp, ambient_temp,image_name,screen)
 
 					#save image .csv file and image frame if given "-s" cmd line arg
 					if save_file_boolean == "-s":
@@ -189,8 +206,6 @@ if ser.isOpen():
 						csvFile.write('\n') 		   #we're done with this row
 						csvFile.close()
 
-						pygame.image.save(pygame.display.get_surface(), IR_images_directory+current_time+'.jpeg')  
-
 					data_vector_copy = list(data_vector) #preserve original temp values					
 
 					#assign colors for cells
@@ -206,9 +221,11 @@ if ser.isOpen():
 					for i in range(len(grid)):
 						grid[i].render(data_vector[i], data_vector_copy[i], screen)
 	
+					pygame.image.save(pygame.display.get_surface(), IR_images_directory+image_name+'.jpeg')  
 					pygame.display.flip()
 					read_amb = False
 					read_dat = False 
+					last_frame_date = current_time
 				
 	except Exception, e1:
 		print "Error in communication with port: " + str(e1)
