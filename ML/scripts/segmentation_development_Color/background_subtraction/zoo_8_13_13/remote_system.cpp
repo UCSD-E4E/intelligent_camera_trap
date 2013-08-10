@@ -1,3 +1,13 @@
+/*
+ * Run the openCV background subtraction MOG2 on input frames
+ * from a webcam.  Find the center of mass for images segmented
+ * this way, move turret accordingly.
+ * Save frames from the webcam making a new folder every 5 minutes
+ * in the directory specified in "image_file_directory"
+ */
+
+
+
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include <vector>
