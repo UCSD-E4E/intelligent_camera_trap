@@ -2,8 +2,8 @@
  * Run the openCV background subtraction MOG2 on input frames
  * from a webcam.  Find the center of mass for images segmented
  * this way, move turret accordingly.
- * Save frames from the webcam making a new folder every 5 minutes
- * in the directory specified in "image_file_directory"
+ * Save video from the webcam making a new folder every 5 minutes
+ * in the directory specified in "video_file_directory"
  */
 
 
@@ -41,11 +41,12 @@ int main(int argc, char *argv[])
     Mat gray;
 	Mat fore;
 
-    string image_file_directory ("/home/sealab/Desktop/");
-    string image_file_name;
+    string video_file_directory ("/home/sealab/Desktop/");
+    string video_file_name;
     string make_directory;
     string current_directory;
     string current_frame;
+    string first_file;
     const char* make_directory_c;
     
     BackgroundSubtractorMOG2 bg;
@@ -63,36 +64,40 @@ int main(int argc, char *argv[])
     VideoCapture cap(0);
 	if(!cap.isOpened())
 	{
-        cout << endl;
-		cout << "Failed to connect to the 360 camera." <<endl;
-        cout << endl;	
+		cout << endl << "Failed to connect to the 360 camera." << endl << endl;
     }
 	
     else
 	{
-        cout << endl;
-		cout<< "Connected to 360 camera." << endl;
-        cout << endl;	
+		cout << endl << "Connected to 360 camera." << endl << endl;
     }
 
     cap.set(CV_CAP_PROP_FRAME_WIDTH, 160);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, 120);
 
-
     //make first image directory
     time(&start_time);
     strftime(current_time, 24, "%m-%d-%H:%M:%S",localtime(&start_time));
-    make_directory = "mkdir " + image_file_directory + current_time;
-    current_directory = image_file_directory + current_time + "/";    
+    make_directory = "mkdir " + video_file_directory + current_time;
+    current_directory = video_file_directory + current_time + "/";
+    first_file = current_directory + current_time + ".avi";    
     make_directory_c = make_directory.c_str();
     system(make_directory_c);
     
     next_time = start_time + 300; //next directory should be 5 mins later
 	
+    //video writer to write a video in first directory
+    int codec = CV_FOURCC('M', 'J', 'P', 'G');
+    VideoWriter output_writer(first_file, codec, 30., Size(cap.get(CV_CAP_PROP_FRAME_WIDTH), cap.get(CV_CAP_PROP_FRAME_HEIGHT)), true);
+    if( !output_writer.isOpened())
+    {
+        cout << endl << "Could not open output video writer for 360 video." << endl <<endl;
+    }
+
+
 	for(;;)
 	{
 		cap >> frame;
-        
         time(&rawtime);
         strftime(current_time, 24, "%m-%d-%H:%M:%S",localtime(&rawtime));
 
@@ -100,10 +105,14 @@ int main(int argc, char *argv[])
         if( rawtime >= next_time )
         {
             strftime(next_time_c, 24, "%m-%d-%H:%M:%S",localtime(&next_time));
-            make_directory = "mkdir " + image_file_directory + next_time_c;
-            current_directory = image_file_directory + next_time_c +"/";            
+            make_directory = "mkdir " + video_file_directory + next_time_c;
+            current_directory = video_file_directory + next_time_c +"/"; 
+            video_file_name = current_directory + next_time_c + ".avi";           
             make_directory_c = make_directory.c_str();
             system(make_directory_c);
+    
+            //new video writer for next directory
+            VideoWriter output_writer(video_file_name, codec, 30., Size(cap.get(CV_CAP_PROP_FRAME_WIDTH), cap.get(CV_CAP_PROP_FRAME_HEIGHT)));            
 
             next_time += 300;  //next directory 5 mins after this one
             frame_count = 0;   //reset frame_count
@@ -128,9 +137,7 @@ int main(int argc, char *argv[])
             y = 0;
         }
             
-        current_frame = to_string(frame_count);
-        image_file_name = current_directory + current_time + "_" + current_frame + ".jpg";
-        imwrite(image_file_name, frame);
+        output_writer.write(frame);
 
         ++frame_count;  
 
