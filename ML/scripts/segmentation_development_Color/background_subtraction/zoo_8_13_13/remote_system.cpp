@@ -6,18 +6,19 @@
  * in the directory specified in "video_file_directory"
  */
 
-
-
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include <vector>
 #include <time.h>
 #include <string>
 #include <cstdlib>
+#include <math.h>
+#include "motor_controller.h"
+
 using namespace cv;
 using namespace std;
 
-
+#define PI 3.14159
 /*
  * Return the centroid of a segmented binary image.
  */
@@ -33,13 +34,14 @@ Point getCentroid(cv::Mat img)
     return coord;
 }
 
-
-
 int main(int argc, char *argv[])
 {
 	Mat frame;
     Mat gray;
 	Mat fore;
+
+    const int FRAME_W = 160;
+    const int FRAME_H = 120;
 
     string video_file_directory ("/home/sealab/Desktop/");
     string video_file_name;
@@ -63,10 +65,9 @@ int main(int argc, char *argv[])
 
     VideoCapture cap(0);
 	if(!cap.isOpened())
-	{
-		cout << endl << "Failed to connect to the 360 camera." << endl << endl;
+    {
+        cout << endl << "Failed to connect to the 360 camera." << endl << endl;
     }
-	
     else
 	{
 		cout << endl << "Connected to 360 camera." << endl << endl;
@@ -94,6 +95,8 @@ int main(int argc, char *argv[])
         cout << endl << "Could not open output video writer for 360 video." << endl <<endl;
     }
 
+    MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
+    mctrl.updatePanTilt();
 
 	for(;;)
 	{
@@ -132,7 +135,15 @@ int main(int argc, char *argv[])
             last_center.y = y;
             
             //MOTOR CONTROL HERE
+            x = x - FRAME_W/2;
+            y = -y + FRAME_H/2;
+            if (y > 0)
+            {
+                double x_deg = atan2(y, x)*180/(2*PI);
 
+                mctrl.new_pan = x_deg;
+                mctrl.updatePosition();
+            }
             x = 0;
             y = 0;
         }
