@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     const int FRAME_W = 160;
     const int FRAME_H = 120;
 
-    string video_file_directory ("/home/sealab/Desktop/");
+    string video_file_directory ("/home/riley/Desktop/");
     string video_file_name;
     string make_directory;
     string current_directory;
@@ -65,7 +65,8 @@ int main(int argc, char *argv[])
     time_t start_time;
     time_t next_time;
 
-    VideoCapture cap(0);
+    namedWindow("Localization", CV_WINDOW_AUTOSIZE);
+    VideoCapture cap(1);
 	if(!cap.isOpened())
     {
         cout << endl << "Failed to connect to the 360 camera." << endl << endl;
@@ -75,8 +76,8 @@ int main(int argc, char *argv[])
 		cout << endl << "Connected to 360 camera." << endl << endl;
     }
 
-    cap.set(CV_CAP_PROP_FRAME_WIDTH, 160);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT, 120);
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, FRAME_W);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, FRAME_H);
 
     //make first image directory
     time(&start_time);
@@ -99,7 +100,8 @@ int main(int argc, char *argv[])
 
     MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
     mctrl.updatePanTilt();
-
+    cout << "Motor controller created" << endl;
+    
 	for(;;)
 	{
 		cap >> frame;
@@ -118,6 +120,7 @@ int main(int argc, char *argv[])
     
             //new video writer for next directory
             VideoWriter output_writer(video_file_name, codec, 30., Size(cap.get(CV_CAP_PROP_FRAME_WIDTH), cap.get(CV_CAP_PROP_FRAME_HEIGHT)));            
+            cout << "Built video writer" << endl;
 
             next_time += 300;  //next directory 5 mins after this one
             frame_count = 0;   //reset frame_count
@@ -128,24 +131,32 @@ int main(int argc, char *argv[])
         last_center = getCentroid(fore);    
         x += last_center.x;
         y += last_center.y;
-        
-        if (frame_count % 10 == 0)          //every 10 frames, come up w/ a new tracking location
+        imshow("Localization", fore);
+
+        if (frame_count % 1 == 0)          //every 10 frames, come up w/ a new tracking location
         {
-            x = int(x/10.);  //avg all our centroid coordinates
-            y = int(y/10.);
+           // x = int(x/10.);  //avg all our centroid coordinates
+           // y = int(y/10.);
             last_center.x = x;
             last_center.y = y;
             
             //MOTOR CONTROL HERE
             x = x - FRAME_W/2;
             y = -y + FRAME_H/2;
+
+            //x = 0;
+            //y = FRAME_H/2 - 10;
             if (y > 0)
             {
-                double x_deg = atan2(y, x)*180/(2*PI);
-
+                double x_deg = (180 + (int)(atan2(y, x)*180/(PI))) % 180;
+                printf("offset = %f\n", x_deg);
                 mctrl.new_pan = x_deg;
+                mctrl.new_tilt = mctrl.tilt_pos;
+                cout << "Offset Calculated, sending command..." << endl;
                 mctrl.updatePosition();
+                cout << "Sent" << endl;
             }
+            cout << "No significant offset" << endl;
             x = 0;
             y = 0;
         }

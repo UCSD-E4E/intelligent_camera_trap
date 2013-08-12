@@ -6,7 +6,7 @@
 #include "ros/ros.h"
 
 #include <boost/asio.hpp>
-
+#include <boost/system/system_error.hpp>
 //using namespace boost::asio;
 
 class MotorController
