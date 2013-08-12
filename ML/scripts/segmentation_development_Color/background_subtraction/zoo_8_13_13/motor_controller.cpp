@@ -17,15 +17,16 @@ void MotorController::updatePosition()
 {
 	//update current motor position
 	updatePanTilt();
-	if ((abs(new_pan - pan_pos) > TOLERANCE) || (abs(new_tilt - tilt_pos) > TOLERANCE))
+	if ((abs(new_pan - pan_pos) >= TOLERANCE) || (abs(new_tilt - tilt_pos) >= TOLERANCE))
 	{
-		int pan_steps = (new_pan - pan_pos)*PAN_STEPS/PAN_RANGE;
+        double gain = 0.5;
+		int pan_steps = (int) (gain*(new_pan - pan_pos)*PAN_STEPS/PAN_RANGE);
 		int tilt_steps = (new_tilt - tilt_pos)*TILT_STEPS/TILT_RANGE;
 		sendRelSteps(pan_steps, tilt_steps); 
 	}
 	else
 	{
-		printf("Change not big enough to move motors");
+		printf("Change not big enough to move motors\n");
 	}
 	return;
 }
@@ -80,16 +81,16 @@ void MotorController::readCoords()
 		}
 		else if ((c[0] == 'X') || (c[1] == ':'))
 		{
-			printf("Offset message: %s", c);
+			printf("Offset message: %s\n", c);
 			sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
 			pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
 			tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
-			printf("Current Position: [%f, %f]", pan_pos, tilt_pos);	
+			printf("Current Position: [%f, %f]\n", pan_pos, tilt_pos);	
 			read_coords = 1;
 		}
 		else
 		{
-			printf("read error, input: %s", c);
+			printf("read error, input: %s\n", c);
 		}
 	
 		//clean out c buffer for future use
@@ -128,11 +129,11 @@ void MotorController::readResponse()
 		if ((c[0] == 'T') || (c[1] == 'a'))
 		{
 			sscanf(c, "Target T1:%d T2:%d", &x_conf, &y_conf);
-			printf("Confirmation: [%d, %d]", x_conf, y_conf);
+			printf("Confirmation: [%d, %d]\n", x_conf, y_conf);
 			readRes = 1;
 		}
 		
-		printf("From Controller: %s", c);	
+		printf("From Controller: %s\n", c);	
 		
 		//clean buffer
 		for (i=0;i<64;i++)
@@ -149,7 +150,7 @@ void MotorController::readResponse()
 void MotorController::writeString(char* s)
 {
 	boost::asio::write(serial, boost::asio::buffer(s, strlen(s)));
-	printf("wrote %s to /dev/ttyUSB0", s);
+	printf("wrote %s to /dev/ttyUSB0\n", s);
 }
 
 int MotorController::sendSteps(int steps_x, int steps_y)
@@ -165,7 +166,7 @@ int MotorController::sendSteps(int steps_x, int steps_y)
 	writeString(cmd);
 
 	//check confirmation
-	printf("Steps = [%d, %d]", steps_x, steps_y); 
+	printf("Steps = [%d, %d]\n", steps_x, steps_y); 
 	return 0;
 }
 
@@ -203,7 +204,7 @@ int MotorController::sendRelSteps(int steps_x, int steps_y)
 
 	writeString(cmd);
 	readResponse();
-	printf("Relative Steps: [%d, %d]", steps_x, steps_y);
+	printf("Relative Steps: [%d, %d]\n", steps_x, steps_y);
 	
 	return 0;
 
@@ -212,7 +213,7 @@ int MotorController::sendRelSteps(int steps_x, int steps_y)
 	
 std::string MotorController::readPort()
 {
-	printf("Reading port...");
+	printf("Reading port...\n");
 	using namespace boost;
 	char c;
 	std::string result;
