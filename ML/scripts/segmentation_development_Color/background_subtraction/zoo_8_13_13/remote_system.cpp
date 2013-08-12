@@ -139,8 +139,7 @@ int main(int argc, char *argv[])
             y = -y + FRAME_H/2;
             if (y > 0)
             {
-                double x_deg = atan2(y, x)*180/(2*PI);
-
+                double x_deg = 360 - (atan2(y, x)*180/(2*PI) + 180);
                 mctrl.new_pan = x_deg;
                 mctrl.updatePosition();
             }
