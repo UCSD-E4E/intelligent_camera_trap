@@ -1,7 +1,7 @@
 #include "motor_controller.h"
-#define TOLERANCE 0.0
-#define PAN_STEPS 883.0
-#define PAN_RANGE 180.0
+#define TOLERANCE 10.0
+#define PAN_STEPS 1000.0
+#define PAN_RANGE 1.5 * 180.0
 
 #define TILT_STEPS 355.0
 #define TILT_RANGE 72.0
@@ -14,7 +14,7 @@ void MotorController::updatePosition()
 	if ((abs(new_pan - pan_pos) >= TOLERANCE) || 
             (abs(new_tilt - tilt_pos) >= TOLERANCE))
 	{
-        double gain = 0.5;
+        double gain = 1;
 		int pan_steps = (int) (gain*(new_pan - pan_pos)*PAN_STEPS/PAN_RANGE);
 		int tilt_steps = (new_tilt - tilt_pos)*TILT_STEPS/TILT_RANGE;
 		sendRelSteps(pan_steps, tilt_steps); 
