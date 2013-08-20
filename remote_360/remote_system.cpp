@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdlib>
 #include <math.h>
-#include "/home/sealab/Desktop/motor_controller.h"
+#include "motor_controller.h"
 
 using namespace cv;
 using namespace std;
