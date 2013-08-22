@@ -6,6 +6,7 @@
 #define TILT_STEPS 355.0
 #define TILT_RANGE 72.0
 
+#define DEBUG_MODE 1
 using namespace boost::asio;
 
 void MotorController::updatePosition()
@@ -19,7 +20,7 @@ void MotorController::updatePosition()
             gain = 1;
 		int pan_steps = (int) (gain*(new_pan - pan_pos)*PAN_STEPS/PAN_RANGE);
 		int tilt_steps = (new_tilt - tilt_pos)*TILT_STEPS/TILT_RANGE;
-		sendRelSteps(pan_steps, tilt_steps); 
+		sendRelSteps(pan_steps, 0); 
 	}
 	else
 	{
@@ -72,18 +73,23 @@ void MotorController::readCoords()
 		//pattern matching
 /*		if ((c[0] == 'L') || (c[1] == 'R'))
 		{
-			//printf("LRUD indicator: %s", c);
+			printf("LRUD indicator: %s", c);
 			sscanf(c, "LR:%d UD:%d", &LR, &UD); 
 			//printf("[LR, UD] = [%d,%d]", LR, UD);
 			read_lrud = 1;
 		}*/
 	    if ((c[0] == 'X') || (c[1] == ':'))
 		{
-			//printf("Offset message: %s\n", c);
+			if (DEBUG_MODE)
+                printf("\nOffset message: %s\n", c);
+            
 			sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
 			pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
 			tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
-			//printf("Current Position: [%f, %f]\n", pan_pos, tilt_pos);	
+			
+            if (DEBUG_MODE)
+                printf("Current Position: [%f, %f]\n", pan_pos, tilt_pos);	
+
 			read_coords = 1;
 		}
 		else

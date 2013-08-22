@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 
     
     // open the 360 cam, and set it's resolution
-    VideoCapture cap(0);
+    VideoCapture cap(1);
     if(!cap.isOpened())
     {
         cout << endl << "Failed to connect to the 360 camera." << endl << endl;
