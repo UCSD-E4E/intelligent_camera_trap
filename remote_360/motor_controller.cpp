@@ -1,7 +1,7 @@
 #include "motor_controller.h"
 #define TOLERANCE 10.0
 #define PAN_STEPS 1000.0
-#define PAN_RANGE 1.5 * 180.0
+#define PAN_RANGE 350.0
 
 #define TILT_STEPS 355.0
 #define TILT_RANGE 72.0
@@ -14,7 +14,9 @@ void MotorController::updatePosition()
 	if ((abs(new_pan - pan_pos) >= TOLERANCE) || 
             (abs(new_tilt - tilt_pos) >= TOLERANCE))
 	{
-        double gain = 1;
+        double gain = abs(new_pan - pan_pos)/50.0; 
+        if (gain > 1)
+            gain = 1;
 		int pan_steps = (int) (gain*(new_pan - pan_pos)*PAN_STEPS/PAN_RANGE);
 		int tilt_steps = (new_tilt - tilt_pos)*TILT_STEPS/TILT_RANGE;
 		sendRelSteps(pan_steps, tilt_steps); 
@@ -54,9 +56,10 @@ void MotorController::readCoords()
 	read_coords = read_lrud = 0;
 	
 	//read both inputs:
-	while (!(read_coords && read_lrud) && read_count < 3)
-	{
+	//while (!(read_coords) && )
+	//{
 		//read until newline
+//}
 		for (i=0;i<64;i++)
 		{
 			asio::read(serial, asio::buffer(&b,1));
@@ -67,14 +70,14 @@ void MotorController::readCoords()
 		}	
 	
 		//pattern matching
-		if ((c[0] == 'L') || (c[1] == 'R'))
+/*		if ((c[0] == 'L') || (c[1] == 'R'))
 		{
 			//printf("LRUD indicator: %s", c);
 			sscanf(c, "LR:%d UD:%d", &LR, &UD); 
 			//printf("[LR, UD] = [%d,%d]", LR, UD);
 			read_lrud = 1;
-		}
-		else if ((c[0] == 'X') || (c[1] == ':'))
+		}*/
+	    if ((c[0] == 'X') || (c[1] == ':'))
 		{
 			//printf("Offset message: %s\n", c);
 			sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
@@ -93,8 +96,8 @@ void MotorController::readCoords()
 		{
 			c[i] = '\0';
 		} 	
-		read_count++;
-	}
+	//	read_count++;
+//	}
 	return;	
 }
 
@@ -204,7 +207,7 @@ int MotorController::sendRelSteps(int steps_x, int steps_y)
 	sprintf(cmd, "STD%c%sA", char_count, packet);
 
 	writeString(cmd);
-	readResponse();
+//	readResponse();
 	//printf("Relative Steps: [%d, %d]\n", steps_x, steps_y);
 	
 	return 0;

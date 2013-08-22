@@ -12,7 +12,6 @@ using namespace std;
 
 #define PI 3.14159
 
-
 /*
  * Return the centroid of a segmented binary image.
  */
@@ -27,8 +26,6 @@ Point get_centroid(Mat img)
     coord.y = int(moment01 / moment00);
     return coord;
 }
-
-
 
 /*
  * Control the turret based on the passed
@@ -47,7 +44,7 @@ void turret_control(Point coordinates, MotorController *mctrl,
     
     if (y > 0)
     {
-        x_deg = (180 + (int)(atan2(y,x)*180/(PI))) % 180;
+        x_deg = 90 + (180 + (int)(atan2(y,x)*180/(PI))) % 180;
         mctrl->new_pan = x_deg;
         mctrl->new_tilt = mctrl->tilt_pos;
         mctrl->updatePosition();
@@ -77,7 +74,7 @@ int main(int argc, char *argv[])
 
     
     // open the 360 cam, and set it's resolution
-    VideoCapture cap(1);
+    VideoCapture cap(0);
     if(!cap.isOpened())
     {
         cout << endl << "Failed to connect to the 360 camera." << endl << endl;
