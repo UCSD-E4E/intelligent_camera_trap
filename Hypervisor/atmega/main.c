@@ -23,7 +23,6 @@ void stop_camera();			//turn off spycam, reset GPIO pins.
 /*****MAIN*****/
 int main(void) {
 	init();
-
 	while (1) {
 		low_pwr_sleep();
 	}
@@ -44,7 +43,7 @@ ISR(INT0_vect) {
 	PORTD |= _BV(PORTD5);
 
 	start_camera();
-	wait_for_shutdown();
+	wait_for_shutdown();	//Wait for BBB to be done tracking
 	stop_camera();
 
 	//for optimal power reduction, D5 is again an input and pull-up resistor is disabled.
@@ -102,14 +101,15 @@ void low_pwr_sleep() {
 
 /*
  * Initializes CPU for low power:
- * 	All ports set to input
- * 	Internal Pull-up resistors deactivated
- * 	ADC turned off
- * 	Analog comparator disabled
- * 	Power saving features turned on
- * 	Disable digital input buffer on analog input pins
+ * 	 -All GPIO ports set to input
+ * 	 -Internal Pull-up resistors deactivated
+ * 	 -ADC turned off
+ * 	 -Analog comparator disabled
+ * 	 -Power saving features turned on
+ * 	 -Disable digital input buffer on analog input pins
  * Additionally, interrupt pins set via set_interrupt_pins() function
  */
+
 void init() {
 	// set ports to input
 	DDRB = 0x00;
