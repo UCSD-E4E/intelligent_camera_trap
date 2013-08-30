@@ -8,16 +8,11 @@
 
 using namespace boost::asio;
 
-//int oneNorm(int* x, int* y);
-//int oneNorm(int* x, int* y)
-//{
-//	return abs(*x - *y) + abs(*(x+1) - *(y+1));
-//}
 void MotorController::updatePosition()
 {
-	//update current motor position
 	updatePanTilt();
-	if ((abs(new_pan - pan_pos) >= TOLERANCE) || (abs(new_tilt - tilt_pos) >= TOLERANCE))
+	if ((abs(new_pan - pan_pos) >= TOLERANCE) || 
+            (abs(new_tilt - tilt_pos) >= TOLERANCE))
 	{
         double gain = 0.5;
 		int pan_steps = (int) (gain*(new_pan - pan_pos)*PAN_STEPS/PAN_RANGE);
@@ -26,7 +21,7 @@ void MotorController::updatePosition()
 	}
 	else
 	{
-		printf("Change not big enough to move motors\n");
+		//printf("Change not big enough to move motors\n");
 	}
 	return;
 }
@@ -74,18 +69,18 @@ void MotorController::readCoords()
 		//pattern matching
 		if ((c[0] == 'L') || (c[1] == 'R'))
 		{
-			printf("LRUD indicator: %s", c);
+			//printf("LRUD indicator: %s", c);
 			sscanf(c, "LR:%d UD:%d", &LR, &UD); 
-			printf("[LR, UD] = [%d,%d]", LR, UD);
+			//printf("[LR, UD] = [%d,%d]", LR, UD);
 			read_lrud = 1;
 		}
 		else if ((c[0] == 'X') || (c[1] == ':'))
 		{
-			printf("Offset message: %s\n", c);
+			//printf("Offset message: %s\n", c);
 			sscanf(c, "X:%d Y:%d", &x_steps, &y_steps);
 			pan_pos = x_steps*(PAN_RANGE/PAN_STEPS);
 			tilt_pos = y_steps*(TILT_RANGE/TILT_STEPS);
-			printf("Current Position: [%f, %f]\n", pan_pos, tilt_pos);	
+			//printf("Current Position: [%f, %f]\n", pan_pos, tilt_pos);	
 			read_coords = 1;
 		}
 		else
@@ -129,11 +124,11 @@ void MotorController::readResponse()
 		if ((c[0] == 'T') || (c[1] == 'a'))
 		{
 			sscanf(c, "Target T1:%d T2:%d", &x_conf, &y_conf);
-			printf("Confirmation: [%d, %d]\n", x_conf, y_conf);
+			//printf("Confirmation: [%d, %d]\n", x_conf, y_conf);
 			readRes = 1;
 		}
 		
-		printf("From Controller: %s\n", c);	
+		//printf("From Controller: %s\n", c);	
 		
 		//clean buffer
 		for (i=0;i<64;i++)
@@ -150,23 +145,25 @@ void MotorController::readResponse()
 void MotorController::writeString(char* s)
 {
 	boost::asio::write(serial, boost::asio::buffer(s, strlen(s)));
-	printf("wrote %s to /dev/ttyUSB0\n", s);
+	//printf("wrote %s to /dev/ttyUSB0\n", s);
 }
 
 int MotorController::sendSteps(int steps_x, int steps_y)
 {
 	//construct message
-//	unsigned char checksum = 'A';
-	char* packet = (char *)malloc(snprintf(NULL, 0, "X0%dY0%d", steps_x, steps_y) + 1);
+    //	unsigned char checksum = 'A';
+	char* packet = (char *) malloc(snprintf(NULL, 0, "X0%dY0%d", 
+                                    steps_x, steps_y) + 1);
 	char char_count = sprintf(packet, "X0%dY0%d", steps_x, steps_y);
 	
-	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", char_count, packet) + 1);
+	char* cmd = (char *) malloc(snprintf(NULL, 0, "STD%c%sA", 
+                                char_count, packet) + 1);
 	sprintf(cmd, "STC%c%sA", char_count, packet);
 	
 	writeString(cmd);
 
 	//check confirmation
-	printf("Steps = [%d, %d]\n", steps_x, steps_y); 
+	//printf("Steps = [%d, %d]\n", steps_x, steps_y); 
 	return 0;
 }
 
@@ -196,15 +193,19 @@ int MotorController::sendRelSteps(int steps_x, int steps_y)
 		steps_y*=-1;
 	}
 
-	char* packet = (char *)malloc(snprintf(NULL, 0, "%c0%03d%c0%03d", dir_x, steps_x, dir_y, steps_y) + 1);
-	int char_count = sprintf(packet, "%c0%03d%c0%03d", dir_x, steps_x, dir_y, steps_y);
-	char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", (char)char_count, packet) + 1);
+	char* packet = (char *) malloc(snprintf(NULL, 0, "%c0%03d%c0%03d", dir_x, 
+                                    steps_x, dir_y, steps_y) + 1);
+	int char_count = sprintf(packet, "%c0%03d%c0%03d", dir_x, 
+                                                       steps_x, dir_y, steps_y);
+	
+    char* cmd = (char *)malloc(snprintf(NULL, 0, "STD%c%sA", 
+                                            (char)char_count, packet) + 1);
 
 	sprintf(cmd, "STD%c%sA", char_count, packet);
 
 	writeString(cmd);
 	readResponse();
-	printf("Relative Steps: [%d, %d]\n", steps_x, steps_y);
+	//printf("Relative Steps: [%d, %d]\n", steps_x, steps_y);
 	
 	return 0;
 
