@@ -54,14 +54,10 @@ void turret_control(Point coordinates, MotorController *mctrl, const int frame_w
 
 }
 
-
-
-
-
-
 int main(int argc, char *argv[])
 {
     Mat frame;
+    Mat frame2;
     Mat gray;
     Mat fore;
     Mat biggest_contour;
@@ -81,7 +77,8 @@ int main(int argc, char *argv[])
 
     
     // open the 360 cam, and set it's resolution
-    VideoCapture cap(0);
+    VideoCapture cap(1);
+    VideoCapture webcam(2);
     if(!cap.isOpened())
     {
         cout << endl << "Failed to connect to the 360 camera." << endl << endl;
@@ -90,20 +87,33 @@ int main(int argc, char *argv[])
     {
         cout << endl << "Connected to 360 camera." << endl << endl;
     }
+    
+    if(!webcam.isOpened())
+    {
+        cout << endl << "Failed to connect to the webcam" << endl << endl;
+    }
+    else
+    {
+        cout << endl << "Connected to the webcam" << endl << endl;
+    }
 
-    cap.set(CV_CAP_PROP_FRAME_WIDTH, FRAME_W);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT, FRAME_H);
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, FRAME_W * 3);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, FRAME_H * 3);
+
+    webcam.set(CV_CAP_PROP_FRAME_WIDTH, FRAME_W * 8);
+    webcam.set(CV_CAP_PROP_FRAME_HEIGHT, FRAME_H * 8);
 
     // open the motor controller
-    MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
-    mctrl.updatePanTilt();
-    cout << "Motor controller created" << endl;
+//    MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
+//    mctrl.updatePanTilt();
+//    cout << "Motor controller created" << endl;
    
     // tracking loop
     for(;;)
     {
         cap >> frame;
-        cout << "Frame number: " <<frame_count << endl;
+        webcam >> frame2;
+        cout << "Frame number: " << frame_count << endl;
         
         cvtColor(frame, gray, CV_BGR2GRAY); //grayscale the frame
         bg.operator()(gray,fore);           //get the binary foreground image
@@ -136,11 +146,11 @@ int main(int argc, char *argv[])
             cout << "  fY = " << last_center.y;
             
             // move the turret:
-            turret_control(last_center, &mctrl, FRAME_W, FRAME_H);
+            //turret_control(last_center, &mctrl, FRAME_W, FRAME_H);
         }
 
 
-        cout <<endl<<endl;
+        cout << endl << endl;
         ++frame_count;  
 
         if( waitKey(1) >= 0) break;
