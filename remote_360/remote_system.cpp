@@ -66,8 +66,8 @@ int main(int argc, char *argv[])
     Mat fore;
     Mat biggest_contour;
 
-    const int FRAME_W = 160;
-    const int FRAME_H = 120;
+    const int FRAME_W = 160 * 4;
+    const int FRAME_H = 120 * 4;
  
     BackgroundSubtractorMOG2 bg;
     vector<vector<Point> > contours;
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 
     
     // open the 360 cam, and set it's resolution
-    VideoCapture cap(0);
+    VideoCapture cap(1);
     if(!cap.isOpened())
     {
         cout << endl << "Failed to connect to the 360 camera." << endl << endl;
@@ -95,10 +95,10 @@ int main(int argc, char *argv[])
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, FRAME_H);
 
 	//showing images
-	cvNamedWindow( "Cam360",0);
-	resizeWindow( "Cam360", 640, 420);
-	cvNamedWindow( "Background_Sub",0);
-	resizeWindow( "Background_Sub", 640, 420);
+	cvNamedWindow( "Cam360",CV_WINDOW_AUTOSIZE);
+//	resizeWindow( "Cam360", 640, 420);
+	cvNamedWindow( "Background_Sub",CV_WINDOW_AUTOSIZE);
+//	resizeWindow( "Background_Sub", 640, 420);
 
     // open the motor controller
     MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
