@@ -12,6 +12,7 @@ using namespace std;
 
 #define PI 3.14159
 
+
 /*
  * Return the centroid of a segmented binary image.
  */
@@ -27,29 +28,36 @@ Point get_centroid(Mat img)
     return coord;
 }
 
+
+
 /*
  * Control the turret based on the passed
  * in x and y coordinates.
  */
-void turret_control(Point coordinates, MotorController *mctrl, 
-                        const int frame_width, const int frame_height)
+void turret_control(Point coordinates, MotorController *mctrl, const int frame_width, const int frame_height)
 {
     int x;
     int y; 
     double x_deg;   
     
     // adjust x and y coordinates
-    x = coordinates.x - (frame_width/2) + 1;
-    y = ((-1 * coordinates.y) + (frame_height/2)) - 1;       
-    
-    if (y > 0)
+    x = coordinates.x - (frame_width/2);
+    y = ((-1 * coordinates.y) + (frame_height/2));    
+
+    if( y > frame_height/8 )
     {
-        x_deg = 90 + (180 + (int)(atan2(y,x)*180/(PI))) % 180;
+        x_deg = (180 + (int)(atan2(y,x)*180/(PI))) % 180;
         mctrl->new_pan = x_deg;
         mctrl->new_tilt = mctrl->tilt_pos;
         mctrl->updatePosition();
     }
+
 }
+
+
+
+
+
 
 int main(int argc, char *argv[])
 {
@@ -58,7 +66,6 @@ int main(int argc, char *argv[])
     Mat fore;
     Mat biggest_contour;
 
-    namedWindow("debug", CV_WINDOW_AUTOSIZE);
     const int FRAME_W = 160;
     const int FRAME_H = 120;
  
@@ -74,7 +81,7 @@ int main(int argc, char *argv[])
 
     
     // open the 360 cam, and set it's resolution
-    VideoCapture cap(1);
+    VideoCapture cap(0);
     if(!cap.isOpened())
     {
         cout << endl << "Failed to connect to the 360 camera." << endl << endl;
@@ -86,6 +93,12 @@ int main(int argc, char *argv[])
 
     cap.set(CV_CAP_PROP_FRAME_WIDTH, FRAME_W);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, FRAME_H);
+
+	//showing images
+	cvNamedWindow( "Cam360",0);
+	resizeWindow( "Cam360", 640, 420);
+	cvNamedWindow( "Background_Sub",0);
+	resizeWindow( "Background_Sub", 640, 420);
 
     // open the motor controller
     MotorController mctrl("/dev/ttyUSB0", 19200, 0.0, 0.0);
@@ -127,14 +140,13 @@ int main(int argc, char *argv[])
             last_center = get_centroid(biggest_contour);
             cout << "X = " << last_center.x;
             cout << "  fY = " << last_center.y;
+
+	//showing images
+	imshow("Cam360", frame);
+	imshow("Background_Sub", fore);
             
             // move the turret:
             turret_control(last_center, &mctrl, FRAME_W, FRAME_H);
-            imshow("debug", biggest_contour);
-        }
-        else 
-        {
-            imshow("debug", Mat::zeros(frame.rows, frame.cols, CV_8UC1));
         }
 
 
@@ -143,5 +155,5 @@ int main(int argc, char *argv[])
 
         if( waitKey(1) >= 0) break;
     }
-    return 0;
+return 0;
 }
