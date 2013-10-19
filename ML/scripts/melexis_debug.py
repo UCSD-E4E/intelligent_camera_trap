@@ -18,7 +18,6 @@ import os
 
 
 
-from std_msgs.msg import String
 
 
 class Cell:
