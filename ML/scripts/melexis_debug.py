@@ -46,7 +46,7 @@ def renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp,
 	high_frame_temp_str = str.ljust("High temp of this frame",48) + " = %.1f" % high_frame_temp
 	low_frame_temp_str = str.ljust("Low temp of this frame",48) + " = %.1f" % low_frame_temp	
 	ambient_temp_str = str.ljust("Ambient temp of this frame",46) + " = %.1f" %  ambient_temp	
-	date_str = str.ljust("Date of this frame",52) + " = %s" % date
+	#date_str = str.ljust("Date of this frame",52) + " = %s" % date
 
 	myfont = pygame.font.SysFont("times", 18)
 	CELL_SIZE = 50
