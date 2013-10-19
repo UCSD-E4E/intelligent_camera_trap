@@ -187,7 +187,7 @@ if ser.isOpen():
 						counter = 1
 
 
-					renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp, ambient_temp,image_name,screen)
+					renderStats(mean_frame_temp, frame_std_dev, high_frame_temp, low_frame_temp, ambient_temp,screen)
 
 					#save image .csv file and image frame if given "-s" cmd line arg
 					if save_file_boolean == "-s":
