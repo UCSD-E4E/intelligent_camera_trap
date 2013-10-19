@@ -15,7 +15,7 @@ import time
 from time import localtime, strftime
 import traceback
 import os
-import rospy
+
 
 
 from std_msgs.msg import String
@@ -149,7 +149,7 @@ if ser.isOpen():
 		csvFileName = current_time
 		last_frame_date = ''
 		counter = 1
-		while not rospy.is_shutdown():			
+		while True:
 			response = ser.readline()
 			current_time = strftime("%m-%d-%H:%M:%S",localtime())			
 
