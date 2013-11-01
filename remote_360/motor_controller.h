@@ -3,11 +3,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <math.h>
-#include "ros/ros.h"
 
 #include <boost/asio.hpp>
 #include <boost/system/system_error.hpp>
-//using namespace boost::asio;
 
 class MotorController
 {
@@ -28,7 +26,6 @@ class MotorController
 
 	void updatePosition();
 
-//	void commandCallback(const std_msgs::String::ConstPtr& msg);
 	
 	std::string readPort();
 	void readCoords();
