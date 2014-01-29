@@ -12,7 +12,7 @@ void PORT_Init()
 			
 
 	DDRC = 0b00000000;
-	PORTC = 0b00000000;
+	PORTC = 0b00000001;
 	
 
 	DDRD = 0b00000000;
@@ -32,7 +32,7 @@ unsigned char inputON2()
 
 unsigned char inputON3()
 {
-	return !(PINA & 0b00000001) ;
+	return !(PINC & 0b00000001) ;
 }
 
 unsigned char inputON4()
