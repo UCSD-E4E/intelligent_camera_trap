@@ -102,6 +102,8 @@ void power_off_components()
 int main(void)
 {
 	int current_state;
+	unsigned char old_value;
+	unsigned char new_value;
 	
 	// initialize input/output gpios, UART, and the timer
 	PORT_Init();
@@ -124,10 +126,12 @@ int main(void)
 			turn_on_bbb();
 			turn_on_gopro(); // requires a 3 second GPIO hold, so we turn on GoPro after flipping the BBB relay
 			set_bbb_heart_beat(ON);
+			old_value = readBBBHeartBeatLine();
 			while((!(check_if_bbb_is_on())) && get_bbb_heart_beat() )
 			{
+				new_value = readBBBHeartBeatLine();
 				
-				if (readBBBHeartBeatLine()) //say the line is normally high, but goes low to indicate a pulse
+				if (old_value != new_value) //say the line is normally high, but goes low to indicate a pulse
 
 				{
 					set_bbb_heart_beat(ON);
