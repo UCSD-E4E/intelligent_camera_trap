@@ -1,13 +1,13 @@
 /*
- * hypervisor_jan_2014.c
- *
- * Created: 1/15/2014 3:28:22 PM
- * Author: David Muller
- * Revision : Muhsin Gurel 01/22/2014
- */ 
+* hypervisor_jan_2014.c
+*
+* Created: 1/15/2014 3:28:22 PM
+* Author: David Muller
+* Revision : Muhsin Gurel 01/22/2014
+*/
 
 
-#define OSCSPEED        16*1000*1000                /* in Hz */
+#define OSCSPEED 16*1000*1000 /* in Hz */
 
 #ifndef F_CPU
 #define F_CPU 16000000UL
@@ -58,30 +58,30 @@ ISR(INT0_vect)
 
 void TIMER_Init(void)
 {
-	TCCR0 = (1<<CS02)|(1<<CS00);        // Timer Clock = system clock / 1024
-	TIFR  = 1<<TOV0;                    // Clear TOV0 / Clear pending interrupts
-	TIMSK = 1<< TOIE0;                  // Enable Timer 0 Overflow Interrupt
+	TCCR0 = (1<<CS02)|(1<<CS00); // Timer Clock = system clock / 1024
+	TIFR = 1<<TOV0; // Clear TOV0 / Clear pending interrupts
+	TIMSK = 1<< TOIE0; // Enable Timer 0 Overflow Interrupt
 }
 
 
 
 /*
- * Set up INT0 for Trailmaster interrupt.
- */
+* Set up INT0 for Trailmaster interrupt.
+*/
 void set_up_interrupt_pin()
 {
-	GICR |= 1<<INT0;		// Enable INT0
-	MCUCR &= ~(1<<ISC01) ;	// Trigger INT0 on falling edge
+	GICR |= 1<<INT0;                // Enable INT0
+	MCUCR &= ~(1<<ISC01) ;        // Trigger INT0 on falling edge
 	MCUCR &= ~(0<<ISC00) ;
-	sei();				//Enable Global Interrupt
+	sei();                                //Enable Global Interrupt
 }
 
 
 
 /*
- * "Power-down" sleep mode.
- */
-void power_down_sleep_mode() 
+* "Power-down" sleep mode.
+*/
+void power_down_sleep_mode()
 {
 	// IN THE FUTURE ALSO TURN OFF THE JTAG (set JTD bit in MCUCSR to 1)... for now, we'll leave JTAG on out of convenience
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
@@ -93,7 +93,7 @@ void power_down_sleep_mode()
 
 void power_off_components()
 {
-	WDT_off();  //make sure the watchdog is off
+	WDT_off(); //make sure the watchdog is off
 }
 
 
@@ -117,26 +117,35 @@ int main(void)
 	while(1)
 	{
 		current_state = get_state();
-				
+		
 		if (current_state == ON)
 		{
 			PrintLn("ON");
 			turn_on_bbb();
-			turn_on_gopro();  // requires a 3 second GPIO hold, so we turn on GoPro after flipping the BBB relay
-			set_bbb_heart_beat(ON); 
+			turn_on_gopro(); // requires a 3 second GPIO hold, so we turn on GoPro after flipping the BBB relay
+			set_bbb_heart_beat(ON);
 			while((!(check_if_bbb_is_on())) && get_bbb_heart_beat() )
 			{
-				// Wait for BBB shutdown signal or BBB heartbeat to stop ticking
+				
+				if (readBBBHeartBeatLine()) //say the line is normally high, but goes low to indicate a pulse
+
+				{
+					set_bbb_heart_beat(ON);
+
+				}
 			}
+
+
 			set_state(OFF);
 			turn_off_bbb();
-			turn_off_gopro();  // again, GoPro requires a 3 second GPIO hold, so do after the BBB
+			turn_off_gopro(); // again, GoPro requires a 3 second GPIO hold, so do after the BBB
 		}
 		
 		else if (current_state == OFF)
 		{
 			PrintLn("OFF!");
 			power_down_sleep_mode();
+			
 		}
 	}
 }
