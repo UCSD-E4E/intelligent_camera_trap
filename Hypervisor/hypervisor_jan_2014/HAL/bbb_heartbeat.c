@@ -57,3 +57,8 @@ void increment_bbb_heart_beat_inactive_time_100MS(void)
 	}
 }
 
+unsigned char readBBBHeartBeatLine(void)
+{
+	return inputON3();
+}
+
