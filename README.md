@@ -14,9 +14,9 @@ Documents
 
 Find documentation on creating the Ubuntu software environment necessary to run our tracking software on the BBB <a href="https://docs.google.com/document/d/11fNbpm_8UlqleUQ5o6HENReJ5FhbzSRXErsukm4au68/edit?usp=sharing">here</a>
 
-Find Beaglebone Black ubuntu images (with our software) <a href="https://drive.google.com/file/d/0B8LrVSaJlUQiNnEtNnBZb0xwUW8/edit?usp=sharing">here</a> 
+Find Beaglebone Black Ubuntu images (with our software) <a href="https://drive.google.com/file/d/0B8LrVSaJlUQiNnEtNnBZb0xwUW8/edit?usp=sharing">here</a> 
 
 Find details on Trailmaster PIR and the Hypervisor power-management microcontroller <a href="https://docs.google.com/document/d/1n6HdeWOwB5dCszqAN170XhF30ehxwwt9SKwHBR9YPTk/edit?usp=sharing">here</a>
 
-
+Find Trailmaster Manual <a href="https://drive.google.com/file/d/0B8LrVSaJlUQiMmpsNWk3UVdPc3M/edit?usp=sharing">here</a>
 
