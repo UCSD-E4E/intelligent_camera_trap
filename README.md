@@ -12,7 +12,7 @@ animals with its camera turret. To use power only when necessary, the system use
 Documents
 ================= 
 
-Find documentation on creating the Ubuntu software enviorenment necessary to run our tracking software on the BBB <a href="https://docs.google.com/document/d/11fNbpm_8UlqleUQ5o6HENReJ5FhbzSRXErsukm4au68/edit?usp=sharing">here</a>
+Find documentation on creating the Ubuntu software environment necessary to run our tracking software on the BBB <a href="https://docs.google.com/document/d/11fNbpm_8UlqleUQ5o6HENReJ5FhbzSRXErsukm4au68/edit?usp=sharing">here</a>
 
 Find Beaglebone Black ubuntu images (with our software) <a href="https://drive.google.com/file/d/0B8LrVSaJlUQiNnEtNnBZb0xwUW8/edit?usp=sharing">here</a> 
 
