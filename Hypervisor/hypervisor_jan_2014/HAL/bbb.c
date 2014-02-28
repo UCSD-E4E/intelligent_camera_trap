@@ -5,13 +5,13 @@
 
 void turn_on_bbb(void)
 {
-	relayON1(ON);
+	relayON4(ON);
 }
 
 
 void turn_off_bbb(void)
 {
-	relayON1(OFF);
+	relayON4(OFF);
 }
 
 

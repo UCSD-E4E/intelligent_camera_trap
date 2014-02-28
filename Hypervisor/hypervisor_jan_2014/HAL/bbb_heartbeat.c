@@ -1,10 +1,11 @@
 #include "HyperVisor.h"
 #include <avr/interrupt.h>
+#include "port.h"
 
 
 
-#define MISSING_HEARTBEAT_TIME_THRESHOLD 60
-#define MAXIMUM_HEARTBEAT_TIME          3600
+#define MISSING_HEARTBEAT_TIME_THRESHOLD 30
+#define MAXIMUM_HEARTBEAT_TIME 3600
 
 
 volatile static unsigned int heart_beat_inactive_time_in_S = MISSING_HEARTBEAT_TIME_THRESHOLD;
@@ -19,16 +20,16 @@ unsigned char get_bbb_heart_beat(void)
 
 void set_bbb_heart_beat(unsigned char currentHearBeat)
 {
-	if (currentHearBeat == ON) 
+	if (currentHearBeat == ON)
 	{
 
 		cli();
 		heart_beat_inactive_time_in_S = 0;
 		heart_beat_inactive_time_in_100MS = 0;
 		sei();
-	} 
-		
-	else if (currentHearBeat == OFF) 
+	}
+	
+	else if (currentHearBeat == OFF)
 	{
 		cli();
 		heart_beat_inactive_time_in_S = MISSING_HEARTBEAT_TIME_THRESHOLD;
@@ -45,7 +46,7 @@ unsigned int get_bbb_heart_beat_inactive_time_in_S(void)
 
 void increment_bbb_heart_beat_inactive_time_100MS(void)
 {
-	if (heart_beat_inactive_time_in_S  <= MAXIMUM_HEARTBEAT_TIME)
+	if (heart_beat_inactive_time_in_S <= MAXIMUM_HEARTBEAT_TIME)
 	{
 		heart_beat_inactive_time_in_100MS++;
 		
@@ -61,4 +62,3 @@ unsigned char readBBBHeartBeatLine(void)
 {
 	return inputON3();
 }
-

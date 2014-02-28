@@ -3,14 +3,14 @@
 *
 * Created: 1/15/2014 3:28:22 PM
 * Author: David Muller
-* Revision : Muhsin Gurel 01/22/2014
+* Revision : Muhsin Gurel 01/29/2014
 */
 
 
-#define OSCSPEED 16*1000*1000 /* in Hz */
+#define OSCSPEED 8*1000*1000 /* in Hz */
 
 #ifndef F_CPU
-#define F_CPU 16000000UL
+#define F_CPU 8000000UL
 #endif
 
 #include <string.h>
@@ -48,9 +48,11 @@ ISR(TIMER0_OVF_vect)
 }
 
 //Interrupt Service Routine for INT0...Trailmaster
-ISR(INT0_vect)
+ISR(INT2_vect)
 {
+	
 	set_state(ON);
+	
 }
 /********************************************************************************/
 
@@ -70,9 +72,10 @@ void TIMER_Init(void)
 */
 void set_up_interrupt_pin()
 {
-	GICR |= 1<<INT0;                // Enable INT0
-	MCUCR &= ~(1<<ISC01) ;        // Trigger INT0 on falling edge
-	MCUCR &= ~(0<<ISC00) ;
+	
+	MCUCSR &= ~(1<<ISC2) ;        // Trigger INT2 on falling edge
+	GICR |= 1<<INT2;                // Enable INT2
+	//MCUCR &= ~(1<<ISC00) ;
 	sei();                                //Enable Global Interrupt
 }
 
@@ -113,26 +116,28 @@ int main(void)
 	// make sure all extra components (watchdog,...) are off
 	power_off_components();
 	
-	// set up INT0 for Trailmaster input
+	// set up INT2 for Trailmaster input
 	set_up_interrupt_pin();
-	
+				
 	while(1)
 	{
 		current_state = get_state();
 		
 		if (current_state == ON)
 		{
+		
 			PrintLn("ON");
+			relayON1(ON); // Main System Power
 			turn_on_bbb();
-			turn_on_gopro(); // requires a 3 second GPIO hold, so we turn on GoPro after flipping the BBB relay
+			relayON2(ON); // GoPro Power
+			turn_on_gopro(); // requires a half second GPIO hold, so we turn on GoPro after flipping the BBB relay
 			set_bbb_heart_beat(ON);
-			_delay_ms_(30000);  //let Ubuntu boot up
-			old_value = readBBBHeartBeatLine();
+			_delay_ms(5000);
+			old_value = readBBBHeartBeatLine(); 
 			while((!(check_if_bbb_is_on())) && get_bbb_heart_beat() )
 			{
-				new_value = readBBBHeartBeatLine();
-				
-				if (old_value != new_value) 
+				new_value = readBBBHeartBeatLine(); 
+				if (old_value !=new_value) //say the line is normally high, but goes low to indicate a pulse
 
 				{
 					set_bbb_heart_beat(ON);
@@ -143,7 +148,9 @@ int main(void)
 
 			set_state(OFF);
 			turn_off_bbb();
-			turn_off_gopro(); // again, GoPro requires a 3 second GPIO hold, so do after the BBB
+			turn_off_gopro(); // again, GoPro requires a 2 second GPIO hold, so do after the BBB
+			relayON2(OFF);  // GoPro Power Off
+			relayON1(OFF); //Main System Power Off
 		}
 		
 		else if (current_state == OFF)
