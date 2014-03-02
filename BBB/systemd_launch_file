@@ -1,9 +1,0 @@
-[Unit]
-Description=Systemd service file to run tracking on boot-up. See http://kezhong.wordpress.com/2011/11/19/creating-my-own-systemd-service-files-on-fedora-16x86_64/ to finish systemd set-up. (PLACE THE PATH TO OUR TRACKING EXECUTABLE IN ExecStart.)
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/hello
-
-[Install]
-WantedBy=multi-user.target
