@@ -64,7 +64,8 @@ printf "\n3b.) Installing our setup.sh script /home/root..."
 # write all our lines into setup.sh file in here
 echo "chmod a+rw /dev/ttyO*" > /home/root/setup.sh
 echo "chmod a+rw /dev/video*" >> /home/root/setup.sh
-echo "/usr/share/rtc_ds1307/clock_init.sh" >> /home/root/setup.sh
+#echo "/usr/share/rtc_ds1307/clock_init.sh" >> /home/root/setup.sh
+echo "MAKE SURE YOU GET THIS FILE FROM ANGELA. YOU DONT HAVE IT RIGHT NOW"
 echo "echo ITC_setup_complete > /dev/shm/ITC_setup_complete" >> /home/root/setup.sh
 printf "done\n"
 
