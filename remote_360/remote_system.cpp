@@ -103,8 +103,12 @@ int main(int argc, char *argv[])
 	roi = Rect(160, 250, 300, 150);
 	frame = frame1(roi);
 
-        cvtColor(frame, gray, CV_BGR2GRAY); //grayscale the frame
-        bg.operator()(gray,fore);           //get the binary foreground image
+	// grayscale
+        //cvtColor(frame, gray, CV_BGR2GRAY); //grayscale the frame
+        //bg.operator()(gray,fore);           //get the binary foreground image
+
+	//color
+	bg.operator()(frame,fore);
 
         // find all contours, get all the points in each contour
         findContours(fore, precontours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE); 
@@ -176,14 +180,14 @@ int main(int argc, char *argv[])
 	
 	if ( cpolar.y < 5 || cpolar.y > 175 ) //if target is out of view (teta < 5 or teta > 175)
 	{
-	    if( wit > 300 ) {state = 0;} //wait about a min before going to 0
+	    if( wit > 100 ) {state = 0;} //wait about a min before going to 0
 	    else { ++wit; } 
 	}
 	else //if target is in view (5 < teta < 175)
 	{
 	    if ( cpolar.y == avg/75 ) //if target is not moving for 5 sec
 	    {
-		if ( wit > 300 ) {state = 0;} //wait about a min before going to 0
+		if ( wit > 100 ) {state = 0;} //wait about a min before going to 0
 		else { ++wit;}
 	    }
 	    else { state = 1; wit = 0;} //if target is moving in the view area record and set the wait to 0
