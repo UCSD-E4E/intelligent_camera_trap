@@ -20,7 +20,7 @@ class producer (threading.Thread):
         global angle
         global validity
         print "Starting " + self.name
-        proc = subprocess.Popen( '../remote_360/remote_system' , shell = False, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+        proc = subprocess.Popen( '/home/ubuntu/intelligent_camera_trap/BBB/remote_360/remote_system' , shell = False, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
         while True:
             buffer = []
             for i in range (5):

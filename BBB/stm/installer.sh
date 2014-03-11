@@ -72,7 +72,7 @@ printf "done\n"
 
 
 printf "\n4.) Creating our run.sh script in current direcory..."
-echo "python Main.py" > run.sh
+echo "/usr/bin/python /home/ubuntu/intelligent_camera_trap/BBB/stm/Main.py" > run.sh
 chown $USER run.sh
 chown :$USER run.sh
 chmod +g+w run.sh
