@@ -104,9 +104,11 @@ int main(int argc, char *argv[])
 	frame = frame1(roi);
 
 	// grayscale
-        cvtColor(frame, gray, CV_BGR2GRAY); //grayscale the frame
-        bg.operator()(gray,fore);           //get the binary foreground image
+        //cvtColor(frame, gray, CV_BGR2GRAY); //grayscale the frame
+        //bg.operator()(gray,fore);           //get the binary foreground image
 
+	// color
+	bg.operator()(frame, fore);
 
 
         // find all contours, get all the points in each contour
