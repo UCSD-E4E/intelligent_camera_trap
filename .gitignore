@@ -33,3 +33,4 @@ rosserial/src/.dep/*.o.d
 rosserial/src/ros_lib/*.lst
 rosserial/src/ros_lib/*.o
 
+*.pyc
