@@ -13,8 +13,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 printf "\n1.) Copying the RTC driver into /usr/share..."
-#cp -u /home/$USER/intelligent_camera_trap/...... /usr/share
-echo "MAKE SURE YOU GET THIS FILE FROM ANGELA. YOU DONT HAVE IT RIGHT NOW"
+cp -u /home/$USER/intelligent_camera_trap/BBB/stm/clock_init.sh /usr/share
 printf "done\n"
 
 
