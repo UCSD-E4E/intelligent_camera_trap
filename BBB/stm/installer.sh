@@ -90,6 +90,7 @@ crontab -u root mycron
 rm mycron
 printf "done\n"
 
+sync
 
 printf "\nWe'd like to reboot the system to finish installation\n"
 read -r -p "Reboot now? [y/N] " response
