@@ -91,16 +91,16 @@ rm mycron
 printf "done\n"
 
 
-#printf "\nWe'd like to reboot the system to finish installation\n"
-#read -r -p "Reboot now? [y/N] " response
-#case $response in
-    #[yY][eE][sS]|[yY]) 
-        #echo "Rebooting now..."
-        #;;
-    #*)
-        #echo "Exiting..."
-        #exit 1
-        #;;
-#esac
+printf "\nWe'd like to reboot the system to finish installation\n"
+read -r -p "Reboot now? [y/N] " response
+case $response in
+    [yY][eE][sS]|[yY]) 
+        echo "Rebooting now..."
+        ;;
+    *)
+        echo "Exiting..."
+        exit 1
+        ;;
+esac
 
 
