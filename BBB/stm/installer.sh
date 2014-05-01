@@ -78,12 +78,12 @@ then
 else
    echo "@reboot /home/root/setup.sh" >> mycron
 fi
-if grep --silent "@reboot /usr/bin/screen -L -dMS remote_system /home/$USER/intelligent_camera_trap/BBB/stm/run.sh" mycron
+if grep --silent "@reboot /usr/bin/screen -L -dmS remote_system /home/$USER/intelligent_camera_trap/BBB/stm/run.sh" mycron
 
 then 
    printf "\nroot's screen cronjob already installed.  Moving on...\n"
 else
-   echo "@reboot /usr/bin/screen -L -dMS remote_system /home/$USER/intelligent_camera_trap/BBB/stm/run.sh" >> mycron
+   echo "@reboot /usr/bin/screen -L -dmS remote_system /home/$USER/intelligent_camera_trap/BBB/stm/run.sh" >> mycron
 fi
 #install new cron file
 crontab -u root mycron
