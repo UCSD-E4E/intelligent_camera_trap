@@ -416,7 +416,7 @@ unsigned int ptat;
   
 }
 
-void CUSTOM_PRINT(float *t){
+void CUSTOM_PRINT(uint8_t *t){
 
 for (int i=0; i < MLX620_IR_ROWS; i++)
   {
@@ -430,8 +430,8 @@ for (int i=0; i < MLX620_IR_ROWS; i++)
   }
    
 }
-float minimum(float *array){
-    float min=array[0][0];
+uint8_t minimum(uint8_t *array){
+    uint8_t min=array[0][0];
 	for (int i=0; i < MLX620_IR_ROWS; i++)
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
@@ -445,8 +445,8 @@ float minimum(float *array){
     return min;
 }
 
-float maximum(float *array){
-    float max=array[0][0];
+uint8_t maximum(uint8_t *array){
+    uint8_t max=array[0][0];
     for (int i=0; i < MLX620_IR_ROWS; i++)
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
@@ -459,9 +459,9 @@ float maximum(float *array){
     return max;
 }
 
-void NORMALIZE(float *array){
-    float min=minimum(array);
-    float max=maximum(array);
+void NORMALIZE(uint8_t *array){
+    uint8_t min=minimum(array);
+    uint8_t max=maximum(array);
     
     printf("\n \n Min=%f \t Max=%f \n",min,max);
 	for (int i=0; i < MLX620_IR_ROWS; i++)
@@ -475,10 +475,10 @@ void NORMALIZE(float *array){
     
 }
 
-int main(void)
+uint8_t frame(void)
 {
   int i, ACK;
-  float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
+  uint8_t IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
   
 	for (i=0; i < 5; i++)
 	{ 
