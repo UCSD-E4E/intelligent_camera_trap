@@ -15,6 +15,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdint.h>
 
 
 // I2C2 BUS 1 on BBB
@@ -477,7 +478,7 @@ void NORMALIZE(float (*array)[16]){
     
 }
 
-float frame(void)
+uint8_t frame(void)
 {
   int i, ACK;
   float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
@@ -508,6 +509,14 @@ float frame(void)
 	NORMALIZE(IRTemp);
 	printf("\n Normalized values: \n");
 	CUSTOM_PRINT(IRTemp);
+	 uint8_t pIRTemp[4][16];
+
+       for(int i=0;i<4;i++){
+	for(int j=0;j<16 ; j++)
+	{
+         pIRTemp[i][j]=uint8_t(IRTemp[i][j]);
+ 	}
+	}
 	
   
   return(IRTemp);
