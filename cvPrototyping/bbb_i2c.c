@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <time.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 
 // I2C2 BUS 1 on BBB
@@ -386,7 +387,7 @@ void dump(short int* buf)
 	}
 }
 
-void MEASURE_TEMP(float *IRTemp)
+void MEASURE_TEMP(float (*IRTemp)[16])
 {
 unsigned int ptat;
   float vth25;
@@ -416,7 +417,7 @@ unsigned int ptat;
   
 }
 
-void CUSTOM_PRINT(uint8_t *t){
+void CUSTOM_PRINT(float (*t)[16]){
 
 for (int i=0; i < MLX620_IR_ROWS; i++)
   {
@@ -428,10 +429,11 @@ for (int i=0; i < MLX620_IR_ROWS; i++)
 	}
 		
   }
+  printf("\n");
    
 }
-uint8_t minimum(uint8_t *array){
-    uint8_t min=array[0][0];
+float minimum(float (*array)[16]){
+    float min=0;
 	for (int i=0; i < MLX620_IR_ROWS; i++)
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
@@ -445,13 +447,13 @@ uint8_t minimum(uint8_t *array){
     return min;
 }
 
-uint8_t maximum(uint8_t *array){
-    uint8_t max=array[0][0];
+float maximum(float (*array)[16]){
+    float max=0;
     for (int i=0; i < MLX620_IR_ROWS; i++)
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
 		{
-			if(array[i][j]<max)
+			if(array[i][j]>max)
 				max=array[i][j];	
 		}
 		
@@ -459,9 +461,9 @@ uint8_t maximum(uint8_t *array){
     return max;
 }
 
-void NORMALIZE(uint8_t *array){
-    uint8_t min=minimum(array);
-    uint8_t max=maximum(array);
+void NORMALIZE(float (*array)[16]){
+    float min=minimum(array);
+    float max=maximum(array);
     
     printf("\n \n Min=%f \t Max=%f \n",min,max);
 	for (int i=0; i < MLX620_IR_ROWS; i++)
@@ -475,10 +477,10 @@ void NORMALIZE(uint8_t *array){
     
 }
 
-uint8_t frame(void)
+float frame(void)
 {
   int i, ACK;
-  uint8_t IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
+  float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
   
 	for (i=0; i < 5; i++)
 	{ 
@@ -506,6 +508,7 @@ uint8_t frame(void)
 	NORMALIZE(IRTemp);
 	printf("\n Normalized values: \n");
 	CUSTOM_PRINT(IRTemp);
+	
   
-  return(IRtemp);
+  return(IRTemp);
 }
