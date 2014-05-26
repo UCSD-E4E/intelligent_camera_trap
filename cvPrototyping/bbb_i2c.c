@@ -483,7 +483,7 @@ uint8_t frame(void)
   int i, ACK;
   float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
   
-	for (i=0; i < 5; i++)
+/*	for (i=0; i < 5; i++)
 	{ 
   	ACK=INITIALIZE(); 
 	
@@ -503,12 +503,12 @@ uint8_t frame(void)
   		break;
   	}
     }
-	
+*/	
     MEASURE_TEMP(IRTemp);
-	CUSTOM_PRINT(IRTemp);
+//	CUSTOM_PRINT(IRTemp);
 	NORMALIZE(IRTemp);
-	printf("\n Normalized values: \n");
-	CUSTOM_PRINT(IRTemp);
+//	printf("\n Normalized values: \n");
+//	CUSTOM_PRINT(IRTemp);
 	 uint8_t pIRTemp[4][16];
 
        for(int i=0;i<4;i++){
