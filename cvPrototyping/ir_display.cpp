@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
         uint8_t ir_frame[4][16];
 
         frame(ir_frame);
+        print_frame(ir_frame);
         cv_frame = Mat(4, 16, CV_8UC1, &ir_frame);
 
         bg.operator()(cv_frame, fore, 0.1);
@@ -113,7 +114,6 @@ int main(int argc, char *argv[])
 
         state = 1;
 
-        print_frame(ir_frame);
 //        cout << "Center position: ";
         ++frame_count;
     }
