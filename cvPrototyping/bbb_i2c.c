@@ -5,7 +5,6 @@
 #include <stdio.h> 
 #include <string.h>
 #include <math.h>
-#include "i2cfunc.h"
 #include <stdio.h> 
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
@@ -16,7 +15,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdint.h>
-
+#include <stdlib.h>
+#include "bbb_i2c.h"
 
 // I2C2 BUS 1 on BBB
 #define I2C_BUS 1
@@ -457,10 +457,12 @@ float maximum(float (*array)[16]){
 			if(array[i][j]>max)
 				max=array[i][j];	
 		}
+
 		
 	}
     return max;
 }
+
 
 void NORMALIZE(float (*array)[16]){
     float min=minimum(array);
@@ -478,19 +480,20 @@ void NORMALIZE(float (*array)[16]){
     
 }
 
-uint8_t frame(void)
+void frame(uint8_t (*pIRTemp)[16])
 {
   int i, ACK;
   float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
   
-/*	for (i=0; i < 5; i++)
+	for (i=0; i < 5; i++)
 	{ 
   	ACK=INITIALIZE(); 
 	
   	if (ACK<0 && i==4)
   	{
   		printf("Sensor initialization failed. Aborting !!! \n");
-  		return(1);  		
+  		//return(1);
+		exit(1);  		
   	}
   	else if ( ACK<0 && i<4)
 	{
@@ -503,13 +506,13 @@ uint8_t frame(void)
   		break;
   	}
     }
-*/	
+	
     MEASURE_TEMP(IRTemp);
-//	CUSTOM_PRINT(IRTemp);
+	//CUSTOM_PRINT(IRTemp);
 	NORMALIZE(IRTemp);
 //	printf("\n Normalized values: \n");
 //	CUSTOM_PRINT(IRTemp);
-	 uint8_t pIRTemp[4][16];
+//       uint8_t pIRTemp[4][16];
 
        for(int i=0;i<4;i++){
 	for(int j=0;j<16 ; j++)
@@ -517,7 +520,8 @@ uint8_t frame(void)
          pIRTemp[i][j]=uint8_t(IRTemp[i][j]);
  	}
 	}
-	
-  
-  return(IRTemp);
+
+ 
+ 
 }
+
