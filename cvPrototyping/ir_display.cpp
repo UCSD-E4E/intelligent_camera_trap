@@ -13,7 +13,7 @@ void print_frame(uint8_t (*frame_in)[16])
     {
         for (int j = 0; j < 16; j++)
         {
-            cout << frame_in[i][j] << ", ";
+            printf("%d, ", frame_in[i][j]);
         }
         cout << "\n";
     }
