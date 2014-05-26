@@ -407,7 +407,7 @@ unsigned int ptat;
   printf("Temperature of chip is %.2f degrees C\n", ta);
   read_calc_compens_pixel(ta, &compens_pixel_offcomp);
   read_all_pixels(IRTemp_raw);
-  remap_array(IRTemp_raw);
+  //remap_array(IRTemp_raw);
   for (int i=0; i < MLX620_IR_SENSORS; i++)
   {
 	   	temp[i]=pixel_temp(ta, i, compens_pixel_offcomp);
