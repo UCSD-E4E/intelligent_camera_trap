@@ -414,9 +414,9 @@ unsigned int ptat;
 
   }
   int k=0;
-  for (int j=0; i < MLX620_IR_COLUMNS; i++)
+  for (int j=0; j < MLX620_IR_COLUMNS; j++)
   {
-    for( int i=0; j < MLX620_IR_ROWS ; j++)
+    for( int i=0; i < MLX620_IR_ROWS ; i++)
 	{
 	   	IRTemp[i][j]=temp[k];
 	   	k++;
