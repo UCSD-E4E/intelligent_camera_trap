@@ -396,6 +396,7 @@ unsigned int ptat;
   float ta;
   float compens_pixel_offcomp;
   float pt;
+  float temp[64];
   
 
  // decode ta coefficients from EEPROM
@@ -407,14 +408,22 @@ unsigned int ptat;
   read_calc_compens_pixel(ta, &compens_pixel_offcomp);
   read_all_pixels(IRTemp_raw);
   remap_array(IRTemp_raw);
-  for (int i=0; i < MLX620_IR_ROWS; i++)
+  for (int i=0; i < MLX620_IR_SENSORS; i++)
   {
-    for( int j=0; j < MLX620_IR_COLUMNS ; j++)
+	   	temp[i]=pixel_temp(ta, i, compens_pixel_offcomp);
+
+  }
+  int k=0;
+  for (int j=0; i < MLX620_IR_COLUMNS; i++)
+  {
+    for( int i=0; j < MLX620_IR_ROWS ; j++)
 	{
-	   	IRTemp[i][j]=pixel_temp(ta, i, compens_pixel_offcomp);
+	   	IRTemp[i][j]=temp[k];
+	   	k++;
 	}
 		
   }
+  
   
 }
 
