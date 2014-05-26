@@ -474,13 +474,12 @@ void NORMALIZE(float (*array)[16]){
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
 		{
 			if(array[i][j]<25)
-				array[i][j]=0;
+				array[i][j]=25;
 			else if(array[i][j]>35)
 				array[i][j]=255;
 			
 			
-			//array[i][j]=((array[i][j]-min)*(255/(max-min)));	
-		}
+			array[i][j]=((array[i][j]-25)*(255/(35-25)));
 		
 	}
     
