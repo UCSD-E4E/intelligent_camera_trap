@@ -473,7 +473,13 @@ void NORMALIZE(float (*array)[16]){
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
 		{
-			array[i][j]=((array[i][j]-min)*(255/(max-min)));	
+			if(array[i][j]<25)
+				array[i][j]=0;
+			else if(array[i][j]>35)
+				array[i][j]=255;
+			
+			
+			//array[i][j]=((array[i][j]-min)*(255/(max-min)));	
 		}
 		
 	}
