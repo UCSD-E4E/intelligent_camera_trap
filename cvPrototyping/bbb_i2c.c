@@ -480,7 +480,7 @@ void NORMALIZE(float (*array)[16]){
 			
 			
 			array[i][j]=((array[i][j]-25)*(255/(35-25)));
-		
+		}		
 	}
     
 }
@@ -490,7 +490,7 @@ void frame(uint8_t (*pIRTemp)[16])
   int i, ACK;
   float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
   
-	for (i=0; i < 5; i++)
+/*	for (i=0; i < 5; i++)
 	{ 
   	ACK=INITIALIZE(); 
 	
@@ -511,7 +511,7 @@ void frame(uint8_t (*pIRTemp)[16])
   		break;
   	}
     }
-	
+*/	
     MEASURE_TEMP(IRTemp);
 	//CUSTOM_PRINT(IRTemp);
 	NORMALIZE(IRTemp);
