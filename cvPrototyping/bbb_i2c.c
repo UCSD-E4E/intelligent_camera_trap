@@ -434,7 +434,7 @@ for (int i=0; i < MLX620_IR_ROWS; i++)
    
 }
 float minimum(float (*array)[16]){
-    float min=0;
+    float min=array[0][0];
 	for (int i=0; i < MLX620_IR_ROWS; i++)
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
@@ -449,7 +449,7 @@ float minimum(float (*array)[16]){
 }
 
 float maximum(float (*array)[16]){
-    float max=0;
+    float max=array[0][0];
     for (int i=0; i < MLX620_IR_ROWS; i++)
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
