@@ -485,7 +485,7 @@ void NORMALIZE(float (*array)[16]){
 			if(array[i][j]<25)
 				array[i][j]=25;
 			else if(array[i][j]>35)
-				array[i][j]=255;
+				array[i][j]=35;
 			
 			
 			array[i][j]=((array[i][j]-25)*(255/(35-25)));
