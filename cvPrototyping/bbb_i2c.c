@@ -396,6 +396,7 @@ unsigned int ptat;
   float ta;
   float compens_pixel_offcomp;
   float pt;
+  float temp[64];
   
 
  // decode ta coefficients from EEPROM
@@ -406,15 +407,23 @@ unsigned int ptat;
   printf("Temperature of chip is %.2f degrees C\n", ta);
   read_calc_compens_pixel(ta, &compens_pixel_offcomp);
   read_all_pixels(IRTemp_raw);
-  remap_array(IRTemp_raw);
-  for (int i=0; i < MLX620_IR_ROWS; i++)
+  //remap_array(IRTemp_raw);
+  for (int i=0; i < MLX620_IR_SENSORS; i++)
   {
-    for( int j=0; j < MLX620_IR_COLUMNS ; j++)
+	   	temp[i]=pixel_temp(ta, i, compens_pixel_offcomp);
+
+  }
+  int k=0;
+  for (int j=0; j < MLX620_IR_COLUMNS; j++)
+  {
+    for( int i=0; i < MLX620_IR_ROWS ; i++)
 	{
-	   	IRTemp[i][j]=pixel_temp(ta, i, compens_pixel_offcomp);
+	   	IRTemp[i][j]=temp[k];
+	   	k++;
 	}
 		
   }
+  
   
 }
 
@@ -474,14 +483,13 @@ void NORMALIZE(float (*array)[16]){
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
 		{
 			if(array[i][j]<25)
-				array[i][j]=0;
+				array[i][j]=25;
 			else if(array[i][j]>35)
-				array[i][j]=255;
+				array[i][j]=35;
 			
 			
-			//array[i][j]=((array[i][j]-min)*(255/(max-min)));	
-		}
-		
+			array[i][j]=((array[i][j]-25)*(255/(35-25)));
+		}		
 	}
     
 }
@@ -491,7 +499,7 @@ void frame(uint8_t (*pIRTemp)[16])
   int i, ACK;
   float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
   
-	for (i=0; i < 5; i++)
+/*	for (i=0; i < 5; i++)
 	{ 
   	ACK=INITIALIZE(); 
 	
@@ -512,7 +520,7 @@ void frame(uint8_t (*pIRTemp)[16])
   		break;
   	}
     }
-	
+*/	
     MEASURE_TEMP(IRTemp);
 	//CUSTOM_PRINT(IRTemp);
 	NORMALIZE(IRTemp);
