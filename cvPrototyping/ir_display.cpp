@@ -87,8 +87,10 @@ int main(int argc, char *argv[])
         uint8_t ir_frame[4][16];
         uint8_t ir_thresh[4][16];
         frame(ir_frame);
-//        print_frame(ir_frame);
         cv_frame = Mat(4, 16, CV_8UC1, &ir_frame);
+
+        mat_to_uint_array(cv_frame, ir_thresh, 4, 16);
+        print_frame(ir_thresh);
 
         bg.operator()(cv_frame, fore, 0.1);
 
@@ -122,7 +124,7 @@ int main(int argc, char *argv[])
 
 
         mat_to_uint_array(fore, ir_thresh, 4, 16);
-        print_frame(ir_thresh);
+        //print_frame(ir_thresh);
   //      imshow("raw", large_frame);
   //      imshow("frame", large_thresh);
 
