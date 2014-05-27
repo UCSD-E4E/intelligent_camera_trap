@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 //    namedWindow("raw", CV_WINDOW_AUTOSIZE);
 //    namedWindow("frame", CV_WINDOW_AUTOSIZE);
 
-    BackgroundSubtractorMOG2 bg = BackgroundSubtractorMOG2(1, 16, false);
+    BackgroundSubtractorMOG2 bg = BackgroundSubtractorMOG2(1, 4, false);
     vector<vector<Point> > precontours;
     vector<vector<Point> > contours;
     Point last_center;
@@ -88,9 +88,6 @@ int main(int argc, char *argv[])
         uint8_t ir_thresh[4][16];
         frame(ir_frame);
         cv_frame = Mat(4, 16, CV_8UC1, &ir_frame);
-
-        mat_to_uint_array(cv_frame, ir_thresh, 4, 16);
-        print_frame(ir_thresh);
 
         bg.operator()(cv_frame, fore, 0.1);
 
@@ -124,7 +121,7 @@ int main(int argc, char *argv[])
 
 
         mat_to_uint_array(fore, ir_thresh, 4, 16);
-        //print_frame(ir_thresh);
+        print_frame(ir_thresh);
   //      imshow("raw", large_frame);
   //      imshow("frame", large_thresh);
 
