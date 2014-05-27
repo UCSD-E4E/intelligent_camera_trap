@@ -35,6 +35,17 @@ Point get_centroid(Mat img)
     return coord;
 }
 
+void mat_to_uint_array(Mat src, uint8_t (*dst)[16], int rows, int columns)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for(int j = 0; j < columns; j++)
+        {
+            dst[i][j] = src.data[i*columns + j];
+        }
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -74,9 +85,9 @@ int main(int argc, char *argv[])
         // Get a frame from the melexis sensor
 
         uint8_t ir_frame[4][16];
-
+        uint8_t ir_thresh[4][16];
         frame(ir_frame);
-        print_frame(ir_frame);
+//        print_frame(ir_frame);
         cv_frame = Mat(4, 16, CV_8UC1, &ir_frame);
 
         bg.operator()(cv_frame, fore, 0.1);
@@ -108,6 +119,10 @@ int main(int argc, char *argv[])
         resize(cv_frame, large_frame, Size(16*FRAME_W, 16*FRAME_H), 0, 0, INTER_NEAREST);
         resize(fore, large_thresh, Size(16*FRAME_W, 16*FRAME_H), 0, 0, INTER_NEAREST);
 
+
+
+        mat_to_uint_array(fore, ir_thresh, 4, 16);
+        print_frame(ir_thresh);
   //      imshow("raw", large_frame);
   //      imshow("frame", large_thresh);
 
