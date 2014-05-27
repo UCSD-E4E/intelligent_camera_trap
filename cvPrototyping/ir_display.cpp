@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 //    namedWindow("raw", CV_WINDOW_AUTOSIZE);
 //    namedWindow("frame", CV_WINDOW_AUTOSIZE);
 
-    BackgroundSubtractorMOG2 bg = BackgroundSubtractorMOG2(1, 4, false);
+    BackgroundSubtractorMOG2 bg = BackgroundSubtractorMOG2(1, 0, false);
     vector<vector<Point> > precontours;
     vector<vector<Point> > contours;
     Point last_center;
