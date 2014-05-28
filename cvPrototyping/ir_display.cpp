@@ -131,7 +131,8 @@ int main(int argc, char *argv[])
 
         state = 1;
 
-//        cout << "Center position: ";
+        // Add back in code which says where to turn to and what state
+        // How to do this is in cvPrototyping/remote_system.cpp
         ++frame_count;
     }
     return 0;
