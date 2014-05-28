@@ -46,6 +46,13 @@ void mat_to_uint_array(Mat src, uint8_t (*dst)[16], int rows, int columns)
     }
 }
 
+Point get_polar(int argx, int argy, int framew)
+{
+    Point polar;
+    polar.x = sqrt(pow(argx,2) + pow(argy,2));
+    polar.y = atan2(argy, (argx-framew/2)) * 180 / PI;
+    return polar;
+}
 
 int main(int argc, char *argv[])
 {
@@ -92,10 +99,16 @@ int main(int argc, char *argv[])
         //print_frame(ir_thresh);
 
 	threshold(cv_frame, fore, 220, 255, THRESH_BINARY);
-       /* bg.operator()(cv_frame, fore, 0.1);
+	
+	
+	mat_to_uint_array(fore, ir_thresh, 4, 16);
+        print_frame(ir_thresh);
+        
+       // bg.operator()(cv_frame, fore, 0.1);
+
 
         // find all contours, get all the points in each contour
-        findContours(fore, precontours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
+  /*     findContours(ir_thresh, precontours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 
         contours = precontours;
 
@@ -112,7 +125,7 @@ int main(int argc, char *argv[])
             }
         }
 
-        biggest_contour = Mat::zeros(cv_frame.rows, cv_frame.cols, CV_8UC1);
+        biggest_contour = Mat::zeros(ir_thresh.rows, ir_thresh.cols, CV_8UC1);
         drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
         last_center = get_centroid(biggest_contour);
 
@@ -123,16 +136,70 @@ int main(int argc, char *argv[])
 */
 
 
-        mat_to_uint_array(fore, ir_thresh, 4, 16);
-        print_frame(ir_thresh);
+     
+        
   //      imshow("raw", large_frame);
   //      imshow("frame", large_thresh);
 
 
         state = 1;
 
+
         // Add back in code which says where to turn to and what state
         // How to do this is in cvPrototyping/remote_system.cpp
+
+/*        if( contours.size() > 1 )
+        {
+            // isolate largest contour in its own Mat
+            biggest_contour = Mat::zeros(ir_thresh.rows, ir_thresh.cols, CV_8UC1);
+            drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
+            last_center = get_centroid(biggest_contour);
+            cpolar = get_polar (last_center.x, last_center.y, ir_thresh.cols);
+
+        }
+        else
+        {
+            cout << endl << " no contour";
+        }
+
+        //decision making for target state
+
+        if ( k > 74 )
+            k = 0; //movement in the last 5 seconds
+
+        avrg[k] = cpolar.y;
+        ++k;
+        avg = 0;
+        for ( j=0;j<75;++j)
+            avg += avrg[j];
+
+        if ( cpolar.y < 5 || cpolar.y > 175 ) //if target is out of view (teta < 5 or teta > 175)
+        {
+            if( wit > 100 )
+                state = 0; //wait about a min before going to 0
+            else
+              ++wit;
+        }
+        else //if target is in view (5 < teta < 175)
+        {
+            if ( cpolar.y == avg/75 ) //if target is not moving for 5 sec
+            {
+                if ( wit > 100 )
+                    state = 0; //wait about a min before going to 0
+            else
+              ++wit;
+            }
+            else
+            {
+              state = 1;
+              wit = 0;
+            } //if target is moving in the view area record and set the wait to 0
+        }
+
+        cout << " (teta,state) = " << "(" << cpolar.y << "," << state << ")" << endl;
+
+*/
+
         ++frame_count;
     }
     return 0;
