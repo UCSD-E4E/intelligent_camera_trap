@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 	
 	mat_to_uint_array(fore, ir_thresh, 4, 16);
         //print_frame(ir_thresh);
-        
+   /*     
         bg.operator()(ir_thresh, fore, 0.1);
 
 
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
        //print_frame(ir_thresh); 
 
         biggest_contour = Mat::zeros(ir_thresh.rows, ir_thresh.cols, CV_8UC1);
-  /*
+  
         drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
         last_center = get_centroid(biggest_contour);
 
