@@ -89,7 +89,10 @@ int main(int argc, char *argv[])
         frame(ir_frame);
         cv_frame = Mat(4, 16, CV_8UC1, &ir_frame);
 
-        bg.operator()(cv_frame, fore, 0.1);
+        //print_frame(ir_thresh);
+
+	threshold(cv_frame, fore, 220, 255, THRESH_BINARY);
+       /* bg.operator()(cv_frame, fore, 0.1);
 
         // find all contours, get all the points in each contour
         findContours(fore, precontours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
@@ -117,7 +120,7 @@ int main(int argc, char *argv[])
         Mat large_thresh;
         resize(cv_frame, large_frame, Size(16*FRAME_W, 16*FRAME_H), 0, 0, INTER_NEAREST);
         resize(fore, large_thresh, Size(16*FRAME_W, 16*FRAME_H), 0, 0, INTER_NEAREST);
-
+*/
 
 
         mat_to_uint_array(fore, ir_thresh, 4, 16);
