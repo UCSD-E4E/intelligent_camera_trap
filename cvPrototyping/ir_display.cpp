@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
             cout << endl << " no contour";
         }
         mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
-        print_frame(ir_thresh);
+    //    print_frame(ir_thresh);
 /*
         //decision making for target state
 
