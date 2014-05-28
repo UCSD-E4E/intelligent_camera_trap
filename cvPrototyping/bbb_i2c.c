@@ -404,7 +404,7 @@ unsigned int ptat;
  // read temperature register
   ptat=ptat_read();
   ta=calc_ta(ptat, vth25, kt1, kt2);
-  printf("Temperature of chip is %.2f degrees C\n", ta);
+ // printf("Temperature of chip is %.2f degrees C\n", ta);
   read_calc_compens_pixel(ta, &compens_pixel_offcomp);
   read_all_pixels(IRTemp_raw);
   //remap_array(IRTemp_raw);
@@ -477,7 +477,7 @@ void NORMALIZE(float (*array)[16]){
     float min=minimum(array);
     float max=maximum(array);
     
-    printf("\n \n Min=%f \t Max=%f \n",min,max);
+  //  printf("\n \n Min=%f \t Max=%f \n",min,max);
 	for (int i=0; i < MLX620_IR_ROWS; i++)
 	{
 		for( int j=0;j < MLX620_IR_COLUMNS ; j++)
