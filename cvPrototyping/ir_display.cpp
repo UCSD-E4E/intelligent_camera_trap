@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            cout << endl << " no contour";
+        //    cout << endl << " no contour";
         }
         mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
     //    print_frame(ir_thresh);
