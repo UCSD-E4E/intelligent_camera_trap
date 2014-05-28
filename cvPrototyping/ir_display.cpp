@@ -137,20 +137,20 @@ int main(int argc, char *argv[])
         // Add back in code which says where to turn to and what state
         // How to do this is in cvPrototyping/remote_system.cpp
 
-        if( contours.size() > 1 )
+        if( contours.size() > 0)
         {
             // isolate largest contour in its own Mat
             biggest_contour = Mat::zeros(4, 16, CV_8UC1);
             drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
             last_center = get_centroid(biggest_contour);
-            mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
-            print_frame(ir_thresh);
 
         }
         else
         {
             cout << endl << " no contour";
         }
+        mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
+        print_frame(ir_thresh);
 /*
         //decision making for target state
 
