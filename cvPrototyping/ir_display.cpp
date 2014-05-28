@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 //    namedWindow("frame", CV_WINDOW_AUTOSIZE);
 
     BackgroundSubtractorMOG2 bg = BackgroundSubtractorMOG2(1, 0, false);
-    vector<vector<Point> > precontours;
+    vector<vector<Point> > ir_contours;
     vector<vector<Point> > contours;
     Point last_center;
     Scalar color = Scalar(255,255,255);
@@ -104,13 +104,13 @@ int main(int argc, char *argv[])
 	mat_to_uint_array(fore, ir_thresh, 4, 16);
         //print_frame(ir_thresh);
         
-       // bg.operator()(cv_frame, fore, 0.1);
+        bg.operator()(ir_thresh, fore, 0.1);
 
 
         // find all contours, get all the points in each contour
-       findContours(ir_thresh, precontours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
+       findContours(fore, ir_contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 
-        contours = precontours;
+        contours = ir_contours;
 
         // find largest contour
         largest_size = 0;
@@ -125,9 +125,10 @@ int main(int argc, char *argv[])
             }
         }
         
-       print_frame(ir_thresh); 
-/*
+       //print_frame(ir_thresh); 
+
         biggest_contour = Mat::zeros(ir_thresh.rows, ir_thresh.cols, CV_8UC1);
+  /*
         drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
         last_center = get_centroid(biggest_contour);
 
