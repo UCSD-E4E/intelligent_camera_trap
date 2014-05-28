@@ -123,14 +123,12 @@ int main(int argc, char *argv[])
         }
         
 
-        biggest_contour = Mat::zeros(4, 16, CV_8UC1);
+/*        biggest_contour = Mat::zeros(4, 16, CV_8UC1);
   
         drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
         last_center = get_centroid(biggest_contour);
+*/
 
-
-        mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
-        print_frame(ir_thresh);
 
         state = 1;
 
@@ -139,20 +137,21 @@ int main(int argc, char *argv[])
         // Add back in code which says where to turn to and what state
         // How to do this is in cvPrototyping/remote_system.cpp
 
-/*        if( contours.size() > 1 )
+        if( contours.size() > 1 )
         {
             // isolate largest contour in its own Mat
-            biggest_contour = Mat::zeros(ir_thresh.rows, ir_thresh.cols, CV_8UC1);
+            biggest_contour = Mat::zeros(4, 16, CV_8UC1);
             drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
             last_center = get_centroid(biggest_contour);
-            cpolar = get_polar (last_center.x, last_center.y, ir_thresh.cols);
+            mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
+            print_frame(ir_thresh);
 
         }
         else
         {
             cout << endl << " no contour";
         }
-
+/*
         //decision making for target state
 
         if ( k > 74 )
