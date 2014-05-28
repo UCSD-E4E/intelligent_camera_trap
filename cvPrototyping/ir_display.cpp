@@ -46,12 +46,10 @@ void mat_to_uint_array(Mat src, uint8_t (*dst)[16], int rows, int columns)
     }
 }
 
-Point get_polar(int argx, int argy, int framew)
+int get_degrees(int x_pos)
 {
-    Point polar;
-    polar.x = sqrt(pow(argx,2) + pow(argy,2));
-    polar.y = atan2(argy, (argx-framew/2)) * 180 / PI;
-    return polar;
+    int degrees = 60*x_pos/15 + 60;
+    return degrees;
 }
 
 int main(int argc, char *argv[])
@@ -102,13 +100,12 @@ int main(int argc, char *argv[])
 	
 	
 	mat_to_uint_array(fore, ir_thresh, 4, 16);
-        //print_frame(ir_thresh);
-   /*     
-        bg.operator()(ir_thresh, fore, 0.1);
+        
+//        bg.operator()(ir_thresh, fore, 0.1);
 
 
         // find all contours, get all the points in each contour
-       findContours(fore, ir_contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
+        findContours(fore, ir_contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 
         contours = ir_contours;
 
@@ -125,28 +122,19 @@ int main(int argc, char *argv[])
             }
         }
         
-       //print_frame(ir_thresh); 
 
-        biggest_contour = Mat::zeros(ir_thresh.rows, ir_thresh.cols, CV_8UC1);
+        biggest_contour = Mat::zeros(4, 16, CV_8UC1);
   
         drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
         last_center = get_centroid(biggest_contour);
 
-        Mat large_frame;
-        Mat large_thresh;
-        resize(cv_frame, large_frame, Size(16*FRAME_W, 16*FRAME_H), 0, 0, INTER_NEAREST);
-        resize(fore, large_thresh, Size(16*FRAME_W, 16*FRAME_H), 0, 0, INTER_NEAREST);
-*/
 
-
-     
-        
-  //      imshow("raw", large_frame);
-  //      imshow("frame", large_thresh);
-
+        mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
+        print_frame(ir_thresh);
 
         state = 1;
 
+	
 
         // Add back in code which says where to turn to and what state
         // How to do this is in cvPrototyping/remote_system.cpp
@@ -198,10 +186,11 @@ int main(int argc, char *argv[])
               wit = 0;
             } //if target is moving in the view area record and set the wait to 0
         }
-
-        cout << " (teta,state) = " << "(" << cpolar.y << "," << state << ")" << endl;
-
 */
+        int theta = get_degrees(last_center.x);
+        cout << " (theta,state) = " << "(" << theta << "," << state << ")" << endl;
+
+
 
         ++frame_count;
     }
