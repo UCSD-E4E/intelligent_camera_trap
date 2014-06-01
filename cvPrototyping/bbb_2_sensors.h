@@ -17,9 +17,9 @@ int I2C_CLOSE(int handle);
 
 int WAIT(unsigned int msec);
 
-int INITIALIZE(void);
+int INITIALIZE(int bus);
 
 void NORMALIZE(float (*array)[16]);
 
-void frame(uint8_t (*pIRTemp)[16]);
+void frame(uint8_t (*pIRTemp)[16],int bus);
 
