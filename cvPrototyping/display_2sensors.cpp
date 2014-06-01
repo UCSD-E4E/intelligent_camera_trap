@@ -20,6 +20,19 @@ void print_frame(uint8_t (*frame_in)[32])
     cout << "\n \n";
 }
 
+void print_frame_half(uint8_t (*frame_in)[16])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 16; j++)
+        {
+            printf("%d, ", frame_in[i][j]);
+        }
+        cout << "\n";
+    }
+    cout << "\n \n";
+}
+
 /*
  * Return the centroid of a segmented binary image.
  */
@@ -96,7 +109,12 @@ int main(int argc, char *argv[])
         uint8_t ir_frame[4][32];
         uint8_t ir_thresh[4][32];
         frame(ir_frame_1,1);
+        
+        print_frame_half(ir_frame_1);
+        
         frame(ir_frame_2,2);
+        
+        print_frame_half(ir_frame_2);
         
         for(int i=0; i<4; i++)
         {  
