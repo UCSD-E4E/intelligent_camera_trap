@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "bbb_i2c.h"
+#include "bbb_2_sensors.h"
 
 // I2C2 BUS 1 on BBB
 //#define I2C_BUS 2
