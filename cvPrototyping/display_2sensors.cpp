@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
         
         for(int i=0; i<4; i++)
         {  
-           for(int j=0;j<32;ij++)
+           for(int j=0;j<32;j++)
            {
              if(j<16)
                 ir_frame[i][j]=ir_frame_1[i][j];
