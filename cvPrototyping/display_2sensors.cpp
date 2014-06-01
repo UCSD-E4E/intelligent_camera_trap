@@ -81,6 +81,7 @@ int main(int argc, char *argv[])
 
     // Initialize Melexis Sensor (I2C and whatnot)
     INITIALIZE(1);
+    printf("SENSOR TWO \n");
     INITIALIZE(2);
 
 
