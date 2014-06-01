@@ -249,7 +249,7 @@ float calc_ta(unsigned int ptat, float vth25, float kt1, float kt2)
 	ta=(ta/(2*kt2))+25;
 }
 
-void read_all_pixels(short int* buf,I2C_BUS)
+void read_all_pixels(short int* buf,int I2C_BUS)
 {
 	int handle;
 	unsigned char buf_w[4];
