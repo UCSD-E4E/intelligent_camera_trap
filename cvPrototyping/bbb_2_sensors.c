@@ -19,7 +19,7 @@
 #include "bbb_i2c.h"
 
 // I2C2 BUS 1 on BBB
-#define I2C_BUS 2
+//#define I2C_BUS 2
 
 /**
   \def MLX620_IR_ROWS
@@ -146,7 +146,7 @@ int WAIT(unsigned int msec)
   return(0);
 }
 
-int INITIALIZE(void)
+int INITIALIZE(int I2C_BUS)
 {
 	int handle;
 	unsigned char buf[10];
@@ -202,7 +202,7 @@ int INITIALIZE(void)
   return(0);
 }
 
-unsigned int ptat_read(void)
+unsigned int ptat_read(int I2C_BUS)
 {
 	int handle;
 	unsigned int ptat;
@@ -249,7 +249,7 @@ float calc_ta(unsigned int ptat, float vth25, float kt1, float kt2)
 	ta=(ta/(2*kt2))+25;
 }
 
-void read_all_pixels(short int* buf)
+void read_all_pixels(short int* buf,I2C_BUS)
 {
 	int handle;
 	unsigned char buf_w[4];
@@ -265,7 +265,7 @@ void read_all_pixels(short int* buf)
 	
 }
 
-void read_calc_compens_pixel(float ta, float* compens_pixel_offcomp)
+void read_calc_compens_pixel(float ta, float* compens_pixel_offcomp,int I2C_BUS)
 {
 	int handle;
 	unsigned char buf_w[4];
@@ -388,7 +388,7 @@ void dump(short int* buf)
 	}
 }
 
-void MEASURE_TEMP(float (*IRTemp)[16])
+void MEASURE_TEMP(float (*IRTemp)[16],int bus)
 {
 unsigned int ptat;
   float vth25;
@@ -402,11 +402,11 @@ unsigned int ptat;
  // decode ta coefficients from EEPROM
   calc_ta_coeff(&vth25, &kt1, &kt2);
  // read temperature register
-  ptat=ptat_read();
+  ptat=ptat_read(bus);
   ta=calc_ta(ptat, vth25, kt1, kt2);
  // printf("Temperature of chip is %.2f degrees C\n", ta);
-  read_calc_compens_pixel(ta, &compens_pixel_offcomp);
-  read_all_pixels(IRTemp_raw);
+  read_calc_compens_pixel(ta, &compens_pixel_offcomp,bus);
+  read_all_pixels(IRTemp_raw,bus);
   //remap_array(IRTemp_raw);
   for (int i=0; i < MLX620_IR_SENSORS; i++)
   {
@@ -494,34 +494,12 @@ void NORMALIZE(float (*array)[16]){
     
 }
 
-void frame(uint8_t (*pIRTemp)[16])
+void frame(uint8_t (*pIRTemp)[16],int bus)
 {
   int i, ACK;
   float IRTemp[MLX620_IR_ROWS][MLX620_IR_COLUMNS];
   
-/*	for (i=0; i < 5; i++)
-	{ 
-  	ACK=INITIALIZE(); 
-	
-  	if (ACK<0 && i==4)
-  	{
-  		printf("Sensor initialization failed. Aborting !!! \n");
-  		//return(1);
-		exit(1);  		
-  	}
-  	else if ( ACK<0 && i<4)
-	{
-		printf("Failed to initialize sensor, attempting again\n");
-  		WAIT(50);
-  		continue;
-	}
-	else
-	{
-  		break;
-  	}
-    }
-*/	
-    MEASURE_TEMP(IRTemp);
+    MEASURE_TEMP(IRTemp,bus);
 	//CUSTOM_PRINT(IRTemp);
 	NORMALIZE(IRTemp);
 //	printf("\n Normalized values: \n");
