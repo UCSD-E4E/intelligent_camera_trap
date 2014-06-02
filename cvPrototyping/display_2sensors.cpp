@@ -7,7 +7,20 @@ using namespace std;
 
 #define PI 3.14159
 
-void print_frame(uint8_t (*frame_in)[16])
+void print_frame(uint8_t (*frame_in)[32])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 32; j++)
+        {
+            printf("%d, ", frame_in[i][j]);
+        }
+        cout << "\n";
+    }
+    cout << "\n \n";
+}
+
+void print_frame_half(uint8_t (*frame_in)[16])
 {
     for (int i = 0; i < 4; i++)
     {
@@ -35,7 +48,7 @@ Point get_centroid(Mat img)
     return coord;
 }
 
-void mat_to_uint_array(Mat src, uint8_t (*dst)[16], int rows, int columns)
+void mat_to_uint_array(Mat src, uint8_t (*dst)[32], int rows, int columns)
 {
     for (int i = 0; i < rows; i++)
     {
@@ -48,7 +61,7 @@ void mat_to_uint_array(Mat src, uint8_t (*dst)[16], int rows, int columns)
 
 int get_degrees(int x_pos)
 {
-    int degrees = 60*x_pos/15 + 60;
+    int degrees = 120*x_pos/15 + 120;
     return degrees;
 }
 
@@ -80,6 +93,8 @@ int main(int argc, char *argv[])
     for ( j=0;j<75;++j ) { avrg[j] = 0; }
 
     // Initialize Melexis Sensor (I2C and whatnot)
+    INITIALIZE(1);
+    printf("SENSOR TWO \n");
     INITIALIZE(2);
 
 
@@ -89,17 +104,37 @@ int main(int argc, char *argv[])
 
         // Get a frame from the melexis sensor
 
-        uint8_t ir_frame[4][16];
-        uint8_t ir_thresh[4][16];
-        frame(ir_frame,2);
-        cv_frame = Mat(4, 16, CV_8UC1, &ir_frame);
+        uint8_t ir_frame_1[4][16];
+        uint8_t ir_frame_2[4][16];
+        uint8_t ir_frame[4][32];
+        uint8_t ir_thresh[4][32];
+        frame(ir_frame_1,2);
+        
+      //  print_frame_half(ir_frame_1);
+        
+        frame(ir_frame_2,1);
+        
+      //  print_frame_half(ir_frame_2);
+        
+        for(int i=0; i<4; i++)
+        {  
+           for(int j=0;j<32;j++)
+           {
+             if(j<16)
+                ir_frame[i][j]=ir_frame_1[i][j];
+             else if(j>15)
+                ir_frame[i][j]=ir_frame_2[i][j-16];
+           }
+        }
+        
+        cv_frame = Mat(4, 32, CV_8UC1, &ir_frame);
 
-        print_frame(ir_frame);
+        //print_frame(ir_thresh);
 
 	threshold(cv_frame, fore, 220, 255, THRESH_BINARY);
 	
 	
-	mat_to_uint_array(fore, ir_thresh, 4, 16);
+	mat_to_uint_array(fore, ir_thresh, 4, 32);
         
 //        bg.operator()(ir_thresh, fore, 0.1);
 
@@ -123,13 +158,6 @@ int main(int argc, char *argv[])
         }
         
 
-/*        biggest_contour = Mat::zeros(4, 16, CV_8UC1);
-  
-        drawContours( biggest_contour, contours, larg_contour_index, color, -1, 8);
-        last_center = get_centroid(biggest_contour);
-*/
-
-
         state = 1;
 
 	
@@ -137,7 +165,7 @@ int main(int argc, char *argv[])
         // Add back in code which says where to turn to and what state
         // How to do this is in cvPrototyping/remote_system.cpp
 
-        biggest_contour = Mat::zeros(4, 16, CV_8UC1);
+        biggest_contour = Mat::zeros(4, 32, CV_8UC1);
         
 	if( contours.size() > 0)
         {
@@ -150,43 +178,9 @@ int main(int argc, char *argv[])
         {
         //    cout << endl << " no contour";
         }
-        mat_to_uint_array(biggest_contour, ir_thresh, 4, 16);
-        print_frame(ir_thresh);
-/*
-        //decision making for target state
+        mat_to_uint_array(biggest_contour, ir_thresh, 4, 32);
+       print_frame(ir_thresh);
 
-        if ( k > 74 )
-            k = 0; //movement in the last 5 seconds
-
-        avrg[k] = cpolar.y;
-        ++k;
-        avg = 0;
-        for ( j=0;j<75;++j)
-            avg += avrg[j];
-
-        if ( cpolar.y < 5 || cpolar.y > 175 ) //if target is out of view (teta < 5 or teta > 175)
-        {
-            if( wit > 100 )
-                state = 0; //wait about a min before going to 0
-            else
-              ++wit;
-        }
-        else //if target is in view (5 < teta < 175)
-        {
-            if ( cpolar.y == avg/75 ) //if target is not moving for 5 sec
-            {
-                if ( wit > 100 )
-                    state = 0; //wait about a min before going to 0
-            else
-              ++wit;
-            }
-            else
-            {
-              state = 1;
-              wit = 0;
-            } //if target is moving in the view area record and set the wait to 0
-        }
-*/
         int theta = get_degrees(last_center.x);
         cout << " (theta,state) = " << "(" << theta << "," << state << ")" << endl;
 
