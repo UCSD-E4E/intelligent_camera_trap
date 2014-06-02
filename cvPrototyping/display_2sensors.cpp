@@ -179,7 +179,7 @@ int main(int argc, char *argv[])
         //    cout << endl << " no contour";
         }
         mat_to_uint_array(biggest_contour, ir_thresh, 4, 32);
-       print_frame(ir_thresh);
+      // print_frame(ir_thresh);
 
         int theta = get_degrees(last_center.x);
         cout << " (theta,state) = " << "(" << theta << "," << state << ")" << endl;
