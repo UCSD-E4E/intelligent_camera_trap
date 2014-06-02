@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
-#include "bbb_i2c.h"
+#include "bbb_2_sensors.h"
 
 using namespace cv;
 using namespace std;
