@@ -61,7 +61,7 @@ void mat_to_uint_array(Mat src, uint8_t (*dst)[32], int rows, int columns)
 
 int get_degrees(int x_pos)
 {
-    int degrees = 120*x_pos/15 + 120;
+    int degrees = 120*x_pos/31 + 120;
     return degrees;
 }
 
