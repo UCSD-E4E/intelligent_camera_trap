@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
         frame(ir_frame,2);
         cv_frame = Mat(4, 16, CV_8UC1, &ir_frame);
 
-        //print_frame(ir_thresh);
+        print_frame(ir_frame);
 
 	threshold(cv_frame, fore, 220, 255, THRESH_BINARY);
 	
