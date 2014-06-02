@@ -108,13 +108,13 @@ int main(int argc, char *argv[])
         uint8_t ir_frame_2[4][16];
         uint8_t ir_frame[4][32];
         uint8_t ir_thresh[4][32];
-        frame(ir_frame_1,1);
+        frame(ir_frame_1,2);
         
-        print_frame_half(ir_frame_1);
+      //  print_frame_half(ir_frame_1);
         
-        frame(ir_frame_2,2);
+        frame(ir_frame_2,1);
         
-        print_frame_half(ir_frame_2);
+      //  print_frame_half(ir_frame_2);
         
         for(int i=0; i<4; i++)
         {  
