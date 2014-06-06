@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 
         //print_frame(ir_thresh);
 
-	threshold(cv_frame, fore, 220, 255, THRESH_BINARY);
+	threshold(cv_frame, fore, 180, 255, THRESH_BINARY);
 	
 	
 	mat_to_uint_array(fore, ir_thresh, 4, 32);
